@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Amoraitis.TodoList.Data;
 using Amoraitis.TodoList.Models;
 using Amoraitis.TodoList.Services;
+using NodaTime;
 
 namespace Amoraitis.TodoList
 {
@@ -26,15 +27,19 @@ namespace Amoraitis.TodoList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
+            // Add Nodatime IClock
+            services.AddSingleton<IClock>(SystemClock.Instance);
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<ITodoItemService, TodoItemService>();
 
             services.AddMvc();
         }

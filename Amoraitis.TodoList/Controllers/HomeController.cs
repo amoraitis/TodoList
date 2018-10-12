@@ -5,13 +5,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Amoraitis.TodoList.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Amoraitis.TodoList.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public HomeController(UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser != null)
+            {
+                return RedirectToAction(nameof(TodosController.Home), "Todos");
+            }
             return View();
         }
 

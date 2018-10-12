@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "moment.js@2.22.2",
+      "destination": "wwwroot/lib/moment.js/"
+    }
+  ]
+}
