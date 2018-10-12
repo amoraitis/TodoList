@@ -25,6 +25,8 @@
     }
 </table>
 
+<h3>Users</h3>
+
 <table class="table">
     <thead>
         <tr>
@@ -33,10 +35,10 @@
         </tr>
     </thead>
 
-    @foreach(var user in Model.Everyone)
+    @foreach(var user in Model.Users)
     {
         <tr>
-            <td>user.Id</td>
+            <td>@user.Id</td>
             <td>@user.Email</td>
         </tr>
     }

@@ -8,6 +8,6 @@ namespace Amoraitis.TodoList.Models
     public class ManageUsersViewModel
     {
         public ApplicationUser[] Administrators { get; set; }
-        public ApplicationUser[] Everyone { get; set; }
+        public ApplicationUser[] Users { get; set; }
     }
 }

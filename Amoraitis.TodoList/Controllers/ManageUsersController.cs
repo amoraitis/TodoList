@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Amoraitis.TodoList.Controllers
 {
     [Authorize(Roles = Constants.AdministratorRole)]
+    [Route("[controller]/[action]")]
     public class ManageUsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -20,19 +21,21 @@ namespace Amoraitis.TodoList.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> Index()
         {
+
             var admins = (await _userManager
-                .GetUsersInRoleAsync("Administrator"))
+                .GetUsersInRoleAsync(Constants.AdministratorRole))
                 .ToArray();
 
-            var everyone = await _userManager.Users
-                .ToArrayAsync();
+            var users = (await _userManager
+                .GetUsersInRoleAsync(Constants.UserRole))
+                .ToArray();
 
             var model = new ManageUsersViewModel
             {
                 Administrators = admins,
-                Everyone = everyone
+                Users = users
             };
 
             return View(model);
