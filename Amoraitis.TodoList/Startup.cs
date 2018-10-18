@@ -12,6 +12,7 @@ using Amoraitis.TodoList.Data;
 using Amoraitis.TodoList.Models;
 using Amoraitis.TodoList.Services;
 using NodaTime;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Amoraitis.TodoList
 {
@@ -40,7 +41,6 @@ namespace Amoraitis.TodoList
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<ITodoItemService, TodoItemService>();
-
             services.AddMvc();
         }
 

@@ -25,9 +25,5 @@ namespace Amoraitis.TodoList.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
-
-        public DbSet<Amoraitis.TodoList.Models.EditViewModel> EditViewModel { get; set; }
-
-        public DbSet<Amoraitis.TodoList.Models.DeleteViewModel> DeleteViewModel { get; set; }
     }
 }

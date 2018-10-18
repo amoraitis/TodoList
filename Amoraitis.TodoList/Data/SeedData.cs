@@ -19,16 +19,25 @@ namespace Amoraitis.TodoList.Data
             await EnsureRolesAsync(roleManager);
             var userManager = services
                  .GetRequiredService<UserManager<ApplicationUser>>();
+            await AddAdminRights(userManager);
         }
 
         private async static Task AddAdminRights(UserManager<ApplicationUser> userManager)
         {
-            var admin = await userManager.Users
-        .Where(x => x.UserName == "admin@admin.com")
-        .SingleOrDefaultAsync();
-         
-            await userManager.AddToRoleAsync(
-                admin, Constants.AdministratorRole);
+            var adminExists = userManager.Users
+                .Any(x => x.UserName == "admin@admin.com");
+
+            if (!adminExists)
+            {
+                var admin = new ApplicationUser
+                {
+                    Email = "admin@admin.local",
+                    UserName = "admin@admin.local"
+                };
+                await userManager.CreateAsync(admin, "Admin1!");
+                await userManager.AddToRoleAsync(
+                    admin, Constants.AdministratorRole);
+            }            
         }
 
         private static async Task EnsureRolesAsync(
