@@ -20,6 +20,7 @@ namespace Amoraitis.TodoList.Models
         public Instant Added { get; set; }
         [NotMapped]
         public Instant DueTo { get; set; }
+        public FileInfo File { get; set; }
 
         [Obsolete("Property only used for EF-serialization purposes")]
         [DataType(DataType.DateTime)]
@@ -40,5 +41,13 @@ namespace Amoraitis.TodoList.Models
             get => DueTo.ToDateTimeUtc();
             set => DueTo = DateTime.SpecifyKind(value, DateTimeKind.Utc).ToInstant();
         }
+    }
+
+    public class FileInfo
+    {
+        [Required, Key]
+        public Guid UserId { get; set; }
+        public string Path { get; set; }
+        public long Size { get; set; }
     }
 }

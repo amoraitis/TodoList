@@ -11,7 +11,7 @@ using System;
 namespace Amoraitis.TodoList.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181011121056_InitialModel_TodoItem")]
+    [Migration("20181025102444_InitialModel_TodoItem")]
     partial class InitialModel_TodoItem
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,6 +72,20 @@ namespace Amoraitis.TodoList.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Amoraitis.TodoList.Models.FileInfo", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Path");
+
+                    b.Property<long>("Size");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("File");
+                });
+
             modelBuilder.Entity("Amoraitis.TodoList.Models.TodoItem", b =>
                 {
                     b.Property<Guid>("Id")
@@ -87,11 +101,15 @@ namespace Amoraitis.TodoList.Data.Migrations
                     b.Property<DateTime>("DuetoDateTime")
                         .HasColumnName("DueTo");
 
+                    b.Property<Guid?>("FileUserId");
+
                     b.Property<string>("Title");
 
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FileUserId");
 
                     b.ToTable("Todo");
                 });
@@ -202,6 +220,13 @@ namespace Amoraitis.TodoList.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Amoraitis.TodoList.Models.TodoItem", b =>
+                {
+                    b.HasOne("Amoraitis.TodoList.Models.FileInfo", "File")
+                        .WithMany()
+                        .HasForeignKey("FileUserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

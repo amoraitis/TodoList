@@ -21,6 +21,19 @@ namespace Amoraitis.TodoList.Data.Migrations
                 table: "AspNetRoles");
 
             migrationBuilder.CreateTable(
+                name: "File",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(nullable: false),
+                    Path = table.Column<string>(nullable: true),
+                    Size = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_File", x => x.UserId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Todo",
                 columns: table => new
                 {
@@ -29,12 +42,19 @@ namespace Amoraitis.TodoList.Data.Migrations
                     Content = table.Column<string>(nullable: true),
                     Done = table.Column<bool>(nullable: false),
                     DueTo = table.Column<DateTime>(nullable: false),
+                    FileUserId = table.Column<Guid>(nullable: true),
                     Title = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Todo", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Todo_File_FileUserId",
+                        column: x => x.FileUserId,
+                        principalTable: "File",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -50,6 +70,11 @@ namespace Amoraitis.TodoList.Data.Migrations
                 column: "NormalizedName",
                 unique: true,
                 filter: "[NormalizedName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Todo_FileUserId",
+                table: "Todo",
+                column: "FileUserId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUserTokens_AspNetUsers_UserId",
@@ -68,6 +93,9 @@ namespace Amoraitis.TodoList.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Todo");
+
+            migrationBuilder.DropTable(
+                name: "File");
 
             migrationBuilder.DropIndex(
                 name: "UserNameIndex",

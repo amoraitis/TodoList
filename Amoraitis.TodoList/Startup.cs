@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
@@ -12,7 +8,7 @@ using Amoraitis.TodoList.Data;
 using Amoraitis.TodoList.Models;
 using Amoraitis.TodoList.Services;
 using NodaTime;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Amoraitis.TodoList.Services.Storage;
 
 namespace Amoraitis.TodoList
 {
@@ -36,6 +32,9 @@ namespace Amoraitis.TodoList
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+            // Add storage service
+            var storageService = new LocalFileStorageService(Configuration["LocalFileStorageBasePath"]);
+            services.AddSingleton<IFileStorageService>(storageService);
             // Add Nodatime IClock
             services.AddSingleton<IClock>(SystemClock.Instance);
             // Add application services.
