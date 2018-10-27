@@ -12,7 +12,12 @@ namespace Amoraitis.TodoList.Models
         [Required, Key]
         public Guid Id { get; set; }
         public string UserId { get; set; }
+        [Required]
+        [MinLength(3)]
+        [MaxLength(50)]
         public string Title { get; set; }
+        [MaxLength(200)]
+        [MinLength(15)]
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }
         public bool Done { get; set; }
@@ -46,7 +51,7 @@ namespace Amoraitis.TodoList.Models
     public class FileInfo
     {
         [Required, Key]
-        public Guid UserId { get; set; }
+        public Guid TodoId { get; set; }
         public string Path { get; set; }
         public long Size { get; set; }
     }

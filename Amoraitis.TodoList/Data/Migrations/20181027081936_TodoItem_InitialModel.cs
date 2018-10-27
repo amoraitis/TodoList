@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Amoraitis.TodoList.Data.Migrations
 {
-    public partial class InitialModel_TodoItem : Migration
+    public partial class TodoItem_InitialModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,13 +24,13 @@ namespace Amoraitis.TodoList.Data.Migrations
                 name: "File",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(nullable: false),
+                    TodoId = table.Column<Guid>(nullable: false),
                     Path = table.Column<string>(nullable: true),
                     Size = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_File", x => x.UserId);
+                    table.PrimaryKey("PK_File", x => x.TodoId);
                 });
 
             migrationBuilder.CreateTable(
@@ -39,21 +39,21 @@ namespace Amoraitis.TodoList.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Added = table.Column<DateTime>(nullable: false),
-                    Content = table.Column<string>(nullable: true),
+                    Content = table.Column<string>(maxLength: 200, nullable: true),
                     Done = table.Column<bool>(nullable: false),
                     DueTo = table.Column<DateTime>(nullable: false),
-                    FileUserId = table.Column<Guid>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
+                    FileTodoId = table.Column<Guid>(nullable: true),
+                    Title = table.Column<string>(maxLength: 50, nullable: false),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Todo", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Todo_File_FileUserId",
-                        column: x => x.FileUserId,
+                        name: "FK_Todo_File_FileTodoId",
+                        column: x => x.FileTodoId,
                         principalTable: "File",
-                        principalColumn: "UserId",
+                        principalColumn: "TodoId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -72,9 +72,9 @@ namespace Amoraitis.TodoList.Data.Migrations
                 filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Todo_FileUserId",
+                name: "IX_Todo_FileTodoId",
                 table: "Todo",
-                column: "FileUserId");
+                column: "FileTodoId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUserTokens_AspNetUsers_UserId",

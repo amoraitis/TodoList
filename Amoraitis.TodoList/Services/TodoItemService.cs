@@ -29,11 +29,16 @@ namespace Amoraitis.TodoList.Services
             todo.Done = false;
             todo.Added = _clock.GetCurrentInstant();
             todo.UserId = user.Id;
-
+            todo.File = new FileInfo
+            {
+                TodoId = todo.Id,
+                Path = "",
+                Size = 0
+            };
             _context.Todos.Add(todo);
 
             var saved = await _context.SaveChangesAsync();
-            return saved == 1;
+            return saved > 0;
         }
 
         public async Task<TodoItem[]> GetIncompleteItemsAsync(ApplicationUser user)
@@ -50,10 +55,10 @@ namespace Amoraitis.TodoList.Services
                 .ToArrayAsync();
         }
 
-        public async Task<bool> Exists(Guid id)
+        public bool Exists(Guid id)
         {
-            return await _context.Todos
-                .AnyAsync(t => t.Id == id);
+            return _context.Todos
+                .Any(t => t.Id == id);
 
         }
 
@@ -93,6 +98,7 @@ namespace Amoraitis.TodoList.Services
         public async Task<TodoItem> GetItemAsync(Guid id)
         {
             return await _context.Todos
+                .Include(t=>t.File)
                 .Where(t => t.Id == id)
                 .SingleOrDefaultAsync();
         }
@@ -121,6 +127,24 @@ namespace Amoraitis.TodoList.Services
                 .Where(t => t.UserId == user.Id && !t.Done
                 && DateTime.Compare(DateTime.UtcNow.AddDays(1), t.DueTo.ToDateTimeUtc()) >= 0)
                 .ToArrayAsync();
+        }
+
+        public async Task<bool> SaveFileAsync(Guid todoId, ApplicationUser currentUser, string path, long size)
+        {
+            var todo = await _context.Todos.Include(t => t.File)
+                .Where(t => t.Id == todoId && t.UserId == currentUser.Id)
+                .SingleOrDefaultAsync();
+
+            if (todo == null)
+                return false;
+
+            todo.File.Path = path;
+            todo.File.Size = size;
+            todo.File.TodoId = todo.Id;
+
+            var changes = await _context.SaveChangesAsync();
+
+            return changes > 0;
         }
     }
 }

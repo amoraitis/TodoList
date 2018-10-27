@@ -5,7 +5,11 @@ using Amoraitis.TodoList.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Amoraitis.TodoList.Services;
-using System.Diagnostics;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Net.Http.Headers;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using Amoraitis.TodoList.Services.Storage;
 
 namespace Amoraitis.TodoList.Controllers
 {
@@ -14,13 +18,16 @@ namespace Amoraitis.TodoList.Controllers
     public class TodosController : Controller
     {
         private readonly ITodoItemService _todoItemService;
+        private readonly IFileStorageService _fileStorageService;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public TodosController(ITodoItemService todoItemService,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IFileStorageService fileStorageService)
         {
             _todoItemService = todoItemService;
             _userManager = userManager;
+            _fileStorageService = fileStorageService;
         }
 
         public async Task<IActionResult> Home()
@@ -65,7 +72,7 @@ namespace Amoraitis.TodoList.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TodoItem todo)
+        public async Task<IActionResult> Create([Bind("Title,DuetoDateTime")]TodoItem todo)
         {
             if (!ModelState.IsValid)
             {
@@ -108,6 +115,37 @@ namespace Amoraitis.TodoList.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost("{todoId}")]
+        [ValidateAntiForgeryToken]
+        [RequestSizeLimit(52428800)]
+        public async Task<IActionResult> UploadFile([FromRoute] Guid todoId, IFormFile file)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null) return Challenge();
+
+            if (todoId == null || todoId == Guid.Empty)
+                return BadRequest();
+
+            if (file == null || file?.Length == 0)
+                return BadRequest(typeof(IFormFile));
+
+            var path = todoId + "//" + file.FileName;
+
+            await _fileStorageService.CleanDirectoryAsync(todoId.ToString());
+
+            var saved = await _fileStorageService.SaveFileAsync(path, file.OpenReadStream());
+
+            if (!saved)
+                return BadRequest("Couldn't create or replace file");
+
+            var succeeded = await _todoItemService.SaveFileAsync(todoId, currentUser, path, file.Length);
+
+            if (!succeeded)
+                return BadRequest("Couldn't create or replace file");
+
+            return RedirectToAction("Details", new { id = todoId });
         }
 
         public async Task<IActionResult> Edit(Guid id)
@@ -157,6 +195,7 @@ namespace Amoraitis.TodoList.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
             if (id == Guid.Empty)
@@ -167,6 +206,8 @@ namespace Amoraitis.TodoList.Controllers
             var todo = await _todoItemService
                 .GetItemAsync(id);
             if (todo == null) return NotFound();
+
+            ViewData["FileName"] = Path.GetFileName(todo.File.Path);
             return View(todo);
         }
 
@@ -201,11 +242,6 @@ namespace Amoraitis.TodoList.Controllers
 
             return RedirectToAction("Index");
 
-        }
-
-        private async Task<bool> TodoExistsAsync(Guid id)
-        {
-            return await _todoItemService.Exists(id);
         }
     }
 }

@@ -73,14 +73,14 @@ namespace Amoraitis.TodoList.Data.Migrations
 
             modelBuilder.Entity("Amoraitis.TodoList.Models.FileInfo", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("TodoId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Path");
 
                     b.Property<long>("Size");
 
-                    b.HasKey("UserId");
+                    b.HasKey("TodoId");
 
                     b.ToTable("File");
                 });
@@ -93,22 +93,25 @@ namespace Amoraitis.TodoList.Data.Migrations
                     b.Property<DateTime>("AddedDateTime")
                         .HasColumnName("Added");
 
-                    b.Property<string>("Content");
+                    b.Property<string>("Content")
+                        .HasMaxLength(200);
 
                     b.Property<bool>("Done");
 
                     b.Property<DateTime>("DuetoDateTime")
                         .HasColumnName("DueTo");
 
-                    b.Property<Guid?>("FileUserId");
+                    b.Property<Guid?>("FileTodoId");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FileUserId");
+                    b.HasIndex("FileTodoId");
 
                     b.ToTable("Todo");
                 });
@@ -225,7 +228,7 @@ namespace Amoraitis.TodoList.Data.Migrations
                 {
                     b.HasOne("Amoraitis.TodoList.Models.FileInfo", "File")
                         .WithMany()
-                        .HasForeignKey("FileUserId");
+                        .HasForeignKey("FileTodoId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -11,6 +11,30 @@ namespace Amoraitis.TodoList.Services.Storage
         {
             _base_path = base_path;
         }
+
+        public Task<bool> CleanDirectoryAsync(string targetPath)
+        {
+            if (String.IsNullOrEmpty(targetPath))
+                throw new ArgumentNullException(nameof(targetPath));
+
+            targetPath = Path.Combine(_base_path,
+                targetPath);
+
+            if (!Directory.Exists(targetPath))
+                return Task.FromResult(false);
+            try
+            {
+                foreach (string file in Directory.GetFiles(targetPath))
+                {
+                    File.Delete(file);
+                }
+                return Task.FromResult(true);
+            }catch(Exception)
+            {
+                return Task.FromResult(false);
+            }
+        }
+
         public Task<bool> DeleteFileAsync(string path)
         {
             if (String.IsNullOrEmpty(path))

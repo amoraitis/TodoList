@@ -12,6 +12,7 @@ namespace Amoraitis.TodoList.Services.Storage
         Task<bool> ExistsAsync(string path);
         Task<Stream> GetFileStreamAsync(string path);
         Task<FileStorageInfo> GetFileInfoAsync(string path);
+        Task<bool> CleanDirectoryAsync(string targetPath);
     }
 
     public class FileStorageInfo

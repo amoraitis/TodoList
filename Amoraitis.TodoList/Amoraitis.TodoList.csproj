@@ -12,13 +12,6 @@
     <None Remove="wwwroot\lib\moment.js\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="Data\Migrations\20181011110325_InitialModel_TodoItem.cs" />
-    <Compile Remove="Data\Migrations\20181011110325_InitialModel_TodoItem.Designer.cs" />
-    <Compile Remove="Data\Migrations\20181011121056_InitialModel_TodoItem.cs" />
-    <Compile Remove="Data\Migrations\20181011121056_InitialModel_TodoItem.Designer.cs" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />

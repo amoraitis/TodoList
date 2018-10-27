@@ -25,6 +25,8 @@ namespace Amoraitis.TodoList
         public void ConfigureServices(IServiceCollection services)
         {
 
+            // Angular's default header name for sending the XSRF token.
+            services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
