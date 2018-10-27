@@ -219,14 +219,16 @@ namespace Amoraitis.TodoList.Controllers
             var deleteViewModel = new DeleteViewModel()
             {
                 Id = todo.Id,
-                Title = todo.Title
+                Title = todo.Title,
+                FilePath = todo.File.Path
             };
+            ViewData["FileName"] = Path.GetFileName(todo.File.Path);
             return View(deleteViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id, string filePath)
         {
             if (id == Guid.Empty)
             {
@@ -238,7 +240,13 @@ namespace Amoraitis.TodoList.Controllers
             var successful = await _todoItemService
                 .DeleteTodoAsync(id, currentUser);
 
-            if (!successful) return BadRequest(new { error = "Couldn't delete item!" });
+            if (!successful)
+                return BadRequest(new { error = "Couldn't delete item!" });
+
+            successful = await _fileStorageService.DeleteFileAsync(filePath, id.ToString());
+
+            if (!successful)
+                return BadRequest(new { error = "Couldn't delete item!" });
 
             return RedirectToAction("Index");
 

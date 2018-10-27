@@ -35,15 +35,20 @@ namespace Amoraitis.TodoList.Services.Storage
             }
         }
 
-        public Task<bool> DeleteFileAsync(string path)
+        public Task<bool> DeleteFileAsync(string path, string containingFolder)
         {
             if (String.IsNullOrEmpty(path))
                 throw new ArgumentNullException(nameof(path));
+
             path = Path.Combine(_base_path, path);
             try
             {
                 if (ExistsAsync(path).Result)
                     File.Delete(path);
+
+                if (containingFolder != null)
+                    Directory.Delete(Path.Combine(_base_path, containingFolder));
+
                 return Task.FromResult(true);
             }
             catch (Exception)

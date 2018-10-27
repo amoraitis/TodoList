@@ -8,7 +8,7 @@ namespace Amoraitis.TodoList.Services.Storage
     public interface IFileStorageService
     {
         Task<bool> SaveFileAsync(string path, Stream stream);
-        Task<bool> DeleteFileAsync(string path);
+        Task<bool> DeleteFileAsync(string path, string containingFolder);
         Task<bool> ExistsAsync(string path);
         Task<Stream> GetFileStreamAsync(string path);
         Task<FileStorageInfo> GetFileInfoAsync(string path);

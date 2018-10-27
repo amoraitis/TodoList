@@ -15,10 +15,17 @@
         <dd>
             @Html.DisplayFor(model => model.Title)
         </dd>
+        <dt>
+            File
+        </dt>
+        <dd>
+            @ViewData["FileName"]
+        </dd>
     </dl>
 
     <form asp-action="DeleteConfirmed" method="post">
         <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="FilePath"/>
         <input type="submit" value="Delete" class="btn btn-danger" />
         <a asp-action="Index">Cancal</a>
     </form>    

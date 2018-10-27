@@ -106,11 +106,13 @@ namespace Amoraitis.TodoList.Services
         public async Task<bool> DeleteTodoAsync(Guid id, ApplicationUser currentUser)
         {
             var todo = await _context.Todos
+                .Include(t=>t.File)
                 .Where(t => t.Id == id && t.UserId == currentUser.Id)
                 .SingleOrDefaultAsync();
-            _context.Remove(todo);
+            _context.Todos.Remove(todo);
+            _context.Files.Remove(todo.File);
             var deleted = await _context.SaveChangesAsync();
-            return deleted == 1;
+            return deleted > 0;
         }
 
         public async Task<TodoItem[]> GetRecentlyAddedItemsAsync(ApplicationUser currentUser)
