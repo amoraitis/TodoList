@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using Amoraitis.TodoList.Models;
+using Amoraitis.TodoList.Models.AccountViewModels;
+using Amoraitis.TodoList.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Amoraitis.TodoList.Models;
-using Amoraitis.TodoList.Models.AccountViewModels;
-using Amoraitis.TodoList.Services;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Amoraitis.TodoList.Controllers
 {

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Amoraitis.TodoList.Models;
+﻿using Amoraitis.TodoList.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Amoraitis.TodoList.Controllers
 {
