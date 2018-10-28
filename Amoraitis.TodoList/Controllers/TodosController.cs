@@ -72,7 +72,7 @@ namespace Amoraitis.TodoList.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,DuetoDateTime")]TodoItem todo)
+        public async Task<IActionResult> Create([Bind("Title,Content,DuetoDateTime")]TodoItem todo)
         {
             if (!ModelState.IsValid)
             {
