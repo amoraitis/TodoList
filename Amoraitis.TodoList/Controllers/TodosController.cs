@@ -1,15 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Amoraitis.TodoList.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Amoraitis.TodoList.Models;
 using Amoraitis.TodoList.Services;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Net.Http.Headers;
-using System.IO;
-using Microsoft.AspNetCore.Http;
 using Amoraitis.TodoList.Services.Storage;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Amoraitis.TodoList.Controllers
 {
@@ -228,7 +226,7 @@ namespace Amoraitis.TodoList.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id, string filePath)
+        public async Task<IActionResult> DeleteConfirmed(Guid id, string filePath = "")
         {
             if (id == Guid.Empty)
             {
@@ -236,18 +234,21 @@ namespace Amoraitis.TodoList.Controllers
             }
 
             var currentUser = await _userManager.GetUserAsync(User);
-
-            var successful = await _todoItemService
-                .DeleteTodoAsync(id, currentUser);
-
-            if (!successful)
-                return BadRequest(new { error = "Couldn't delete item!" });
-
-            successful = await _fileStorageService.DeleteFileAsync(filePath, id.ToString());
+            bool successful;
+            successful = await _todoItemService
+                    .DeleteTodoAsync(id, currentUser);
 
             if (!successful)
                 return BadRequest(new { error = "Couldn't delete item!" });
 
+            try
+            {
+                successful = await _fileStorageService.DeleteFileAsync(filePath, id.ToString());
+
+                if (!successful)
+                    return BadRequest(new { error = "Couldn't delete item!" });
+            }
+            catch (ArgumentNullException) { }
             return RedirectToAction("Index");
 
         }
