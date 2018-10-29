@@ -226,7 +226,7 @@ namespace Amoraitis.TodoList.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id, string filePath)
+        public async Task<IActionResult> DeleteConfirmed(Guid id, string filePath = "")
         {
             if (id == Guid.Empty)
             {
@@ -234,18 +234,21 @@ namespace Amoraitis.TodoList.Controllers
             }
 
             var currentUser = await _userManager.GetUserAsync(User);
-
-            var successful = await _todoItemService
-                .DeleteTodoAsync(id, currentUser);
-
-            if (!successful)
-                return BadRequest(new { error = "Couldn't delete item!" });
-
-            successful = await _fileStorageService.DeleteFileAsync(filePath, id.ToString());
+            bool successful;
+            successful = await _todoItemService
+                    .DeleteTodoAsync(id, currentUser);
 
             if (!successful)
                 return BadRequest(new { error = "Couldn't delete item!" });
 
+            try
+            {
+                successful = await _fileStorageService.DeleteFileAsync(filePath, id.ToString());
+
+                if (!successful)
+                    return BadRequest(new { error = "Couldn't delete item!" });
+            }
+            catch (ArgumentNullException) { }
             return RedirectToAction("Index");
 
         }
