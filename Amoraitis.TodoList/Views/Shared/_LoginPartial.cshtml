@@ -12,7 +12,10 @@
                 <a asp-area="" asp-controller="Todos" asp-action="Index">My todos</a>
             </li>
             <li>
-                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">
+                    <img gravatar-email="@UserManager.GetUserName(User)" gravatar-size="20" title="Hello @UserManager.GetUserName(User)" />
+                     
+                </a>
             </li>
             <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
