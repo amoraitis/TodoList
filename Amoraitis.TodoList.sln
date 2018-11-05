@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2041
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amoraitis.TodoList", "Amoraitis.TodoList\Amoraitis.TodoList.csproj", "{FF767E44-D2F9-4B91-8920-8484CE1D980C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amoraitis.Todo.UnitTests", "Amoraitis.Todo.UnitTests\Amoraitis.Todo.UnitTests.csproj", "{771ED4EE-8280-4A90-9597-A160A62934E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amoraitis.Todo.UnitTests", "Amoraitis.Todo.UnitTests\Amoraitis.Todo.UnitTests.csproj", "{771ED4EE-8280-4A90-9597-A160A62934E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
