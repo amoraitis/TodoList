@@ -43,7 +43,7 @@ namespace Amoraitis.TodoList
             services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer("DevelopementConnection"));
+                options.UseSqlServer(Configuration["ConnectionStrings:DevelopementConnection"]));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

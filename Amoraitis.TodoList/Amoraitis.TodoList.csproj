@@ -20,9 +20,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.1916590" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4" />
     <PackageReference Include="NodaTime" Version="2.4.1" />
     <PackageReference Include="SendGrid" Version="9.10.0" />
+    <PackageReference Include="westwind.aspnetcore.markdown" Version="3.0.36" />
   </ItemGroup>
 
 </Project>

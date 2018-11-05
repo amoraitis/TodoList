@@ -25,7 +25,7 @@ namespace Amoraitis.TodoList.Data
         private async static Task AddAdminRights(UserManager<ApplicationUser> userManager)
         {
             var adminExists = userManager.Users
-                .Any(x => x.UserName == "admin@admin.com");
+                .Any(x => x.UserName == "admin@admin.local");
 
             if (!adminExists)
             {
