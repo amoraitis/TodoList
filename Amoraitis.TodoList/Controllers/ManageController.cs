@@ -47,11 +47,7 @@ namespace Amoraitis.TodoList.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             var model = new IndexViewModel
             {
@@ -74,11 +70,7 @@ namespace Amoraitis.TodoList.Controllers
                 return View(model);
             }
 
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             var email = user.Email;
             if (model.Email != email)
@@ -113,11 +105,7 @@ namespace Amoraitis.TodoList.Controllers
                 return View(model);
             }
 
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
@@ -131,11 +119,7 @@ namespace Amoraitis.TodoList.Controllers
         [HttpGet]
         public async Task<IActionResult> ChangePassword()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             var hasPassword = await _userManager.HasPasswordAsync(user);
             if (!hasPassword)
@@ -156,11 +140,7 @@ namespace Amoraitis.TodoList.Controllers
                 return View(model);
             }
 
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
             if (!changePasswordResult.Succeeded)
@@ -179,11 +159,7 @@ namespace Amoraitis.TodoList.Controllers
         [HttpGet]
         public async Task<IActionResult> SetPassword()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             var hasPassword = await _userManager.HasPasswordAsync(user);
 
@@ -205,11 +181,7 @@ namespace Amoraitis.TodoList.Controllers
                 return View(model);
             }
 
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             var addPasswordResult = await _userManager.AddPasswordAsync(user, model.NewPassword);
             if (!addPasswordResult.Succeeded)
@@ -227,11 +199,7 @@ namespace Amoraitis.TodoList.Controllers
         [HttpGet]
         public async Task<IActionResult> ExternalLogins()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             var model = new ExternalLoginsViewModel { CurrentLogins = await _userManager.GetLoginsAsync(user) };
             model.OtherLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync())
@@ -259,11 +227,7 @@ namespace Amoraitis.TodoList.Controllers
         [HttpGet]
         public async Task<IActionResult> LinkLoginCallback()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             var info = await _signInManager.GetExternalLoginInfoAsync(user.Id);
             if (info == null)
@@ -288,11 +252,7 @@ namespace Amoraitis.TodoList.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveLogin(RemoveLoginViewModel model)
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             var result = await _userManager.RemoveLoginAsync(user, model.LoginProvider, model.ProviderKey);
             if (!result.Succeeded)
@@ -308,11 +268,7 @@ namespace Amoraitis.TodoList.Controllers
         [HttpGet]
         public async Task<IActionResult> TwoFactorAuthentication()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             var model = new TwoFactorAuthenticationViewModel
             {
@@ -327,11 +283,7 @@ namespace Amoraitis.TodoList.Controllers
         [HttpGet]
         public async Task<IActionResult> Disable2faWarning()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             if (!user.TwoFactorEnabled)
             {
@@ -345,11 +297,7 @@ namespace Amoraitis.TodoList.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Disable2fa()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             var disable2faResult = await _userManager.SetTwoFactorEnabledAsync(user, false);
             if (!disable2faResult.Succeeded)
@@ -364,11 +312,7 @@ namespace Amoraitis.TodoList.Controllers
         [HttpGet]
         public async Task<IActionResult> EnableAuthenticator()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             var model = new EnableAuthenticatorViewModel();
             await LoadSharedKeyAndQrCodeUriAsync(user, model);
@@ -380,11 +324,7 @@ namespace Amoraitis.TodoList.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EnableAuthenticator(EnableAuthenticatorViewModel model)
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             if (!ModelState.IsValid)
             {
@@ -436,11 +376,7 @@ namespace Amoraitis.TodoList.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetAuthenticator()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             await _userManager.SetTwoFactorEnabledAsync(user, false);
             await _userManager.ResetAuthenticatorKeyAsync(user);
@@ -452,11 +388,7 @@ namespace Amoraitis.TodoList.Controllers
         [HttpGet]
         public async Task<IActionResult> GenerateRecoveryCodesWarning()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             if (!user.TwoFactorEnabled)
             {
@@ -470,11 +402,7 @@ namespace Amoraitis.TodoList.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> GenerateRecoveryCodes()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUserOrFail();
 
             if (!user.TwoFactorEnabled)
             {
@@ -514,6 +442,18 @@ namespace Amoraitis.TodoList.Controllers
             }
 
             return result.ToString().ToLowerInvariant();
+        }
+
+        private async Task<ApplicationUser> GetUserOrFail()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            return user;
         }
 
         private string GenerateQrCodeUri(string email, string unformattedKey)

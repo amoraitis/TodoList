@@ -5,3 +5,4 @@ dotnet: 2.1.402
 script:
  - dotnet restore
  - dotnet build Amoraitis.TodoList/Amoraitis.TodoList.csproj
+ - dotnet test Amoraitis.Todo.UnitTests/
