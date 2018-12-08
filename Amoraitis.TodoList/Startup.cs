@@ -11,6 +11,9 @@ using NodaTime;
 using Amoraitis.TodoList.Services.Storage;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace Amoraitis.TodoList
 {
@@ -22,6 +25,7 @@ namespace Amoraitis.TodoList
             .SetBasePath(environment.ContentRootPath)
             .AddJsonFile("appsettings.json",false,true)
             .AddEnvironmentVariables()
+            .AddUserSecrets<Startup>()
             .Build();
             Environment = environment;
         }
@@ -53,9 +57,13 @@ namespace Amoraitis.TodoList
             services.AddSingleton<IFileStorageService>(storageService);
             // Add Nodatime IClock
             services.AddSingleton<IClock>(SystemClock.Instance);
+            services.AddSingleton<SendGridClient>(new SendGridClient(Configuration["SendGrid:ServiceApiKey"]));
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddSingleton<ISendGridClient>(new SendGridClient(Configuration["SendGrid:ServiceApiKey"]));
+            services.AddTransient<SendGridMessage, SendGridMessage>();
             services.AddScoped<ITodoItemService, TodoItemService>();
+            services.AddLogging();
             services.AddMvc()
                 .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
         }
@@ -75,7 +83,6 @@ namespace Amoraitis.TodoList
                 app.UseHsts();
                 app.UseHttpsRedirection();
             }
-
             
             app.UseStaticFiles();
             app.UseCookiePolicy();
