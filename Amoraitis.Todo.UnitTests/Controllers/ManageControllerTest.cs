@@ -12,6 +12,7 @@ using Amoraitis.TodoList.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -65,8 +66,14 @@ namespace Amoraitis.Todo.UnitTests.Controllers
             servicesMock.Setup(serviceProvider => serviceProvider.GetService(typeof(IPrincipal)))
                 .Returns(new ClaimsPrincipal());
 
+            var urlHelperMock = new Mock<IUrlHelper>();
+
+            urlHelperMock.Setup(urlHelper => urlHelper.Action(It.IsAny<UrlActionContext>()))
+                .Returns("http://fakeurl.example");
+
             _manageController.ControllerContext.HttpContext.RequestServices = servicesMock.Object;
             _manageController.ControllerContext.HttpContext.Session = Mock.Of<ISession>();
+            _manageController.Url = urlHelperMock.Object;
         }
 
         [Fact]
@@ -887,6 +894,21 @@ namespace Amoraitis.Todo.UnitTests.Controllers
                 async () => await _manageController.GenerateRecoveryCodes());
 
             Assert.Equal("Cannot generate recovery codes for user with ID '1' as they do not have 2FA enabled.", exception.Message);
+        }
+
+        [Fact]
+        public async Task SendVerificationEmail_ReturnsRedirectToActionResult_WhenSucceeded()
+        {
+            _userManagerMock
+                .Setup(manager => manager.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
+                .ReturnsAsync(new ApplicationUser{ Id = "1", Email = "max@example.com" });
+
+            var result = await _manageController.SendVerificationEmail(new IndexViewModel());
+
+            var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
+
+            Assert.Equal("Verification email sent. Please check your email.", _manageController.StatusMessage);
+            Assert.Equal("Index", redirectToActionResult.ActionName);
         }
 
         private void SetGetUserAsyncMethod()
