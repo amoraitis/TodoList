@@ -10,6 +10,7 @@ using Amoraitis.TodoList.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -66,6 +67,7 @@ namespace Amoraitis.Todo.UnitTests.Controllers
                 .Returns(new ClaimsPrincipal());
 
             this._accountController.ControllerContext.HttpContext.RequestServices = servicesMock.Object;
+            this._accountController.Url = Mock.Of<IUrlHelper>();
         }
 
         [Fact]
