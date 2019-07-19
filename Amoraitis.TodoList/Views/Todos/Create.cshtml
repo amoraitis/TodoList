@@ -19,12 +19,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
+                <textarea asp-for="Content" class="form-control" id="CreateContentTextArea"></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DuetoDateTime" class="control-label"></label>
-                <input asp-for="DuetoDateTime" class="form-control" />
+                <input type="datetime-local" asp-for="DuetoDateTime" class="form-control" />
                 <span asp-validation-for="DuetoDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,6 +38,8 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+<partial name="_EditorStylePartial" />
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_EditorScriptsPartial" />
 }

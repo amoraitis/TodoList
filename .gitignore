@@ -262,3 +262,4 @@ __pycache__/
 
 // lib files
 Amoraitis.TodoList/wwwroot/lib/
+.vscode/

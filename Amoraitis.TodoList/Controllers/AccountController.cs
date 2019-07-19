@@ -4,6 +4,7 @@ using Amoraitis.TodoList.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -74,7 +75,7 @@ namespace Amoraitis.TodoList.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError("INVALID_LOGIN_ATTEMPT", "Invalid login attempt.");
                     return View(model);
                 }
             }
@@ -134,7 +135,7 @@ namespace Amoraitis.TodoList.Controllers
             else
             {
                 _logger.LogWarning("Invalid authenticator code entered for user with ID {UserId}.", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
+                ModelState.AddModelError("INVALID_AUTHENTICATOR_CODE", "Invalid authenticator code.");
                 return View();
             }
         }
@@ -188,7 +189,7 @@ namespace Amoraitis.TodoList.Controllers
             else
             {
                 _logger.LogWarning("Invalid recovery code entered for user with ID {UserId}", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid recovery code entered.");
+                ModelState.AddModelError("INVALID_RECOVERY_CODE", "Invalid recovery code entered.");
                 return View();
             }
         }

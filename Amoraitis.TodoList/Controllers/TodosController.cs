@@ -63,10 +63,10 @@ namespace Amoraitis.TodoList.Controllers
         }
 
         // GET: Todos/Create
-        public async Task<IActionResult> Create() => View();
+        public ViewResult Create() => View();
 
         // POST: Todos/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -214,6 +214,9 @@ namespace Amoraitis.TodoList.Controllers
             if (id == Guid.Empty) return NotFound();
 
             var todo = await _todoItemService.GetItemAsync(id);
+
+            if (todo == null) return NotFound();
+
             var deleteViewModel = new DeleteViewModel()
             {
                 Id = todo.Id,

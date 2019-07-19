@@ -2,11 +2,14 @@
   "version": "1.0",
   "defaultProvider": "cdnjs",
   "libraries": [
-
     {
       "provider": "cdnjs",
       "library": "moment.js@2.22.2",
       "destination": "wwwroot/lib/moment.js/"
+    },
+    {
+      "library": "simplemde@1.11.2",
+      "destination": "wwwroot/lib/simplemde/"
     }
   ]
 }
