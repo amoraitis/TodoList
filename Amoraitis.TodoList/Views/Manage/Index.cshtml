@@ -10,6 +10,7 @@
     <div class="col-md-6">
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
+            <img gravatar-email="@Model.Email" gravatar-size="60" alt="@Model.Email Gravatar" />
             <div class="form-group">
                 <label asp-for="Username"></label>
                 <input asp-for="Username" class="form-control" disabled />
