@@ -1,7 +1,7 @@
 version: "3"
 services:
     web:
-    environment: Production
+        environment: Production
         build: .
         ports:
             - "8081:80"
