@@ -9,7 +9,8 @@
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
-
+# user data created from the runtime
+*/data/amoraitis/*
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

@@ -1,0 +1,14 @@
+version: "3"
+services:
+    web:
+    environment: Production
+        build: .
+        ports:
+            - "8081:80"
+        depends_on:
+            - db
+    db:
+        image: "mcr.microsoft.com/mssql/server"
+        environment:
+            SA_PASSWORD: "Password#"
+            ACCEPT_EULA: "Y"

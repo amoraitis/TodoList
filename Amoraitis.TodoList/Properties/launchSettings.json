@@ -13,14 +13,22 @@
       "launchBrowser": true,
       "launchUrl": "https://localhost:44321/",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Developement"
       }
     },
     "Amoraitis.TodoList": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Developement"
+      },
+      "applicationUrl": "http://localhost:47818/"
+    },
+    "Amoraitis.TodoList(Production)": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
       },
       "applicationUrl": "http://localhost:47818/"
     }
