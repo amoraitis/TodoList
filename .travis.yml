@@ -3,6 +3,6 @@ solution: Amoraitis.TodoList.sln
 mono: none
 dotnet: 2.1.402
 script:
- - dotnet restore
+ - dotnet restore Amoraitis.TodoList/Amoraitis.TodoList.csproj
  - dotnet build Amoraitis.TodoList/Amoraitis.TodoList.csproj
  - dotnet test Amoraitis.Todo.UnitTests/
