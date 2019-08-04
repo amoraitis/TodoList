@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  amoraitis.todolist:
+    build:
+      context: .
+      dockerfile: Amoraitis.TodoList/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT:Production
+    depends_on:
+      - db
+  db:
+    image: "mcr.microsoft.com/mssql/server"
+    ports:
+      - "1433:1433"
+    env_file:
+    - password.env

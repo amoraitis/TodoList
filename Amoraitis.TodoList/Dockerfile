@@ -1,8 +1,22 @@
-FROM microsoft/dotnet:2.1-sdk
-COPY . /app
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
 WORKDIR /app
-RUN ["dotnet", "restore"]
-RUN ["dotnet", "build"]
-EXPOSE 80/tcp
-RUN chmod +x ./entrypoint.sh
-CMD /bin/bash ./entrypoint.sh
+EXPOSE 47818
+EXPOSE 80
+EXPOSE 443
+
+FROM microsoft/dotnet:2.1-sdk AS build
+WORKDIR /src
+COPY Amoraitis.TodoList/Amoraitis.TodoList.csproj Amoraitis.TodoList/
+RUN dotnet restore Amoraitis.TodoList/Amoraitis.TodoList.csproj
+COPY . .
+WORKDIR /src/Amoraitis.TodoList
+RUN dotnet build Amoraitis.TodoList.csproj -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish Amoraitis.TodoList.csproj -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "Amoraitis.TodoList.dll"]

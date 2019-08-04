@@ -23,7 +23,8 @@ namespace Amoraitis.TodoList
         {
             Configuration = new ConfigurationBuilder()
             .SetBasePath(environment.ContentRootPath)
-            .AddJsonFile("appsettings.json",false,true)
+            .AddJsonFile("appsettings.json", false, true)
+            .AddJsonFile($"appsettings.{environment.EnvironmentName}.json")
             .AddEnvironmentVariables()
             .AddUserSecrets<Startup>()
             .Build();
@@ -46,12 +47,9 @@ namespace Amoraitis.TodoList
             // Angular's default header name for sending the XSRF token.
             services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationDbContext>(options =>
             {
-                if (Environment.IsDevelopment())
-                    options.UseSqlServer(Configuration["ConnectionStrings:DevelopementConnection"]);
-                else if (Environment.IsProduction())
-                    options.UseSqlServer(Configuration["ConnectionStrings:DockerEnviroment"]);
+                    options.UseSqlServer(Configuration["ConnectionStrings:Connection"]);
             });
                 
 
@@ -86,8 +84,8 @@ namespace Amoraitis.TodoList
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-                app.UseHttpsRedirection();
+                //app.UseHsts();
+                //app.UseHttpsRedirection();
             }
             
             app.UseStaticFiles();

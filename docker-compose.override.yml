@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  amoraitis.todolist:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:47818;http://+:47819
+    ports:
+      - "47818:47818"
+      - "47819:47819"
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro

@@ -13,6 +13,7 @@ namespace Amoraitis.TodoList.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+		ApplyMigrations(this);
         }
 
         public DbSet<TodoItem> Todos { get; set; }
@@ -27,5 +28,12 @@ namespace Amoraitis.TodoList.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+        
+public void ApplyMigrations(ApplicationDbContext context) {
+    if (context.Database.GetPendingMigrations().Any()) {
+        context.Database.Migrate();
+    }
+}
+
     }
 }
