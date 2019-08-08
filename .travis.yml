@@ -2,7 +2,10 @@ language: csharp
 solution: Amoraitis.TodoList.sln
 mono: none
 dotnet: 2.1.402
+install: 
+ - dotnet tool install --global coverlet.console
 script:
  - dotnet restore Amoraitis.TodoList/Amoraitis.TodoList.csproj
  - dotnet build Amoraitis.TodoList/Amoraitis.TodoList.csproj
  - dotnet test Amoraitis.Todo.UnitTests/
+ - coverlet ./Amoraitis.Todo.UnitTests/bin/Debug/netcoreapp2.1/Amoraitis.Todo.UnitTests.dll --target "dotnet" --targetargs "test ./Amoraitis.Todo.UnitTests --no-build"
