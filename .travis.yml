@@ -3,7 +3,7 @@ solution: Amoraitis.TodoList.sln
 mono: none
 dotnet: 2.2.107
 install: 
- - dotnet tool install --global coverlet.console --tool-path ./coverlet
+ - dotnet tool install coverlet.console --tool-path ./coverlet
 script:
  - dotnet restore Amoraitis.TodoList/Amoraitis.TodoList.csproj
  - dotnet build Amoraitis.TodoList/Amoraitis.TodoList.csproj
