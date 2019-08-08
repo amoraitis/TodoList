@@ -3,9 +3,9 @@ solution: Amoraitis.TodoList.sln
 mono: none
 dotnet: 2.2.107
 install: 
- - dotnet tool install --global coverlet.console
+ - dotnet tool install --global coverlet.console -OutputDirectory coverlet
 script:
  - dotnet restore Amoraitis.TodoList/Amoraitis.TodoList.csproj
  - dotnet build Amoraitis.TodoList/Amoraitis.TodoList.csproj
  - dotnet test Amoraitis.Todo.UnitTests/
- - coverlet ./Amoraitis.Todo.UnitTests/bin/Debug/netcoreapp2.1/Amoraitis.Todo.UnitTests.dll --target "dotnet" --targetargs "test ./Amoraitis.Todo.UnitTests --no-build"
+ - msbuild ./coverlet/coverlet ./Amoraitis.Todo.UnitTests/bin/Debug/netcoreapp2.1/Amoraitis.Todo.UnitTests.dll --target "dotnet" --targetargs "test ./Amoraitis.Todo.UnitTests --no-build"
