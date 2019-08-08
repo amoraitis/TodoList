@@ -1,8 +1,19 @@
 language: csharp
 solution: Amoraitis.TodoList.sln
 mono: none
-dotnet: 2.1.402
+dotnet: 2.2.107
+install: 
+ - dotnet tool install --global coverlet.console
+before_script:
+  - export PATH="$PATH:$HOME/.dotnet/tools"
 script:
  - dotnet restore Amoraitis.TodoList/Amoraitis.TodoList.csproj
  - dotnet build Amoraitis.TodoList/Amoraitis.TodoList.csproj
  - dotnet test Amoraitis.Todo.UnitTests/
+ - coverlet ./Amoraitis.Todo.UnitTests/bin/Debug/netcoreapp2.1/Amoraitis.Todo.UnitTests.dll --target "dotnet" --targetargs "test ./Amoraitis.Todo.UnitTests --no-build" --format opencover --exclude "[xunit.*]*" --exclude "[Amoraitis.*.Views]*"
+after_script:
+ - bash <(curl -s https://codecov.io/bash)
+cache:
+  directories:
+    - '$HOME/.nuget/packages'
+    - '$HOME/.local/share/NuGet/Cache'
