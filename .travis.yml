@@ -1,7 +1,7 @@
 language: csharp
 solution: Amoraitis.TodoList.sln
 mono: none
-dotnet: 2.1.402
+dotnet: 2.2.107
 install: 
  - dotnet tool install --global coverlet.console
 script:
