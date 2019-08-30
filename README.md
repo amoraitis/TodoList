@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/amoraitis/TodoList.svg?branch=develop)](https://travis-ci.org/amoraitis/TodoList)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![codecov](https://codecov.io/gh/amoraitis/TodoList/branch/develop/graph/badge.svg)](https://codecov.io/gh/amoraitis/TodoList)
+[![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)](https://www.firsttimersonly.com/)
 
 This project is a simple but powerful web application to manage to-dos.
 
