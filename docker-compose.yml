@@ -4,7 +4,7 @@ services:
   amoraitis.todolist:
     build:
       context: .
-      dockerfile: Amoraitis.TodoList/Dockerfile
+      dockerfile: TodoList.Web/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT:Production
     depends_on:

@@ -1,0 +1,56 @@
+﻿@model TodoList.Web.Models.TodoItem
+
+@{ 
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <h4>TodoItem</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+        <dd>
+            <markdown markdown="Content"></markdown>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Done)
+        </dt>
+        <dd>
+            @(Model.Done ? "Yes" : "No")
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Added)
+        </dt>
+        <dd>
+            <span data-value="@Model.Added" class="timeStampValue">
+                @Model.Added
+            </span>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DueTo)
+        </dt>
+        <dd>
+            <span data-value="@Model.DueTo" class="timeStampValue">
+                @Model.DueTo
+            </span>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model=>model.File)
+        </dt>
+        <dd>
+            @ViewData["FileName"]
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

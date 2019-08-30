@@ -18,7 +18,7 @@ This project is a simple but powerful web application to manage to-dos.
 
 2 - Add your Sendgrid API Key by running `dotnet user-secrets set "SendGrid:ServiceApiKey" "your_secret_key"`.
 
-3 - Go to the `TodoList/Amoraitis.TodoList` folder by running the command `cd TodoList/Amoraitis.TodoList` or manually navigating into the file system.
+3 - Go to the `TodoList/TodoList.Web` folder by running the command `cd TodoList/TodoList.Web` or manually navigating into the file system.
 
 4 - Run the command `dotnet restore` to install all the dependencies.
 

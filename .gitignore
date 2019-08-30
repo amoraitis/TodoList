@@ -10,7 +10,7 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 # user data created from the runtime
-*/data/amoraitis/*
+*/.data/*
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -262,5 +262,5 @@ __pycache__/
 *.pyc
 
 // lib files
-Amoraitis.TodoList/wwwroot/lib/
+TodoList.Web/wwwroot/lib/
 .vscode/

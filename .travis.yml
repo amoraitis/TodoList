@@ -1,8 +1,8 @@
 language: csharp
-solution: Amoraitis.TodoList.sln
+solution: TodoList.sln
 mono: none
 dotnet: 2.1.402
 script:
- - dotnet restore Amoraitis.TodoList/Amoraitis.TodoList.csproj
- - dotnet build Amoraitis.TodoList/Amoraitis.TodoList.csproj
- - dotnet test Amoraitis.Todo.UnitTests/
+ - dotnet restore TodoList.Web/TodoList.Web.csproj
+ - dotnet build TodoList.Web/TodoList.Web.csproj
+ - dotnet test TodoList.UnitTests/
