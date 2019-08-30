@@ -1,5 +1,5 @@
 language: csharp
-solution: Amoraitis.TodoList.sln
+solution: TodoList.sln
 mono: none
 dotnet: 2.2.107
 install: 
@@ -7,10 +7,10 @@ install:
 before_script:
   - export PATH="$PATH:$HOME/.dotnet/tools"
 script:
- - dotnet restore Amoraitis.TodoList/Amoraitis.TodoList.csproj
- - dotnet build Amoraitis.TodoList/Amoraitis.TodoList.csproj
- - dotnet test Amoraitis.Todo.UnitTests/
- - coverlet ./Amoraitis.Todo.UnitTests/bin/Debug/netcoreapp2.1/Amoraitis.Todo.UnitTests.dll --target "dotnet" --targetargs "test ./Amoraitis.Todo.UnitTests --no-build" --format opencover --exclude "[xunit.*]*" --exclude "[Amoraitis.*.Views]*"
+ - dotnet restore TodoList.Web/TodoList.Web.csproj
+ - dotnet build TodoList.Web/TodoList.Web.csproj
+ - dotnet test TodoList.UnitTests/
+ - coverlet ./TodoList.UnitTests/bin/Debug/netcoreapp2.1/TodoList.UnitTests.dll --target "dotnet" --targetargs "test ./TodoList.UnitTests --no-build" --format opencover --exclude "[xunit.*]*" --exclude "[TodoList.Web.*.Views]*"
 after_script:
  - bash <(curl -s https://codecov.io/bash)
 cache:
