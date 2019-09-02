@@ -13,6 +13,10 @@
     <None Remove="wwwroot\lib\moment.js\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Controllers\LocalizationController.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="GravatarHelper.AspNetCore" Version="1.0.0" />
@@ -22,10 +26,31 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.1916590" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" PrivateAssets="All" />
     <PackageReference Include="NodaTime" Version="2.4.6" />
     <PackageReference Include="SendGrid" Version="9.10.0" />
     <PackageReference Include="westwind.aspnetcore.markdown" Version="3.0.36" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Compile Update="Resources\Views\Todos\Home.en.Designer.cs">
+      <DependentUpon>Home.en.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Views\Todos\Home.en.resx">
+      <LastGenOutput>Views.Todos.Home.gr.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Todos\Home.el.resx">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

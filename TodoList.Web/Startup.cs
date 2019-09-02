@@ -3,12 +3,17 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using NodaTime;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System.Collections.Generic;
+using System.Globalization;
 using TodoList.Web.Data;
 using TodoList.Web.Models;
 using TodoList.Web.Services;
@@ -36,6 +41,31 @@ namespace TodoList.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add localisation 
+            services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
+            services.AddMvc()
+                .AddViewLocalization(
+                    LanguageViewLocationExpanderFormat.Suffix,
+                    opts => { opts.ResourcesPath = "Resources"; })
+                .AddDataAnnotationsLocalization();
+
+            services.Configure<RequestLocalizationOptions>(
+                opts =>
+                {
+                    var supportedCultures = new List<CultureInfo>
+                    {
+                        new CultureInfo("en-GB"),
+                        new CultureInfo("el-GR")
+                    };
+
+                    opts.DefaultRequestCulture = new RequestCulture("en-GB");                    
+
+                    // Formatting numbers, dates, etc.
+                    opts.SupportedCultures = supportedCultures;
+                    // UI strings that we have localized.
+                    opts.SupportedUICultures = supportedCultures;
+                });
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -48,9 +78,9 @@ namespace TodoList.Web
 
             services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationDbContext>(options =>
             {
-                    options.UseSqlServer(Configuration["ConnectionStrings:Connection"]);
+                options.UseSqlServer(Configuration["ConnectionStrings:Connection"]);
             });
-                
+
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -86,10 +116,14 @@ namespace TodoList.Web
                 //app.UseHsts();
                 //app.UseHttpsRedirection();
             }
-            
+
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
+
+            //Add localisation
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(options.Value);
 
             app.UseMvc(routes =>
             {
