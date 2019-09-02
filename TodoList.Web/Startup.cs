@@ -58,8 +58,7 @@ namespace TodoList.Web
                         new CultureInfo("el-GR")
                     };
 
-                    opts.DefaultRequestCulture = new RequestCulture("en-GB");
-                    //opts.DefaultRequestCulture = new RequestCulture("el-GR");
+                    opts.DefaultRequestCulture = new RequestCulture("en-GB");                    
 
                     // Formatting numbers, dates, etc.
                     opts.SupportedCultures = supportedCultures;
