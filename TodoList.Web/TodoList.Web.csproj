@@ -13,6 +13,10 @@
     <None Remove="wwwroot\lib\moment.js\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Controllers\LocalizationController.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="GravatarHelper.AspNetCore" Version="1.0.0" />
