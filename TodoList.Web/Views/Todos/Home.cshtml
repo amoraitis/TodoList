@@ -1,7 +1,10 @@
 ﻿@model TodoList.Web.Models.HomeViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 
 @{
-    ViewData["Title"] = "Feed";
+    ViewData["Title"] = Localizer["Feed"];
 }
 
 <hr />
