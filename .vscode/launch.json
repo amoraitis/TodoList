@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Amoraitis.TodoList/bin/Debug/netcoreapp2.1/Amoraitis.TodoList.dll",
+            "program": "${workspaceFolder}/Amoraitis.TodoList/bin/Debug/netcoreapp2.2/Amoraitis.TodoList.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Amoraitis.TodoList",
             "stopAtEntry": false,
