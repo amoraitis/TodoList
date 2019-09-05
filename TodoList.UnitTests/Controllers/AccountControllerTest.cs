@@ -628,7 +628,7 @@ namespace TodoList.UnitTests.Controllers
 
             Assert.IsType<ViewResult>(result);
             Assert.False(_accountController.ModelState.IsValid);
-            Assert.Equal(1, _accountController.ModelState.Count);
+            Assert.Single(_accountController.ModelState);
         }
 
         [Fact]

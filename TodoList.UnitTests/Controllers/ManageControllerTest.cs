@@ -294,7 +294,7 @@ namespace TodoList.UnitTests.Controllers
             var viewResult = Assert.IsType<ViewResult>(result);
 
             Assert.IsAssignableFrom<ChangePasswordViewModel>(viewResult.Model);
-            Assert.Equal(1, _manageController.ModelState.Count);
+            Assert.Single(_manageController.ModelState);
         }
 
         [Fact]
@@ -393,7 +393,7 @@ namespace TodoList.UnitTests.Controllers
             var viewResult = Assert.IsType<ViewResult>(result);
 
             Assert.IsAssignableFrom<SetPasswordViewModel>(viewResult.Model);
-            Assert.Equal(1, _manageController.ModelState.Count);
+            Assert.Single(_manageController.ModelState);
         }
 
         [Fact]
@@ -753,7 +753,7 @@ namespace TodoList.UnitTests.Controllers
             var viewResult = Assert.IsType<ViewResult>(result);
 
             Assert.IsAssignableFrom<EnableAuthenticatorViewModel>(viewResult.Model);
-            Assert.Equal(1, _manageController.ModelState.Count);
+            Assert.Single(_manageController.ModelState);
         }
 
         [Fact]

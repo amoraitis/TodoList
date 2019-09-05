@@ -10,7 +10,7 @@ script:
  - dotnet restore TodoList.Web/TodoList.Web.csproj
  - dotnet build TodoList.Web/TodoList.Web.csproj
  - dotnet test TodoList.UnitTests/
- - coverlet ./TodoList.UnitTests/bin/Debug/netcoreapp2.1/TodoList.UnitTests.dll --target "dotnet" --targetargs "test ./TodoList.UnitTests --no-build" --format opencover --exclude "[xunit.*]*" --exclude "[TodoList.Web.*.Views]*"
+ - coverlet ./TodoList.UnitTests/bin/Debug/netcoreapp2.2/TodoList.UnitTests.dll --target "dotnet" --targetargs "test ./TodoList.UnitTests --no-build" --format opencover --exclude "[xunit.*]*" --exclude "[TodoList.Web.*.Views]*"
 after_script:
  - bash <(curl -s https://codecov.io/bash)
 cache:
