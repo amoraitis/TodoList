@@ -10,7 +10,7 @@ This project is a simple but powerful web application to manage to-dos.
 ## Requirements
 
 - A Windows OS
-- .NET Core 2.1 or superior
+- .NET Core 2.2 or superior
 - SQL Server Express 2016 or superior
 - A SendGrid account
 
