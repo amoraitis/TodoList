@@ -90,11 +90,10 @@ namespace TodoList.Web
             services.AddSingleton<IFileStorageService>(storageService);
             // Add Nodatime IClock
             services.AddSingleton<IClock>(SystemClock.Instance);
-            services.AddSingleton<SendGridClient>(new SendGridClient(Configuration["SendGrid:ServiceApiKey"]));
             // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
             services.AddSingleton<ISendGridClient>(new SendGridClient(Configuration["SendGrid:ServiceApiKey"]));
             services.AddTransient<SendGridMessage, SendGridMessage>();
+            services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<ITodoItemService, TodoItemService>();
             services.AddLogging();
             services.AddMvc()
