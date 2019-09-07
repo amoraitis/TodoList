@@ -35,17 +35,6 @@ namespace TodoList.UnitTests.Services
             await _emailSenderService.SendEmailAsync("max@example.com", "This is a test", "A test body");
         }
 
-        [Fact]
-        public async Task It_Should_Throw_Exception_If_Can_Not_Send_Email()
-        {
-            _sendGridClient
-                .Setup(client => client.SendEmailAsync(It.IsAny<SendGridMessage>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new Response(System.Net.HttpStatusCode.InternalServerError, _httpContent.Object, null));
-
-            _emailSenderService = new EmailSender(_sendGridClient.Object, new SendGridMessage());
-            var exception = await Assert.ThrowsAsync<Exception>(async () => await _emailSenderService.SendEmailAsync("max@example.com", "This is a test", "A test body"));
-
-            Assert.Equal("The email couldn't be sent.", exception.Message);
-        }
+        // TODO: Implement Should_Not_Throw_Exception_If_Can_Not_Send_Email() test
     }
 }
