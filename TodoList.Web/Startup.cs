@@ -29,6 +29,7 @@ namespace TodoList.Web
             .SetBasePath(environment.ContentRootPath)
             .AddJsonFile("appsettings.json", false, true)
             .AddJsonFile($"appsettings.{environment.EnvironmentName}.json")
+            .AddJsonFile("appsecrets.json", optional:true,reloadOnChange:true)
             .AddEnvironmentVariables()
             .AddUserSecrets<Startup>()
             .Build();
@@ -72,7 +73,7 @@ namespace TodoList.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            services.ConfigureOptions<AppSecrets>();
             // Angular's default header name for sending the XSRF token.
             services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
