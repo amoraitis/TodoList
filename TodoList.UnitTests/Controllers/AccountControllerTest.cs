@@ -21,10 +21,10 @@ namespace TodoList.UnitTests.Controllers
 {
     public class AccountControllerTest
     {
-        private Mock<FakeUserManager> _userManagerMock;
-        private Mock<FakeSignInManager> _signInManagerMock;
-        private Mock<IEmailSender> _emailSenderMock;
-        private Mock<ILogger<AccountController>> _loggerMock;
+        private readonly Mock<FakeUserManager> _userManagerMock;
+        private readonly Mock<FakeSignInManager> _signInManagerMock;
+        private readonly Mock<IEmailSender> _emailSenderMock;
+        private readonly Mock<ILogger<AccountController>> _loggerMock;
 
         private AccountController _accountController;
 
@@ -65,8 +65,8 @@ namespace TodoList.UnitTests.Controllers
             servicesMock.Setup(serviceProvider => serviceProvider.GetService(typeof(IPrincipal)))
                 .Returns(new ClaimsPrincipal());
 
-            this._accountController.ControllerContext.HttpContext.RequestServices = servicesMock.Object;
-            this._accountController.Url = Mock.Of<IUrlHelper>();
+            _accountController.ControllerContext.HttpContext.RequestServices = servicesMock.Object;
+            _accountController.Url = Mock.Of<IUrlHelper>();
         }
 
         [Fact]

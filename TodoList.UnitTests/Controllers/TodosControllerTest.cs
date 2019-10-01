@@ -14,9 +14,9 @@ namespace TodoList.UnitTests.Controllers
 {
     public class TodosControllerTest
     {
-        private Mock<ITodoItemService> _todoItemServiceMock;
-        private Mock<IFileStorageService> _fileItemServiceMock;
-        private Mock<FakeUserManager> _userManagerMock;
+        private readonly Mock<ITodoItemService> _todoItemServiceMock;
+        private readonly Mock<IFileStorageService> _fileItemServiceMock;
+        private readonly Mock<FakeUserManager> _userManagerMock;
 
         private TodosController _todosController;
 
