@@ -30,22 +30,22 @@ namespace TodoList.UnitTests.Controllers
 
         public AccountControllerTest()
         {
-            this._userManagerMock =  new Mock<FakeUserManager>();
-            this._signInManagerMock = new Mock<FakeSignInManager>();
-            this._emailSenderMock =  new Mock<IEmailSender>();
-            this._loggerMock = new Mock<ILogger<AccountController>>();
+            _userManagerMock =  new Mock<FakeUserManager>();
+            _signInManagerMock = new Mock<FakeSignInManager>();
+            _emailSenderMock =  new Mock<IEmailSender>();
+            _loggerMock = new Mock<ILogger<AccountController>>();
 
             _signInManagerMock
                 .Setup(manager => manager.GetTwoFactorAuthenticationUserAsync())
                 .ReturnsAsync(new ApplicationUser());
 
-            this._accountController = new AccountController(_userManagerMock.Object,
+            _accountController = new AccountController(_userManagerMock.Object,
                     _signInManagerMock.Object,
                     _emailSenderMock.Object,
                     _loggerMock.Object);
 
-            this._accountController.ControllerContext = new ControllerContext();
-            this._accountController.ControllerContext.HttpContext = new DefaultHttpContext();
+            _accountController.ControllerContext = new ControllerContext();
+            _accountController.ControllerContext.HttpContext = new DefaultHttpContext();
 
             var authManager = new Mock<IAuthenticationService>();
 
