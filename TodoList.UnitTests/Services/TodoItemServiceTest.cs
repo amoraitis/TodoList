@@ -10,11 +10,11 @@ using Xunit;
 
 namespace TodoList.UnitTests.Services
 {
-    public class TodoItemServiceTests
+    public class TodoItemServiceTest
     {
         private readonly Mock<IClock> _clockMock;
 
-        public TodoItemServiceTests()
+        public TodoItemServiceTest()
         {
             _clockMock = new Mock<IClock>(MockBehavior.Strict);
 
