@@ -78,7 +78,7 @@ namespace TodoList.Web
 
             services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB; Integrated Security=true; Initial catalog=testdb");
+                options.UseSqlServer(Configuration["ConnectionStrings:Connection"]);
             });
 
 
