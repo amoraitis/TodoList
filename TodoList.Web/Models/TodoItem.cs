@@ -11,20 +11,28 @@ namespace TodoList.Web.Models
     {
         [Required, Key]
         public Guid Id { get; set; }
+
+        [Required]
+        [MaxLength(450)]
         public string UserId { get; set; }
+
         [Required]
         [MinLength(3)]
         [MaxLength(50)]
         public string Title { get; set; }
+
         [MaxLength(200)]
         [MinLength(15)]
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }
         public bool Done { get; set; }
+
         [NotMapped]
         public Instant Added { get; set; }
+
         [NotMapped]
         public Instant DueTo { get; set; }
+
         public FileInfo File { get; set; }
 
         [Obsolete("Property only used for EF-serialization purposes")]
@@ -52,7 +60,10 @@ namespace TodoList.Web.Models
     {
         [Required, Key]
         public Guid TodoId { get; set; }
+
+        [MaxLength(500)]
         public string Path { get; set; }
+
         public long Size { get; set; }
     }
 }
