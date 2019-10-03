@@ -23,12 +23,12 @@ namespace TodoList.UnitTests.Controllers
 {
     public class ManageControllerTest
     {
-        private Mock<FakeUserManager> _userManagerMock;
-        private Mock<FakeSignInManager> _signInManagerMock;
-        private Mock<IEmailSender> _emailSenderMock;
-        private Mock<UrlEncoder> _urlEncoderMock;
-        private Mock<ILogger<ManageController>> _loggerMock;
-        private ManageController _manageController;
+        private readonly Mock<FakeUserManager> _userManagerMock;
+        private readonly Mock<FakeSignInManager> _signInManagerMock;
+        private readonly Mock<IEmailSender> _emailSenderMock;
+        private readonly Mock<UrlEncoder> _urlEncoderMock;
+        private readonly Mock<ILogger<ManageController>> _loggerMock;
+        private readonly ManageController _manageController;
 
         public ManageControllerTest()
         {

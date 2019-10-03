@@ -12,8 +12,8 @@ namespace TodoList.UnitTests.Controllers
 {
     public class HomeControllerTest
     {
-        private Mock<FakeUserManager> _userManagerMock;
-        private HomeController _homeController;
+        private readonly Mock<FakeUserManager> _userManagerMock;
+        private readonly HomeController _homeController;
 
         public HomeControllerTest()
         {
