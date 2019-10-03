@@ -12,20 +12,20 @@ namespace TodoList.UnitTests.Services
 {
     public class EmailSenderTest
     {
-        private EmailSender _emailSenderService;
-        private Mock<ISendGridClient> _sendGridClient;
-        private Mock<HttpContent> _httpContent;
+        private readonly EmailSender _emailSenderService;
+        private readonly Mock<ISendGridClient> _sendGridClientMock;
+        private readonly Mock<HttpContent> _httpContentMock;
 
         public EmailSenderTest()
         {
-            _sendGridClient = new Mock<ISendGridClient>();
-            _httpContent = new Mock<HttpContent>();
+            _sendGridClientMock = new Mock<ISendGridClient>();
+            _httpContentMock = new Mock<HttpContent>();
 
-            _sendGridClient
+            _sendGridClientMock
                 .Setup(client => client.SendEmailAsync(It.IsAny<SendGridMessage>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new Response(System.Net.HttpStatusCode.Accepted, _httpContent.Object, null));
+                .ReturnsAsync(new Response(System.Net.HttpStatusCode.Accepted, _httpContentMock.Object, null));
 
-            _emailSenderService = new EmailSender(_sendGridClient.Object, new SendGridMessage());
+            _emailSenderService = new EmailSender(_sendGridClientMock.Object, new SendGridMessage());
         }
 
         [Fact]

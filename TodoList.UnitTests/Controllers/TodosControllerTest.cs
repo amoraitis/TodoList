@@ -14,25 +14,25 @@ namespace TodoList.UnitTests.Controllers
 {
     public class TodosControllerTest
     {
-        private Mock<ITodoItemService> _todoItemServiceMock;
-        private Mock<IFileStorageService> _fileItemServiceMock;
-        private Mock<FakeUserManager> _userManagerMock;
+        private readonly Mock<ITodoItemService> _todoItemServiceMock;
+        private readonly Mock<IFileStorageService> _fileItemServiceMock;
+        private readonly Mock<FakeUserManager> _userManagerMock;
 
         private TodosController _todosController;
 
         public TodosControllerTest()
         {
-            this._todoItemServiceMock = new Mock<ITodoItemService>();
-            this._fileItemServiceMock = new Mock<IFileStorageService>();
-            this._userManagerMock =  new Mock<FakeUserManager>();
+            _todoItemServiceMock = new Mock<ITodoItemService>();
+            _fileItemServiceMock = new Mock<IFileStorageService>();
+            _userManagerMock =  new Mock<FakeUserManager>();
 
-            this._userManagerMock
+            _userManagerMock
                 .Setup(x => x.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
                 .ReturnsAsync(new ApplicationUser { UserName = "Max", Email = "max@example.com" });
 
-            this._todosController = new TodosController(this._todoItemServiceMock.Object,
-                        this._userManagerMock.Object,
-                        this._fileItemServiceMock.Object);
+            _todosController = new TodosController(_todoItemServiceMock.Object,
+                        _userManagerMock.Object,
+                        _fileItemServiceMock.Object);
         }
 
         [Fact]
@@ -120,7 +120,6 @@ namespace TodoList.UnitTests.Controllers
         [Fact]
         public async Task Create_RedirectsToIndex_WhenTodoItemIsInvalid()
         {
-
             _todosController.ModelState.AddModelError("Test error", "Test error");
 
             var result = await _todosController.Create(new TodoItem {

@@ -12,8 +12,8 @@ namespace TodoList.UnitTests.Controllers
 {
     public class ManageUsersControllerTest
     {
-        private Mock<FakeUserManager> _userManagerMock;
-        private ManageUsersController _manageUsersController;
+        private readonly Mock<FakeUserManager> _userManagerMock;
+        private readonly ManageUsersController _manageUsersController;
 
         public ManageUsersControllerTest()
         {
