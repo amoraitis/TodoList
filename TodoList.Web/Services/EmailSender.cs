@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -13,12 +14,13 @@ namespace TodoList.Web.Services
     {
         private readonly ISendGridClient _client;
         private readonly SendGridMessage _message;
+        private readonly ILogger _logger;
 
-        public EmailSender(ISendGridClient sendGridClient, SendGridMessage sendGridMessage)
+        public EmailSender(ISendGridClient sendGridClient, SendGridMessage sendGridMessage, ILogger<EmailSender> logger)
         {
             _client = sendGridClient;
             _message = sendGridMessage;
-
+            _logger = logger;
             _message.SetFrom(new EmailAddress("noreply@amoraitis.todolist.com", "TodoList Team"));
         }
 
@@ -42,10 +44,9 @@ namespace TodoList.Web.Services
                     throw new Exception("The email couldn't be sent.");
                 }
             }
-            catch (Exception)
+            catch (Exception exp)
             {
-                // ignored
-                // TODO: log exception  
+                _logger.LogError(exp.Message);
             }
 
         }
