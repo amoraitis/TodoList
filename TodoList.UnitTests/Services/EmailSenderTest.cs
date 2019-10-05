@@ -35,6 +35,17 @@ namespace TodoList.UnitTests.Services
             await _emailSenderService.SendEmailAsync("max@example.com", "This is a test", "A test body");
         }
 
+        [Fact]
+        public async Task Should_Not_Throw_Exception_If_Can_Not_Send_Email()
+        {
+            _sendGridClientMock
+               .Setup(client => client.SendEmailAsync(It.IsAny<SendGridMessage>(), It.IsAny<CancellationToken>()))
+               .ReturnsAsync(new Response(System.Net.HttpStatusCode.InternalServerError, _httpContentMock.Object, null));
+
+            EmailSender _emailSenderService = new EmailSender(_sendGridClientMock.Object, new SendGridMessage());
+            await _emailSenderService.SendEmailAsync("max@example.com", "This is a test", "A test body");
+        }
+
         // TODO: Implement Should_Not_Throw_Exception_If_Can_Not_Send_Email() test
     }
 }
