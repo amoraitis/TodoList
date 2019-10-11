@@ -1,7 +1,16 @@
-﻿@{
-    ViewData["Title"] = "About";
-}
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
+﻿<h2>About</h2>
 
-<p>Use this area to provide additional information.</p>
+<h3>A simple but powerful web application to manage to-dos.</h3>
+<ul>
+    <li>Lightweight and fast.</li>
+    <li>Supports for two authentication factor.</li>
+    <li>Allows you to attach files in to-dos.</li>
+    <li>Allows you to specify due date and time in your to-dos.</li>
+</ul>
+<h4>
+    <p>Register or Login to begin</p>
+</h4>
+<hr />
+<a class="btn btn-success" asp-controller="Account" asp-action="Register">Register</a>
+
+<a class="btn btn-success" asp-controller="Account" asp-action="Login">Login</a>
