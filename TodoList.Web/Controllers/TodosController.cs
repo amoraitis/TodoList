@@ -70,7 +70,7 @@ namespace TodoList.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Content,DuetoDateTime")]TodoItem todo)
+        public async Task<IActionResult> Create([Bind("Title,Content,DuetoDateTime")]TodoItemCreateViewModel todo)
         {
             if (!ModelState.IsValid)
             {
@@ -80,8 +80,14 @@ namespace TodoList.Web.Controllers
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null) return Challenge();
 
+            var todoItem = new TodoItem
+            {
+                Title = todo.Title,
+                Content = todo.Content,
+                DuetoDateTime = todo.DuetoDateTime
+            };
             var successful = await _todoItemService
-                .AddItemAsync(todo, currentUser);
+                .AddItemAsync(todoItem, currentUser);
 
             if (!successful)
             {
