@@ -1,0 +1,104 @@
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using NodaTime;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System.Collections.Generic;
+using System.Globalization;
+using TodoList.Web.Data;
+using TodoList.Web.Models;
+using TodoList.Web.Services;
+using TodoList.Web.Services.Storage;
+
+namespace TodoList.Web.Extensions
+{
+    public static class ServiceCollectionExtensions
+    {
+        public static void ConfigureLocalization(this IServiceCollection services)
+        {
+            services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
+            services.AddMvc()
+                .AddViewLocalization(
+                    LanguageViewLocationExpanderFormat.Suffix,
+                    opts => { opts.ResourcesPath = "Resources"; })
+                .AddDataAnnotationsLocalization();
+        }
+
+        public static void ConfigureSupportedCultures(this IServiceCollection services)
+        {
+            services.Configure<RequestLocalizationOptions>(
+                opts =>
+                {
+                    var supportedCultures = new List<CultureInfo>
+                    {
+                        new CultureInfo("en-GB"),
+                        new CultureInfo("el-GR")
+                    };
+
+                    opts.DefaultRequestCulture = new RequestCulture("en-GB");
+
+                    // Formatting numbers, dates, etc.
+                    opts.SupportedCultures = supportedCultures;
+                    // UI strings that we have localized.
+                    opts.SupportedUICultures = supportedCultures;
+                });
+        }
+
+        public static void ConfigureCookiePolicy(this IServiceCollection services)
+        {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+        }
+
+        public static void ConfigureEntityFramework(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(configuration["ConnectionStrings:Connection"]);
+            });
+        }
+
+        public static void ConfigureSecurity(this IServiceCollection services)
+        {
+            // Angular's default header name for sending the XSRF token.
+            services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+        }
+
+        public static void ConfigureIdentity(this IServiceCollection services)
+        {
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+        }
+
+        public static void ConfigureStorage(this IServiceCollection services, IConfiguration configuration)
+        {
+            var storageService = new LocalFileStorageService(configuration["LocalFileStorageBasePath"]);
+            services.AddSingleton<IFileStorageService>(storageService);
+        }
+
+        public static void ConfigureServices(this IServiceCollection services)
+        {
+            services.AddSingleton<IClock>(SystemClock.Instance);
+            services.AddScoped<ITodoItemService, TodoItemService>();
+        }
+
+        public static void ConfigureSendGrid(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddSingleton<ISendGridClient>(new SendGridClient(configuration["SendGrid:ServiceApiKey"]));
+            services.AddTransient<SendGridMessage, SendGridMessage>();
+            services.AddTransient<IEmailSender, EmailSender>();
+        }
+    }
+}
