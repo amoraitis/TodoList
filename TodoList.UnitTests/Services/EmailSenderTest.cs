@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -16,19 +17,19 @@ namespace TodoList.UnitTests.Services
         private readonly EmailSender _emailSenderService;
         private readonly Mock<ISendGridClient> _sendGridClientMock;
         private readonly Mock<HttpContent> _httpContentMock;
-        private readonly Mock<ILogger<EmailSender>> _logger;
+        private readonly NullLogger<EmailSender> _logger;
 
         public EmailSenderTest()
         {
             _sendGridClientMock = new Mock<ISendGridClient>();
             _httpContentMock = new Mock<HttpContent>();
-            _logger = new Mock<ILogger<EmailSender>>();
+            _logger = new NullLogger<EmailSender>();
 
             _sendGridClientMock
                 .Setup(client => client.SendEmailAsync(It.IsAny<SendGridMessage>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new Response(System.Net.HttpStatusCode.Accepted, _httpContentMock.Object, null));
 
-            _emailSenderService = new EmailSender(_sendGridClientMock.Object, new SendGridMessage(),_logger.Object);
+            _emailSenderService = new EmailSender(_sendGridClientMock.Object, new SendGridMessage(),_logger);
         }
 
         [Fact]

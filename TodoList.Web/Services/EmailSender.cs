@@ -41,7 +41,7 @@ namespace TodoList.Web.Services
                 var result = await _client.SendEmailAsync(_message);
                 if (result.StatusCode != System.Net.HttpStatusCode.Accepted)
                 {
-                    throw new Exception("The email couldn't be sent.");
+                    _logger.LogError("The email couldn't be sent.");
                 }
             }
             catch (Exception exp)
