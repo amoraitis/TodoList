@@ -89,8 +89,7 @@ namespace TodoList.UnitTests.Controllers
                 .Setup(service => service.AddItemAsync(It.IsAny<TodoItem>(), It.IsAny<ApplicationUser>()))
                 .ReturnsAsync(true);
 
-            var result = await _todosController.Create(new TodoItem {
-                Id = new Guid(),
+            var result = await _todosController.Create(new TodoItemCreateViewModel {
                 Title = "Test title",
                 Content = "Test content",
                 DuetoDateTime = DateTime.Now
@@ -107,8 +106,7 @@ namespace TodoList.UnitTests.Controllers
                 .Setup(service => service.AddItemAsync(It.IsAny<TodoItem>(), It.IsAny<ApplicationUser>()))
                 .ReturnsAsync(false);
 
-            var result = await _todosController.Create(new TodoItem {
-                Id = new Guid(),
+            var result = await _todosController.Create(new TodoItemCreateViewModel {
                 Title = "Test title",
                 Content = "Test content",
                 DuetoDateTime = DateTime.Now
@@ -122,8 +120,7 @@ namespace TodoList.UnitTests.Controllers
         {
             _todosController.ModelState.AddModelError("Test error", "Test error");
 
-            var result = await _todosController.Create(new TodoItem {
-                Id = new Guid(),
+            var result = await _todosController.Create(new TodoItemCreateViewModel {
                 Title = "Test title",
                 Content = "Test content",
                 DuetoDateTime = DateTime.Now
