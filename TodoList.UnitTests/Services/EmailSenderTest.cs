@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace TodoList.UnitTests.Services
 
             _sendGridClientMock
                 .Setup(client => client.SendEmailAsync(It.IsAny<SendGridMessage>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new Response(System.Net.HttpStatusCode.Accepted, _httpContentMock.Object, null));
+                .ReturnsAsync(new Response(HttpStatusCode.Accepted, _httpContentMock.Object, null));
 
             _emailSenderService = new EmailSender(_sendGridClientMock.Object, new SendGridMessage());
         }
@@ -41,7 +42,7 @@ namespace TodoList.UnitTests.Services
             //Arrange
             _sendGridClientMock
                .Setup(client => client.SendEmailAsync(It.IsAny<SendGridMessage>(), It.IsAny<CancellationToken>()))
-               .ReturnsAsync(new Response(System.Net.HttpStatusCode.InternalServerError, _httpContentMock.Object, null));
+               .ReturnsAsync(new Response(HttpStatusCode.InternalServerError, _httpContentMock.Object, null));
 
             EmailSender _emailSenderService = new EmailSender(_sendGridClientMock.Object, new SendGridMessage());
             //Act
