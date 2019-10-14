@@ -3,17 +3,16 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://0.0.0.0:47818/",
-      "sslPort": 47818
+      "applicationUrl": "http://localhost:47818/",
+      "sslPort": 0
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "https://0.0.0.0:47818/",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Developement"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "TodoList.Web": {
