@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TodoList.Web.Models;
@@ -24,6 +25,11 @@ namespace TodoList.Web.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+
+            builder.Entity<TodoItem>()
+                .Property(e => e.Tags)
+                .HasConversion(v => string.Join(',', v),
+                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
         }
         
 public void ApplyMigrations(ApplicationDbContext context) {

@@ -5,7 +5,7 @@
 }
 
 <div>
-    <h4>TodoItem</h4>
+    <h4>Todo Item</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -41,6 +41,15 @@
             <span data-value="@Model.DueTo" class="timeStampValue">
                 @Model.DueTo
             </span>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Tags)
+        </dt>
+        <dd>
+            @foreach (var tag in Model.Tags)
+            {
+                <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+            }
         </dd>
         <dt>
             @Html.DisplayNameFor(model=>model.File)
