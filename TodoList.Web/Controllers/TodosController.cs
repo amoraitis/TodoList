@@ -49,7 +49,7 @@ namespace TodoList.Web.Controllers
 
 
         // GET: Todos
-        public async Task<IActionResult> Index(string tag)
+        public async Task<IActionResult> Index(string tag = null)
         {
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null) return Challenge();
