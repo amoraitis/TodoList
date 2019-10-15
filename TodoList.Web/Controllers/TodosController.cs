@@ -94,7 +94,7 @@ namespace TodoList.Web.Controllers
                 Title = todo.Title,
                 Content = todo.Content,
                 DuetoDateTime = todo.DuetoDateTime,
-                Tags = todo.Tags.Split(',')
+                Tags = todo.Tags != null ? todo.Tags.Split(',') : new[] { "" }
             };
             var successful = await _todoItemService
                 .AddItemAsync(todoItem, currentUser);
@@ -178,7 +178,7 @@ namespace TodoList.Web.Controllers
                 Id = todo.Id,
                 Title = todo.Title,
                 Content = todo.Content,
-                Tags = string.Join(',',todo.Tags)
+                Tags = todo.Tags?.Count() > 0 ? string.Join(',',todo.Tags) : ""
             };
             return View(editViewModel);
         }
@@ -200,7 +200,7 @@ namespace TodoList.Web.Controllers
                     Id = todo.Id,
                     Title = todo.Title,
                     Content = todo.Content,
-                    Tags = todo.Tags.Split(',')
+                    Tags = todo.Tags != null ? todo.Tags.Split(',') : new[] {""}
                 }, currentUser);
 
             if (!successful)
