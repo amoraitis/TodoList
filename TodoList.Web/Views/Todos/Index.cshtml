@@ -21,6 +21,7 @@
             <th>
                 Added
             </th>
+            <th>Tags</th>
             <th></th>
         </tr>
     </thead>
@@ -44,6 +45,15 @@
                     <span data-value="@item.Added" class="timeStampValue">
                         @item.Added
                     </span>
+                </td>
+                <td>
+                    @if (item.Tags != null)
+                    {
+                        @foreach (var tag in item.Tags)
+                        {
+                            <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                        }
+                    }
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default">Edit</a>
@@ -72,26 +82,38 @@
             <th>
                 Added
             </th>
+            <th>
+                Tags
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Dones)
         {
-            <tr>
-                <td>
-                    @item.Title
-                </td>
-                <td>
-                    <span data-value="@item.Added" class="timeStampValue">
-                        @item.Added
-                    </span>
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @item.Title
+            </td>
+            <td>
+                <span data-value="@item.Added" class="timeStampValue">
+                    @item.Added
+                </span>
+            </td>
+            <td>
+                @if (item.Tags != null)
+                {
+                    @foreach (var tag in item.Tags)
+                    {
+                        <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                    }
+                }
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

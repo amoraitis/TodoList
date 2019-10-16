@@ -8,6 +8,7 @@ namespace TodoList.Web.Services
     {
         Task<TodoItem[]> GetIncompleteItemsAsync(ApplicationUser currentUser);
         Task<TodoItem[]> GetCompleteItemsAsync(ApplicationUser currentUser);
+        Task<TodoItem[]> GetItemsByTagAsync(ApplicationUser currentUser, string tag);
         Task<bool> AddItemAsync(TodoItem todo, ApplicationUser currentUser);
         Task<bool> UpdateDoneAsync(Guid id, ApplicationUser currentUser);
         bool Exists(Guid id);
