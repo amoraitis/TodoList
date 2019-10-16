@@ -22,20 +22,19 @@ namespace TodoList.Web.Controllers
             {
                 return RedirectToAction(nameof(TodosController.Home), "Todos");
             }
+            ViewData["Title"] = "Home";
             return View();
         }
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
-
+            ViewData["Title"] = "About";
             return View();
         }
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
-
+            ViewData["Title"] = "Contact";
             return View();
         }
 
