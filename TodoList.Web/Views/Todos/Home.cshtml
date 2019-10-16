@@ -56,9 +56,12 @@
                 </span>
             </td>
             <td>
-                @foreach (var tag in item.Tags)
+                @if (item.Tags != null)
                 {
-                    <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                    @foreach (var tag in item.Tags)
+                    {
+                        <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                    }
                 }
             </td>
             <td>
@@ -116,9 +119,12 @@
                 </span>
             </td>
             <td>
-                @foreach (var tag in item.Tags)
+                @if (item.Tags != null)
                 {
-                    <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                    @foreach (var tag in item.Tags)
+                    {
+                        <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                    }
                 }
             </td>
             <td>

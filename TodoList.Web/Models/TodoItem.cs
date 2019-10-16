@@ -56,6 +56,8 @@ namespace TodoList.Web.Models
             set => DueTo = DateTime.SpecifyKind(value, DateTimeKind.Utc).ToInstant();
         }
 
+        [Column("Tags")]
+        [MaxLength(3)]
         public IEnumerable<string> Tags { get; set; }
     }
 

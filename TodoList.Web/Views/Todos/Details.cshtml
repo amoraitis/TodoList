@@ -5,7 +5,7 @@
 }
 
 <div>
-    <h4>Todo Item</h4>
+    <h4>Todo</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -46,9 +46,12 @@
             @Html.DisplayNameFor(model => model.Tags)
         </dt>
         <dd>
-            @foreach (var tag in Model.Tags)
+            @if (Model.Tags != null)
             {
-                <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                @foreach (var tag in Model.Tags)
+                {
+                    <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                }
             }
         </dd>
         <dt>
