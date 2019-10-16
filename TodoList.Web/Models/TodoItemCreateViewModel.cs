@@ -17,5 +17,8 @@ namespace TodoList.Web.Models
 
         [DataType(DataType.DateTime)]
         public DateTime DuetoDateTime { get; set; }
+
+        [RegularExpression(@"^(?:[a-zA-Z0-9_\-]*,?){0,3}$", ErrorMessage = "Maximum 3 comma separated tags!")]
+        public string Tags { get; set; }
     }
 }

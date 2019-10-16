@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -54,6 +55,10 @@ namespace TodoList.Web.Models
             get => DueTo.ToDateTimeUtc();
             set => DueTo = DateTime.SpecifyKind(value, DateTimeKind.Utc).ToInstant();
         }
+
+        [Column("Tags")]
+        [MaxLength(3)]
+        public IEnumerable<string> Tags { get; set; }
     }
 
     public class FileInfo

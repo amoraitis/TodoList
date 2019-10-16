@@ -20,6 +20,13 @@ namespace TodoList.Web.Services
             _clock = clock;
         }
 
+        public async Task<IEnumerable<TodoItem>> GetItemsByTagAsync(ApplicationUser currentUser, string tag)
+        {
+            return await _context.Todos
+                .Where(t => t.Tags.Contains(tag))
+                .ToArrayAsync();
+        }
+
         public async Task<bool> AddItemAsync(TodoItem todo, ApplicationUser user)
         {
             todo.Id = Guid.NewGuid();
@@ -86,6 +93,7 @@ namespace TodoList.Web.Services
 
             todo.Title = editedTodo.Title;
             todo.Content = editedTodo.Content;
+            todo.Tags = editedTodo.Tags;
 
             var saved = await _context.SaveChangesAsync();
             return saved == 1;

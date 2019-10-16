@@ -7,8 +7,9 @@ namespace TodoList.Web.Services
 {
     public interface ITodoItemService
     {
-        Task<IEnumerable<TodoItem>> GetIncompleteItemsAsync(ApplicationUser currentUser);
         Task<IEnumerable<TodoItem>> GetCompleteItemsAsync(ApplicationUser currentUser);
+        Task<IEnumerable<TodoItem>> GetIncompleteItemsAsync(ApplicationUser currentUser);
+        Task<IEnumerable<TodoItem>> GetItemsByTagAsync(ApplicationUser currentUser, string tag);
         Task<bool> AddItemAsync(TodoItem todo, ApplicationUser currentUser);
         Task<bool> UpdateDoneAsync(Guid id, ApplicationUser currentUser);
         bool Exists(Guid id);
