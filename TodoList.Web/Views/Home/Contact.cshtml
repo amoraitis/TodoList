@@ -1,12 +1,5 @@
-﻿<h2>@ViewData["Title"]</h2>
+﻿<h2>@ViewData["Title"] @ViewData["Team"]</h2>
 
 <address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
-
-<address>
-    <strong>Support:</strong> <a href="mailto:contact@todolist.com">contact@todolist.com</a><br />
+    <strong>Support:</strong> <a href="mailto:@ViewData["SupportEmail"]">@ViewData["SupportEmail"]</a><br />
 </address>

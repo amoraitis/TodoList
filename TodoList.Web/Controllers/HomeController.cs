@@ -35,6 +35,8 @@ namespace TodoList.Web.Controllers
         public IActionResult Contact()
         {
             ViewData["Title"] = "Contact";
+            ViewData["Team"] = "TodoList Team";
+            ViewData["SupportEmail"] = "contact@todolist.com";
             return View();
         }
 
