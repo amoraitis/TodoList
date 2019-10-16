@@ -49,18 +49,14 @@ namespace TodoList.UnitTests.Controllers
         public void About_ReturnsViewResult_WhenSucceeded()
         {
             var result = _homeController.About();
-            var viewResult = Assert.IsType<ViewResult>(result);
-
-            Assert.Equal("Your application description page.", viewResult.ViewData["Message"]);
+            Assert.IsType<ViewResult>(result);
         }
 
         [Fact]
         public void Contact_ReturnsViewResult_WhenSucceeded()
         {
             var result = _homeController.Contact();
-            var viewResult = Assert.IsType<ViewResult>(result);
-
-            Assert.Equal("Your contact page.", viewResult.ViewData["Message"]);
+            Assert.IsType<ViewResult>(result);
         }
 
         [Fact]
