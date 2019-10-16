@@ -1,8 +1,10 @@
-﻿namespace TodoList.Web.Models
+﻿using System.Collections.Generic;
+
+namespace TodoList.Web.Models
 {
     public class TodoViewModel
     {
-        public TodoItem[] Todos { get; set; }
-        public TodoItem[] Dones { get; set; }
+        public IEnumerable<TodoItem> Todos { get; set; }
+        public IEnumerable<TodoItem> Dones { get; set; }
     }
 }

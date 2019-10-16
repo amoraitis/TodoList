@@ -1,8 +1,10 @@
-﻿namespace TodoList.Web.Models
+﻿using System.Collections.Generic;
+
+namespace TodoList.Web.Models
 {
     public class HomeViewModel
     {
-        public TodoItem[] RecentlyAddedTodos { get; set; }
-        public TodoItem[] CloseDueToTodos { get; set; }
+        public IEnumerable<TodoItem> RecentlyAddedTodos { get; set; }
+        public IEnumerable<TodoItem> CloseDueToTodos { get; set; }
     }
 }
