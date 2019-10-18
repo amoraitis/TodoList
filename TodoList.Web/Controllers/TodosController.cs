@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,9 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TodoList.Core.Interfaces;
+using TodoList.Core.Models;
 using TodoList.Web.Models;
-using TodoList.Web.Services;
-using TodoList.Web.Services.Storage;
 
 namespace TodoList.Web.Controllers
 {

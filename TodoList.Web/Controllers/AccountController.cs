@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using TodoList.Core.Extensions;
+using TodoList.Core.Models;
 using TodoList.Web.Extensions;
-using TodoList.Web.Models;
 using TodoList.Web.Models.AccountViewModels;
 
 namespace TodoList.Web.Controllers

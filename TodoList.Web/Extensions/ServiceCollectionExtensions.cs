@@ -12,10 +12,11 @@ using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Collections.Generic;
 using System.Globalization;
-using TodoList.Web.Data;
+using TodoList.Core.Data;
+using TodoList.Core.Interfaces;
+using TodoList.Core.Models;
+using TodoList.Core.Services;
 using TodoList.Web.Models;
-using TodoList.Web.Services;
-using TodoList.Web.Services.Storage;
 
 namespace TodoList.Web.Extensions
 {

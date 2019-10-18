@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TodoList.Core.Models;
 using TodoList.Web.Models;
 
 namespace TodoList.Web.Controllers
