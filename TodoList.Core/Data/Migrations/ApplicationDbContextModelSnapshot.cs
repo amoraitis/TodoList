@@ -5,9 +5,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TodoList.Core.Data;
-using TodoList.Web.Data;
 
-namespace TodoList.Web.Data.Migrations
+namespace TodoList.Core.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -16,7 +15,7 @@ namespace TodoList.Web.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -130,7 +129,7 @@ namespace TodoList.Web.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("TodoList.Web.Models.ApplicationUser", b =>
+            modelBuilder.Entity("TodoList.Core.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -181,7 +180,7 @@ namespace TodoList.Web.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("TodoList.Web.Models.FileInfo", b =>
+            modelBuilder.Entity("TodoList.Core.Models.FileInfo", b =>
                 {
                     b.Property<Guid>("TodoId")
                         .ValueGeneratedOnAdd();
@@ -196,7 +195,7 @@ namespace TodoList.Web.Data.Migrations
                     b.ToTable("File");
                 });
 
-            modelBuilder.Entity("TodoList.Web.Models.TodoItem", b =>
+            modelBuilder.Entity("TodoList.Core.Models.TodoItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -214,7 +213,12 @@ namespace TodoList.Web.Data.Migrations
 
                     b.Property<Guid?>("FileTodoId");
 
-                    b.Property<string>("Tags");
+                    b.Property<string>("Tags")
+                        .HasColumnName("Tags")
+                        .HasMaxLength(3);
+
+                    b.Property<string>("Test")
+                        .HasMaxLength(50);
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -241,7 +245,7 @@ namespace TodoList.Web.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("TodoList.Web.Models.ApplicationUser")
+                    b.HasOne("TodoList.Core.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -249,7 +253,7 @@ namespace TodoList.Web.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("TodoList.Web.Models.ApplicationUser")
+                    b.HasOne("TodoList.Core.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -262,7 +266,7 @@ namespace TodoList.Web.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("TodoList.Web.Models.ApplicationUser")
+                    b.HasOne("TodoList.Core.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -270,15 +274,15 @@ namespace TodoList.Web.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("TodoList.Web.Models.ApplicationUser")
+                    b.HasOne("TodoList.Core.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TodoList.Web.Models.TodoItem", b =>
+            modelBuilder.Entity("TodoList.Core.Models.TodoItem", b =>
                 {
-                    b.HasOne("TodoList.Web.Models.FileInfo", "File")
+                    b.HasOne("TodoList.Core.Models.FileInfo", "File")
                         .WithMany()
                         .HasForeignKey("FileTodoId");
                 });
