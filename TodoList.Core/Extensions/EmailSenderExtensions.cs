@@ -1,6 +1,6 @@
+using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace TodoList.Core.Extensions
 {

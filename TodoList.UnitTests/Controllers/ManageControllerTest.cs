@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Security.Principal;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -13,10 +7,15 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Security.Principal;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 using TodoList.Core.Models;
 using TodoList.UnitTests.Resources;
 using TodoList.Web.Controllers;
-using TodoList.Web.Models;
 using TodoList.Web.Models.ManageViewModels;
 using Xunit;
 
@@ -33,10 +32,10 @@ namespace TodoList.UnitTests.Controllers
 
         public ManageControllerTest()
         {
-            _userManagerMock =  new Mock<FakeUserManager>();
+            _userManagerMock = new Mock<FakeUserManager>();
             _signInManagerMock = new Mock<FakeSignInManager>();
-            _emailSenderMock =  new Mock<IEmailSender>();
-            _urlEncoderMock =  new Mock<UrlEncoder>();
+            _emailSenderMock = new Mock<IEmailSender>();
+            _urlEncoderMock = new Mock<UrlEncoder>();
             _loggerMock = new Mock<ILogger<ManageController>>();
 
             _manageController = new ManageController(_userManagerMock.Object,
@@ -350,7 +349,7 @@ namespace TodoList.UnitTests.Controllers
                 .Setup(manager => manager.SignInAsync(It.IsAny<ApplicationUser>(), false, null))
                 .Returns(Task.CompletedTask);
 
-            var result = await _manageController.SetPassword(new SetPasswordViewModel{ NewPassword = "abcDEF123_" });
+            var result = await _manageController.SetPassword(new SetPasswordViewModel { NewPassword = "abcDEF123_" });
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
 
             Assert.Equal("Your password has been set.", _manageController.StatusMessage);
@@ -362,7 +361,7 @@ namespace TodoList.UnitTests.Controllers
         {
             _manageController.ModelState.AddModelError("Test error", "Test error");
 
-            var result = await _manageController.SetPassword(new SetPasswordViewModel{ NewPassword = "abcDEF123_" });
+            var result = await _manageController.SetPassword(new SetPasswordViewModel { NewPassword = "abcDEF123_" });
             var viewResult = Assert.IsType<ViewResult>(result);
 
             Assert.IsAssignableFrom<SetPasswordViewModel>(viewResult.Model);
@@ -390,7 +389,7 @@ namespace TodoList.UnitTests.Controllers
                 .Setup(manager => manager.AddPasswordAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Failed(new IdentityError { Code = "01", Description = "Test error" }));
 
-            var result = await _manageController.SetPassword(new SetPasswordViewModel{ NewPassword = "abcDEF123_" });
+            var result = await _manageController.SetPassword(new SetPasswordViewModel { NewPassword = "abcDEF123_" });
             var viewResult = Assert.IsType<ViewResult>(result);
 
             Assert.IsAssignableFrom<SetPasswordViewModel>(viewResult.Model);
@@ -463,7 +462,7 @@ namespace TodoList.UnitTests.Controllers
         {
             _userManagerMock
                 .Setup(manager => manager.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                .ReturnsAsync(new ApplicationUser{ Id = "1" });
+                .ReturnsAsync(new ApplicationUser { Id = "1" });
 
             var exception = await Assert.ThrowsAsync<ApplicationException>(
                 async () => await _manageController.LinkLoginCallback());
@@ -476,7 +475,7 @@ namespace TodoList.UnitTests.Controllers
         {
             _userManagerMock
                 .Setup(manager => manager.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                .ReturnsAsync(new ApplicationUser{ Id = "1" });
+                .ReturnsAsync(new ApplicationUser { Id = "1" });
 
             _userManagerMock
                 .Setup(manager => manager.AddLoginAsync(It.IsAny<ApplicationUser>(), It.IsAny<ExternalLoginInfo>()))
@@ -501,8 +500,10 @@ namespace TodoList.UnitTests.Controllers
                 .Setup(manager => manager.RemoveLoginAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);
 
-            var result = await _manageController.RemoveLogin(new RemoveLoginViewModel {
-                LoginProvider = "Test provider", ProviderKey = "Test key"
+            var result = await _manageController.RemoveLogin(new RemoveLoginViewModel
+            {
+                LoginProvider = "Test provider",
+                ProviderKey = "Test key"
             });
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
 
@@ -528,7 +529,7 @@ namespace TodoList.UnitTests.Controllers
         {
             _userManagerMock
                 .Setup(manager => manager.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                .ReturnsAsync(new ApplicationUser{ Id = "1" });
+                .ReturnsAsync(new ApplicationUser { Id = "1" });
 
             _userManagerMock
                 .Setup(manager => manager.RemoveLoginAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<string>()))
@@ -569,7 +570,7 @@ namespace TodoList.UnitTests.Controllers
         {
             _userManagerMock
                 .Setup(manager => manager.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                .ReturnsAsync(new ApplicationUser{ TwoFactorEnabled = true });
+                .ReturnsAsync(new ApplicationUser { TwoFactorEnabled = true });
 
             var result = await _manageController.Disable2faWarning();
             var viewResult = Assert.IsType<ViewResult>(result);
@@ -595,7 +596,7 @@ namespace TodoList.UnitTests.Controllers
         {
             _userManagerMock
                 .Setup(manager => manager.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                .ReturnsAsync(new ApplicationUser{ Id = "1", TwoFactorEnabled = false });
+                .ReturnsAsync(new ApplicationUser { Id = "1", TwoFactorEnabled = false });
 
             var exception = await Assert.ThrowsAsync<ApplicationException>(
                 async () => await _manageController.Disable2faWarning());
@@ -636,7 +637,7 @@ namespace TodoList.UnitTests.Controllers
         {
             _userManagerMock
                 .Setup(manager => manager.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                .ReturnsAsync(new ApplicationUser{ Id = "1" });
+                .ReturnsAsync(new ApplicationUser { Id = "1" });
 
             _userManagerMock
                 .Setup(manager => manager.SetTwoFactorEnabledAsync(It.IsAny<ApplicationUser>(), false))
@@ -654,7 +655,7 @@ namespace TodoList.UnitTests.Controllers
             SetGetUserAsyncMethod();
 
             _userManagerMock
-                .Setup(ManageUsersController=> ManageUsersController.GetAuthenticatorKeyAsync(It.IsAny<ApplicationUser>()))
+                .Setup(ManageUsersController => ManageUsersController.GetAuthenticatorKeyAsync(It.IsAny<ApplicationUser>()))
                 .ReturnsAsync("test_string");
 
             var result = await _manageController.EnableAuthenticator();
@@ -695,7 +696,7 @@ namespace TodoList.UnitTests.Controllers
                     ManageUsersController.GenerateNewTwoFactorRecoveryCodesAsync(It.IsAny<ApplicationUser>(), It.IsAny<int>()))
                 .ReturnsAsync(new List<string>());
 
-            var result = await _manageController.EnableAuthenticator(new EnableAuthenticatorViewModel{ Code = "Test code" });
+            var result = await _manageController.EnableAuthenticator(new EnableAuthenticatorViewModel { Code = "Test code" });
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
 
             Assert.Equal("ShowRecoveryCodes", redirectToActionResult.ActionName);
@@ -730,7 +731,7 @@ namespace TodoList.UnitTests.Controllers
                     ManageUsersController.VerifyTwoFactorTokenAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(true);
 
-            var result = await _manageController.EnableAuthenticator(new EnableAuthenticatorViewModel{ Code = "test code" });
+            var result = await _manageController.EnableAuthenticator(new EnableAuthenticatorViewModel { Code = "test code" });
             var viewResult = Assert.IsType<ViewResult>(result);
 
             Assert.IsAssignableFrom<EnableAuthenticatorViewModel>(viewResult.Model);
@@ -750,7 +751,7 @@ namespace TodoList.UnitTests.Controllers
                     ManageUsersController.VerifyTwoFactorTokenAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(false);
 
-            var result = await _manageController.EnableAuthenticator(new EnableAuthenticatorViewModel{ Code = "test code" });
+            var result = await _manageController.EnableAuthenticator(new EnableAuthenticatorViewModel { Code = "test code" });
             var viewResult = Assert.IsType<ViewResult>(result);
 
             Assert.IsAssignableFrom<EnableAuthenticatorViewModel>(viewResult.Model);
@@ -817,7 +818,7 @@ namespace TodoList.UnitTests.Controllers
         {
             _userManagerMock
                 .Setup(manager => manager.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                .ReturnsAsync(new ApplicationUser{ TwoFactorEnabled = true });
+                .ReturnsAsync(new ApplicationUser { TwoFactorEnabled = true });
 
             var result = await _manageController.GenerateRecoveryCodesWarning();
             var viewResult = Assert.IsType<ViewResult>(result);
@@ -843,7 +844,7 @@ namespace TodoList.UnitTests.Controllers
         {
             _userManagerMock
                 .Setup(manager => manager.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                .ReturnsAsync(new ApplicationUser{ TwoFactorEnabled = false, Id = "1" });
+                .ReturnsAsync(new ApplicationUser { TwoFactorEnabled = false, Id = "1" });
 
             var exception = await Assert.ThrowsAsync<ApplicationException>(
                 async () => await _manageController.GenerateRecoveryCodesWarning());
@@ -856,7 +857,7 @@ namespace TodoList.UnitTests.Controllers
         {
             _userManagerMock
                 .Setup(manager => manager.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                .ReturnsAsync(new ApplicationUser{ TwoFactorEnabled = true });
+                .ReturnsAsync(new ApplicationUser { TwoFactorEnabled = true });
 
             _userManagerMock
                 .Setup(ManageUsersController =>
@@ -888,7 +889,7 @@ namespace TodoList.UnitTests.Controllers
         {
             _userManagerMock
                 .Setup(manager => manager.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                .ReturnsAsync(new ApplicationUser{ TwoFactorEnabled = false, Id = "1" });
+                .ReturnsAsync(new ApplicationUser { TwoFactorEnabled = false, Id = "1" });
 
             var exception = await Assert.ThrowsAsync<ApplicationException>(
                 async () => await _manageController.GenerateRecoveryCodes());
@@ -901,7 +902,7 @@ namespace TodoList.UnitTests.Controllers
         {
             _userManagerMock
                 .Setup(manager => manager.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                .ReturnsAsync(new ApplicationUser{ Id = "1", Email = "max@example.com" });
+                .ReturnsAsync(new ApplicationUser { Id = "1", Email = "max@example.com" });
 
             var result = await _manageController.SendVerificationEmail(new IndexViewModel());
 

@@ -1,10 +1,10 @@
-﻿using System;
+﻿using NodaTime;
+using NodaTime.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using NodaTime;
-using NodaTime.Extensions;
 
 namespace TodoList.Core.Models
 {

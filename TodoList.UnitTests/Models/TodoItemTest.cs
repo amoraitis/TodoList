@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using TodoList.Core.Models;
-using TodoList.Web.Models;
 using Xunit;
 
 namespace TodoList.UnitTests.Models
@@ -26,7 +25,7 @@ namespace TodoList.UnitTests.Models
                 AddedDateTime = DateTime.Now,
                 DuetoDateTime = DateTime.Now,
                 Done = false,
-                Tags = new[] {"test"},
+                Tags = new[] { "test" },
                 UserId = Guid.NewGuid().ToString(),
                 File = new FileInfo()
                 {
@@ -35,7 +34,7 @@ namespace TodoList.UnitTests.Models
                     TodoId = todoItemId
                 }
             };
-            
+
             var isValid = Validator.TryValidateObject(todoItem, new ValidationContext(todoItem), validationResults);
 
             Assert.True(isValid);

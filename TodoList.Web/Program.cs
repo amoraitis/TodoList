@@ -1,10 +1,9 @@
-﻿using System;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
 using TodoList.Core.Data;
-using TodoList.Web.Data;
 
 namespace TodoList.Web
 {

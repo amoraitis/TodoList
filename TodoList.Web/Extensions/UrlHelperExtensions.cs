@@ -8,7 +8,8 @@ namespace TodoList.Web.Extensions
     {
         public static string EmailConfirmationLink(this IUrlHelper urlHelper, string userId, string code, string scheme)
         {
-            return urlHelper.Action(new UrlActionContext {
+            return urlHelper.Action(new UrlActionContext
+            {
                 Action = nameof(AccountController.ConfirmEmail),
                 Controller = "Account",
                 Values = new { userId, code },
@@ -18,7 +19,8 @@ namespace TodoList.Web.Extensions
 
         public static string ResetPasswordCallbackLink(this IUrlHelper urlHelper, string userId, string code, string scheme)
         {
-            return urlHelper.Action(new UrlActionContext {
+            return urlHelper.Action(new UrlActionContext
+            {
                 Action = nameof(AccountController.ResetPassword),
                 Controller = "Account",
                 Values = new { userId, code },

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using NodaTime;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using NodaTime;
 using TodoList.Core.Data;
 using TodoList.Core.Interfaces;
 using TodoList.Core.Models;
