@@ -3,11 +3,11 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using TodoList.Core.Interfaces;
+using TodoList.Core.Models;
 using TodoList.UnitTests.Resources;
 using TodoList.Web.Controllers;
 using TodoList.Web.Models;
-using TodoList.Web.Services;
-using TodoList.Web.Services.Storage;
 using Xunit;
 
 namespace TodoList.UnitTests.Controllers

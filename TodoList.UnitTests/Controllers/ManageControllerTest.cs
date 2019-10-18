@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using Moq;
+using TodoList.Core.Models;
 using TodoList.UnitTests.Resources;
 using TodoList.Web.Controllers;
 using TodoList.Web.Models;

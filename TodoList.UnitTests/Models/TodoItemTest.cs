@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using TodoList.Core.Models;
 using TodoList.Web.Models;
 using Xunit;
 

@@ -1,4 +1,3 @@
-using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,7 +6,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using TodoList.Web.Services;
+using TodoList.Core.Services;
 using Xunit;
 
 namespace TodoList.UnitTests.Services

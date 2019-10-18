@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using TodoList.Core.Models;
 using TodoList.UnitTests.Resources;
 using TodoList.Web;
 using TodoList.Web.Controllers;
