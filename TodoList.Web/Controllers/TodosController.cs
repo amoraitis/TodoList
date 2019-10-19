@@ -53,15 +53,15 @@ namespace TodoList.Web.Controllers
         {
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null) return Challenge();
-            var todos = (await _todoItemService.GetIncompleteItemsAsync(currentUser));
+            var todos = await _todoItemService.GetIncompleteItemsAsync(currentUser);
             var dones = await _todoItemService.GetCompleteItemsAsync(currentUser);
 
             if(!string.IsNullOrEmpty(tag))
             {
-                //TODO: These lines are a workaround for not having generic collections, so they need to be changed.
-                todos = todos.AsQueryable().Where(t => t.Tags.Contains(tag)).ToArray();
-                dones = dones.AsQueryable().Where(t => t.Tags.Contains(tag)).ToArray();
+                todos = todos.Where(t => t.Tags.Contains(tag));
+                dones = dones.Where(t => t.Tags.Contains(tag));
             }
+
             var model = new TodoViewModel()
             {
                 Todos = todos,

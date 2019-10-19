@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -358,7 +359,7 @@ namespace TodoList.Web.Controllers
         [HttpGet]
         public IActionResult ShowRecoveryCodes()
         {
-            var recoveryCodes = (string[])TempData[RecoveryCodesKey];
+            var recoveryCodes = (IEnumerable<string>)TempData[RecoveryCodesKey];
             if (recoveryCodes == null)
             {
                 return RedirectToAction(nameof(TwoFactorAuthentication));
@@ -414,7 +415,7 @@ namespace TodoList.Web.Controllers
             var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
             _logger.LogInformation("User with ID {UserId} has generated new 2FA recovery codes.", user.Id);
 
-            var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes.ToArray() };
+            var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes };
 
             return View(nameof(ShowRecoveryCodes), model);
         }

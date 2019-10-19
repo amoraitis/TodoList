@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,7 @@ namespace TodoList.Web.Services
             _clock = clock;
         }
 
-        public async Task<TodoItem[]> GetItemsByTagAsync(ApplicationUser currentUser, string tag)
+        public async Task<IEnumerable<TodoItem>> GetItemsByTagAsync(ApplicationUser currentUser, string tag)
         {
             return await _context.Todos
                 .Where(t => t.Tags.Contains(tag))
@@ -44,14 +45,14 @@ namespace TodoList.Web.Services
             return saved > 0;
         }
 
-        public async Task<TodoItem[]> GetIncompleteItemsAsync(ApplicationUser user)
+        public async Task<IEnumerable<TodoItem>> GetIncompleteItemsAsync(ApplicationUser user)
         {
             return await _context.Todos
                 .Where(t => !t.Done && t.UserId == user.Id)
                 .ToArrayAsync();
         }
 
-        public async Task<TodoItem[]> GetCompleteItemsAsync(ApplicationUser user)
+        public async Task<IEnumerable<TodoItem>> GetCompleteItemsAsync(ApplicationUser user)
         {
             return await _context.Todos
                 .Where(t => t.Done && t.UserId == user.Id)
@@ -119,7 +120,7 @@ namespace TodoList.Web.Services
             return deleted > 0;
         }
 
-        public async Task<TodoItem[]> GetRecentlyAddedItemsAsync(ApplicationUser currentUser)
+        public async Task<IEnumerable<TodoItem>> GetRecentlyAddedItemsAsync(ApplicationUser currentUser)
         {
             return await _context.Todos
                 .Where(t => t.UserId == currentUser.Id && !t.Done
@@ -127,7 +128,7 @@ namespace TodoList.Web.Services
                 .ToArrayAsync();
         }
 
-        public async Task<TodoItem[]> GetDueTo2DaysItems(ApplicationUser user)
+        public async Task<IEnumerable<TodoItem>> GetDueTo2DaysItems(ApplicationUser user)
         {
             return await _context.Todos
                 .Where(t => t.UserId == user.Id && !t.Done
