@@ -11,7 +11,7 @@ namespace TodoList.Web.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-		ApplyMigrations(this);
+            ApplyMigrations(this);
         }
 
         public DbSet<TodoItem> Todos { get; set; }
@@ -31,12 +31,16 @@ namespace TodoList.Web.Data
                 .HasConversion(v => string.Join(',', v),
                 v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
         }
-        
-public void ApplyMigrations(ApplicationDbContext context) {
-    if (context.Database.GetPendingMigrations().Any()) {
-        context.Database.Migrate();
-    }
-}
 
+        public void ApplyMigrations(ApplicationDbContext context)
+        {
+            if (context.Database.IsSqlServer())
+            {
+                if (context.Database.GetPendingMigrations().Any())
+                {
+                    context.Database.Migrate();
+                }
+            }
+        }
     }
 }
