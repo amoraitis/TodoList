@@ -7,8 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/first-interaction@v1
-      env:
-         GITHUB_TOKEN: ${{ secrets.TOKEN }}
       with:
-        repo-token: ${{ GITHUB_TOKEN }}
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
         pr-message: 'Thank you for contributing to this OS project. We will review your forst PR as soon as possible🎉🎉'' first pr'
