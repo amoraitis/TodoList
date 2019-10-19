@@ -92,7 +92,8 @@ namespace TodoList.UnitTests.Controllers
             var result = await _todosController.Create(new TodoItemCreateViewModel {
                 Title = "Test title",
                 Content = "Test content",
-                DuetoDateTime = DateTime.Now
+                DuetoDateTime = DateTime.Now,
+                Tags = "test"
             });
 
             Assert.IsType<RedirectToActionResult>(result);
@@ -109,7 +110,8 @@ namespace TodoList.UnitTests.Controllers
             var result = await _todosController.Create(new TodoItemCreateViewModel {
                 Title = "Test title",
                 Content = "Test content",
-                DuetoDateTime = DateTime.Now
+                DuetoDateTime = DateTime.Now,
+                Tags = "test"
             });
 
             Assert.IsType<BadRequestObjectResult>(result);
@@ -123,7 +125,8 @@ namespace TodoList.UnitTests.Controllers
             var result = await _todosController.Create(new TodoItemCreateViewModel {
                 Title = "Test title",
                 Content = "Test content",
-                DuetoDateTime = DateTime.Now
+                DuetoDateTime = DateTime.Now,
+                Tags = "test"
             });
 
             Assert.IsType<RedirectToActionResult>(result);

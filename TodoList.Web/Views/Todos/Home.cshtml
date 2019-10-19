@@ -28,36 +28,48 @@
             <th>
                 Added
             </th>
+            <th>
+                Tags
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.RecentlyAddedTodos)
         {
-            <tr>
-                <td>
-                    <form asp-action="UpdateDone" method="post">
-                        <input type="checkbox" class="done-checkbox" asp-for="@item.Done" />
-                        <input type="hidden" name="id" value="@item.Id" />
-                    </form>
-                </td>
-                <td>
-                    @item.Title
-                </td>
-                <td>
-                    @(item.Done ? "Yes" : "No")
-                </td>
-                <td>
-                    <span data-value="@item.Added" class="timeStampValueModernized">
-                        @item.Added
-                    </span>
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <form asp-action="UpdateDone" method="post">
+                    <input type="checkbox" class="done-checkbox" asp-for="@item.Done" />
+                    <input type="hidden" name="id" value="@item.Id" />
+                </form>
+            </td>
+            <td>
+                @item.Title
+            </td>
+            <td>
+                @(item.Done ? "Yes" : "No")
+            </td>
+            <td>
+                <span data-value="@item.Added" class="timeStampValueModernized">
+                    @item.Added
+                </span>
+            </td>
+            <td>
+                @if (item.Tags != null)
+                {
+                    @foreach (var tag in item.Tags)
+                    {
+                        <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                    }
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>
@@ -79,36 +91,48 @@
             <th>
                 Due to
             </th>
+            <th>
+                Tags
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.CloseDueToTodos)
         {
-            <tr>
-                <td>
-                    <form asp-action="UpdateDone" method="post">
-                        <input type="checkbox" class="done-checkbox" asp-for="@item.Done" />
-                        <input type="hidden" name="id" value="@item.Id" />
-                    </form>
-                </td>
-                <td>
-                    @item.Title
-                </td>
-                <td>
-                    @(item.Done ? "Yes" : "No")
-                </td>
-                <td>
-                    <span data-value="@item.DueTo" class="timeStampValueModernized">
-                        @item.DueTo
-                    </span>
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <form asp-action="UpdateDone" method="post">
+                    <input type="checkbox" class="done-checkbox" asp-for="@item.Done" />
+                    <input type="hidden" name="id" value="@item.Id" />
+                </form>
+            </td>
+            <td>
+                @item.Title
+            </td>
+            <td>
+                @(item.Done ? "Yes" : "No")
+            </td>
+            <td>
+                <span data-value="@item.DueTo" class="timeStampValueModernized">
+                    @item.DueTo
+                </span>
+            </td>
+            <td>
+                @if (item.Tags != null)
+                {
+                    @foreach (var tag in item.Tags)
+                    {
+                        <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                    }
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

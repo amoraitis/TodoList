@@ -25,6 +25,7 @@ namespace TodoList.UnitTests.Models
                 AddedDateTime = DateTime.Now,
                 DuetoDateTime = DateTime.Now,
                 Done = false,
+                Tags = new[] {"test"},
                 UserId = Guid.NewGuid().ToString(),
                 File = new FileInfo()
                 {
@@ -55,6 +56,7 @@ namespace TodoList.UnitTests.Models
                 AddedDateTime = DateTime.Now,
                 DuetoDateTime = DateTime.Now,
                 Done = false,
+                Tags = new[] { "test" },
                 UserId = null, // Required
                 File = new FileInfo()
                 {

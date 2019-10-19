@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -47,12 +49,19 @@ namespace TodoList.Web.Controllers
 
 
         // GET: Todos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string tag = null)
         {
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null) return Challenge();
-            var todos = await _todoItemService.GetIncompleteItemsAsync(currentUser);
+            var todos = (await _todoItemService.GetIncompleteItemsAsync(currentUser));
             var dones = await _todoItemService.GetCompleteItemsAsync(currentUser);
+
+            if(!string.IsNullOrEmpty(tag))
+            {
+                //TODO: These lines are a workaround for not having generic collections, so they need to be changed.
+                todos = todos.AsQueryable().Where(t => t.Tags.Contains(tag)).ToArray();
+                dones = dones.AsQueryable().Where(t => t.Tags.Contains(tag)).ToArray();
+            }
             var model = new TodoViewModel()
             {
                 Todos = todos,
@@ -70,7 +79,7 @@ namespace TodoList.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Content,DuetoDateTime")]TodoItemCreateViewModel todo)
+        public async Task<IActionResult> Create([Bind("Title,Content,DuetoDateTime,Tags")]TodoItemCreateViewModel todo)
         {
             if (!ModelState.IsValid)
             {
@@ -84,7 +93,8 @@ namespace TodoList.Web.Controllers
             {
                 Title = todo.Title,
                 Content = todo.Content,
-                DuetoDateTime = todo.DuetoDateTime
+                DuetoDateTime = todo.DuetoDateTime,
+                Tags = todo.Tags != null ? todo.Tags.Split(',') : new[] { "" }
             };
             var successful = await _todoItemService
                 .AddItemAsync(todoItem, currentUser);
@@ -167,7 +177,8 @@ namespace TodoList.Web.Controllers
             {
                 Id = todo.Id,
                 Title = todo.Title,
-                Content = todo.Content
+                Content = todo.Content,
+                Tags = todo.Tags?.Count() > 0 ? string.Join(',',todo.Tags) : ""
             };
             return View(editViewModel);
         }
@@ -188,7 +199,8 @@ namespace TodoList.Web.Controllers
                 {
                     Id = todo.Id,
                     Title = todo.Title,
-                    Content = todo.Content
+                    Content = todo.Content,
+                    Tags = todo.Tags != null ? todo.Tags.Split(',') : new[] {""}
                 }, currentUser);
 
             if (!successful)
