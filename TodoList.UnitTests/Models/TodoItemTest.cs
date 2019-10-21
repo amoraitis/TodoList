@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using TodoList.Web.Controllers;
+using TodoList.Web.Models;
 using TodoList.Core.Models;
 using Xunit;
 
@@ -81,5 +83,46 @@ namespace TodoList.UnitTests.Models
             Assert.Single(validationResults);
             Assert.Equal($"The {nameof(TodoItem.UserId)} field is required.", validationResults.Single().ErrorMessage);
         }
+
+        [Fact]
+        public void TodoItem_EmptyTags_ReturnsOk()
+        {
+            var validationResults = new List<ValidationResult>();
+
+            var isValid = Validator.TryValidateProperty(
+                new List<string>( ),
+                new ValidationContext(new TodoItem()) { MemberName = "Tags" },
+                validationResults
+            );
+            Assert.True(isValid);
+        }
+
+        [Fact]
+        public void TodoItem_MoreThanThreeTags_ReturnsFail()
+        {
+            var validationResults = new List<ValidationResult>();
+
+            var isValid = Validator.TryValidateProperty(
+                new List<string> {"t1", "t2", "t3", "t4", "t5"},
+                new ValidationContext(new TodoItem()) {MemberName = "Tags"},
+                validationResults
+            );
+            Assert.False(isValid);
+        }
+
+        [Fact]
+        public void TodoItem_TwoTags_ReturnsOk()
+        {
+            var validationResults = new List<ValidationResult>();
+
+            var isValid = Validator.TryValidateProperty(
+                new List<string> {"t1", "t2"},
+                new ValidationContext(new TodoItem()) {MemberName = "Tags"},
+                validationResults
+            );
+
+            Assert.True(isValid);
+        }
     }
+
 }
