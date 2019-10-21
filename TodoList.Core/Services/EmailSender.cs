@@ -3,6 +3,7 @@ using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace TodoList.Core.Services
 {
@@ -12,11 +13,13 @@ namespace TodoList.Core.Services
     {
         private readonly ISendGridClient _client;
         private readonly SendGridMessage _message;
+        private readonly ILogger _logger;
 
-        public EmailSender(ISendGridClient sendGridClient, SendGridMessage sendGridMessage)
+        public EmailSender(ISendGridClient sendGridClient, SendGridMessage sendGridMessage, ILogger<EmailSender> logger)
         {
             _client = sendGridClient;
             _message = sendGridMessage;
+            _logger = logger;
 
             _message.SetFrom(new EmailAddress("noreply@amoraitis.todolist.com", "TodoList Team"));
         }
@@ -38,13 +41,12 @@ namespace TodoList.Core.Services
                 var result = await _client.SendEmailAsync(_message);
                 if (result.StatusCode != System.Net.HttpStatusCode.Accepted)
                 {
-                    throw new Exception("The email couldn't be sent.");
+                    _logger.LogError("The email couldn't be sent.");
                 }
             }
-            catch (Exception)
+            catch (Exception exp)
             {
-                // ignored
-                // TODO: log exception  
+                _logger.LogError(exp.Message);
             }
 
         }

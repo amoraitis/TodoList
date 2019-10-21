@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using TodoList.Core;
 using TodoList.Core.Models;
 
-namespace TodoList.Core.Data
+namespace TodoList.Data
 {
     public class SeedData
     {

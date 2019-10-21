@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Linq;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TodoList.Core.Models;
 
-namespace TodoList.Core.Data
+namespace TodoList.Core.Contexts
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

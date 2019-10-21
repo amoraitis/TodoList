@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NodaTime;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TodoList.Core.Data;
+using TodoList.Core.Contexts;
 using TodoList.Core.Interfaces;
 using TodoList.Core.Models;
 
@@ -20,7 +21,7 @@ namespace TodoList.Core.Services
             _clock = clock;
         }
 
-        public async Task<TodoItem[]> GetItemsByTagAsync(ApplicationUser currentUser, string tag)
+        public async Task<IEnumerable<TodoItem>> GetItemsByTagAsync(ApplicationUser currentUser, string tag)
         {
             return await _context.Todos
                 .Where(t => t.Tags.Contains(tag))
@@ -45,14 +46,14 @@ namespace TodoList.Core.Services
             return saved > 0;
         }
 
-        public async Task<TodoItem[]> GetIncompleteItemsAsync(ApplicationUser user)
+        public async Task<IEnumerable<TodoItem>> GetIncompleteItemsAsync(ApplicationUser user)
         {
             return await _context.Todos
                 .Where(t => !t.Done && t.UserId == user.Id)
                 .ToArrayAsync();
         }
 
-        public async Task<TodoItem[]> GetCompleteItemsAsync(ApplicationUser user)
+        public async Task<IEnumerable<TodoItem>> GetCompleteItemsAsync(ApplicationUser user)
         {
             return await _context.Todos
                 .Where(t => t.Done && t.UserId == user.Id)
@@ -120,7 +121,7 @@ namespace TodoList.Core.Services
             return deleted > 0;
         }
 
-        public async Task<TodoItem[]> GetRecentlyAddedItemsAsync(ApplicationUser currentUser)
+        public async Task<IEnumerable<TodoItem>> GetRecentlyAddedItemsAsync(ApplicationUser currentUser)
         {
             return await _context.Todos
                 .Where(t => t.UserId == currentUser.Id && !t.Done
@@ -128,7 +129,7 @@ namespace TodoList.Core.Services
                 .ToArrayAsync();
         }
 
-        public async Task<TodoItem[]> GetDueTo2DaysItems(ApplicationUser user)
+        public async Task<IEnumerable<TodoItem>> GetDueTo2DaysItems(ApplicationUser user)
         {
             return await _context.Todos
                 .Where(t => t.UserId == user.Id && !t.Done

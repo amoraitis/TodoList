@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
-using TodoList.Core.Data;
+using TodoList.Data;
 
 namespace TodoList.Web
 {
