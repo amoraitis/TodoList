@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using NodaTime;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using NodaTime;
-using TodoList.Web.Data;
-using TodoList.Web.Models;
+using TodoList.Core.Contexts;
+using TodoList.Core.Interfaces;
+using TodoList.Core.Models;
 
-namespace TodoList.Web.Services
+namespace TodoList.Core.Services
 {
     public class TodoItemService : ITodoItemService
     {
@@ -17,6 +19,13 @@ namespace TodoList.Web.Services
         {
             _context = context;
             _clock = clock;
+        }
+
+        public async Task<IEnumerable<TodoItem>> GetItemsByTagAsync(ApplicationUser currentUser, string tag)
+        {
+            return await _context.Todos
+                .Where(t => t.Tags.Contains(tag))
+                .ToArrayAsync();
         }
 
         public async Task<bool> AddItemAsync(TodoItem todo, ApplicationUser user)
@@ -37,14 +46,14 @@ namespace TodoList.Web.Services
             return saved > 0;
         }
 
-        public async Task<TodoItem[]> GetIncompleteItemsAsync(ApplicationUser user)
+        public async Task<IEnumerable<TodoItem>> GetIncompleteItemsAsync(ApplicationUser user)
         {
             return await _context.Todos
                 .Where(t => !t.Done && t.UserId == user.Id)
                 .ToArrayAsync();
         }
 
-        public async Task<TodoItem[]> GetCompleteItemsAsync(ApplicationUser user)
+        public async Task<IEnumerable<TodoItem>> GetCompleteItemsAsync(ApplicationUser user)
         {
             return await _context.Todos
                 .Where(t => t.Done && t.UserId == user.Id)
@@ -85,6 +94,7 @@ namespace TodoList.Web.Services
 
             todo.Title = editedTodo.Title;
             todo.Content = editedTodo.Content;
+            todo.Tags = editedTodo.Tags;
 
             var saved = await _context.SaveChangesAsync();
             return saved == 1;
@@ -94,7 +104,7 @@ namespace TodoList.Web.Services
         public async Task<TodoItem> GetItemAsync(Guid id)
         {
             return await _context.Todos
-                .Include(t=>t.File)
+                .Include(t => t.File)
                 .Where(t => t.Id == id)
                 .SingleOrDefaultAsync();
         }
@@ -102,7 +112,7 @@ namespace TodoList.Web.Services
         public async Task<bool> DeleteTodoAsync(Guid id, ApplicationUser currentUser)
         {
             var todo = await _context.Todos
-                .Include(t=>t.File)
+                .Include(t => t.File)
                 .Where(t => t.Id == id && t.UserId == currentUser.Id)
                 .SingleOrDefaultAsync();
             _context.Todos.Remove(todo);
@@ -111,7 +121,7 @@ namespace TodoList.Web.Services
             return deleted > 0;
         }
 
-        public async Task<TodoItem[]> GetRecentlyAddedItemsAsync(ApplicationUser currentUser)
+        public async Task<IEnumerable<TodoItem>> GetRecentlyAddedItemsAsync(ApplicationUser currentUser)
         {
             return await _context.Todos
                 .Where(t => t.UserId == currentUser.Id && !t.Done
@@ -119,7 +129,7 @@ namespace TodoList.Web.Services
                 .ToArrayAsync();
         }
 
-        public async Task<TodoItem[]> GetDueTo2DaysItems(ApplicationUser user)
+        public async Task<IEnumerable<TodoItem>> GetDueTo2DaysItems(ApplicationUser user)
         {
             return await _context.Todos
                 .Where(t => t.UserId == user.Id && !t.Done

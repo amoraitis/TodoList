@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using TodoList.Web.Models;
+using TodoList.Core.Models;
 using Xunit;
 
 namespace TodoList.UnitTests.Models
@@ -22,9 +22,14 @@ namespace TodoList.UnitTests.Models
                 Content = "Clean the kitchen.",
                 Added = new Instant(),
                 DueTo = new Instant(),
+#pragma warning disable CS0618 // 'TodoItem.AddedDateTime' is obsolete: 'Property only used for EF-serialization purposes'
                 AddedDateTime = DateTime.Now,
+#pragma warning restore CS0618 // 'TodoItem.AddedDateTime' is obsolete: 'Property only used for EF-serialization purposes'
+#pragma warning disable CS0618 // 'TodoItem.DuetoDateTime' is obsolete: 'Property only used for EF-serialization purposes'
                 DuetoDateTime = DateTime.Now,
+#pragma warning restore CS0618 // 'TodoItem.DuetoDateTime' is obsolete: 'Property only used for EF-serialization purposes'
                 Done = false,
+                Tags = new[] { "test" },
                 UserId = Guid.NewGuid().ToString(),
                 File = new FileInfo()
                 {
@@ -33,7 +38,7 @@ namespace TodoList.UnitTests.Models
                     TodoId = todoItemId
                 }
             };
-            
+
             var isValid = Validator.TryValidateObject(todoItem, new ValidationContext(todoItem), validationResults);
 
             Assert.True(isValid);
@@ -52,9 +57,14 @@ namespace TodoList.UnitTests.Models
                 Content = "Clean the kitchen.",
                 Added = new Instant(),
                 DueTo = new Instant(),
+#pragma warning disable CS0618 // 'TodoItem.AddedDateTime' is obsolete: 'Property only used for EF-serialization purposes'
                 AddedDateTime = DateTime.Now,
+#pragma warning restore CS0618 // 'TodoItem.AddedDateTime' is obsolete: 'Property only used for EF-serialization purposes'
+#pragma warning disable CS0618 // 'TodoItem.DuetoDateTime' is obsolete: 'Property only used for EF-serialization purposes'
                 DuetoDateTime = DateTime.Now,
+#pragma warning restore CS0618 // 'TodoItem.DuetoDateTime' is obsolete: 'Property only used for EF-serialization purposes'
                 Done = false,
+                Tags = new[] { "test" },
                 UserId = null, // Required
                 File = new FileInfo()
                 {

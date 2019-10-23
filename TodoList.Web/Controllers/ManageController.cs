@@ -1,16 +1,18 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
+using TodoList.Core.Extensions;
+using TodoList.Core.Models;
 using TodoList.Web.Extensions;
-using TodoList.Web.Models;
 using TodoList.Web.Models.ManageViewModels;
 
 namespace TodoList.Web.Controllers
@@ -358,7 +360,7 @@ namespace TodoList.Web.Controllers
         [HttpGet]
         public IActionResult ShowRecoveryCodes()
         {
-            var recoveryCodes = (string[])TempData[RecoveryCodesKey];
+            var recoveryCodes = (IEnumerable<string>)TempData[RecoveryCodesKey];
             if (recoveryCodes == null)
             {
                 return RedirectToAction(nameof(TwoFactorAuthentication));
@@ -414,7 +416,7 @@ namespace TodoList.Web.Controllers
             var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
             _logger.LogInformation("User with ID {UserId} has generated new 2FA recovery codes.", user.Id);
 
-            var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes.ToArray() };
+            var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes };
 
             return View(nameof(ShowRecoveryCodes), model);
         }

@@ -7,12 +7,20 @@
 
 This project is a simple but powerful web application to manage to-dos.
 
+## Features
+
+- Lightweight and fast.
+- Supports for two authentication factor.
+- Allows you to attach files in to-dos.
+- Allows you to specify due date and time in your to-dos.
+
 ## Requirements
 
 - A Windows OS
 - .NET Core 2.2 or superior
 - SQL Server Express 2016 or superior
 - A SendGrid account
+- (Optional) Google, Facebook, Twitter, Microsoft API keys.
 
 ## Set up
 
@@ -30,12 +38,37 @@ This project is a simple but powerful web application to manage to-dos.
 
 7 - That it's, your application is running in `http://localhost:47818`.
 
-## Features
+## Support for social login providers
 
-- Lightweight and fast.
-- Supports for two authentication factor.
-- Allows you to attach files in to-dos.
-- Allows you to specify due date and time in your to-dos.
+If you want to allow your users to login with their social accounts, e.g. Facebook, follow instructions below.
+
+### Facebook
+1 - Follow this [guide](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/facebook-logins?view=aspnetcore-2.2#create-the-app-in-facebook) to generate AppID and AppSecret.
+
+2 - Execute the following instructions from `TodoList/TodoList.Web`: 
+- `dotnet user-secrets set Authentication:Facebook:AppId <app-id>`
+- `dotnet user-secrets set Authentication:Facebook:AppSecret <app-secret>`
+
+### Google
+1 - Follow this [guide](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-2.2#create-a-google-api-console-project-and-client-id) to generate ClientID and ClientSecret.
+
+2 - Execute the following instructions from `TodoList/TodoList.Web`: 
+- `dotnet user-secrets set Authentication:Google:ClientId <client-id>`
+- `dotnet user-secrets set Authentication:Google:ClientSecret <client-secret>`
+
+### Microsoft
+1 - Follow this [guide](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/microsoft-logins?view=aspnetcore-2.2#create-the-app-in-microsoft-developer-portal) to generate ClientID and ClientSecret.
+
+2 - Execute the following instructions from `TodoList/TodoList.Web`: 
+- `dotnet user-secrets set Authentication:Microsoft:ClientId <client-id>`
+- `dotnet user-secrets set Authentication:Microsoft:ClientSecret <client-secret>`
+
+### Twitter
+1 - Follow this [guide](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/twitter-logins?view=aspnetcore-2.2#create-the-app-in-twitter) to generate App ID and AppSecret.
+
+2 - Execute the following instructions from `TodoList/TodoList.Web`: 
+- `dotnet user-secrets set Authentication:Twitter:ConsumerKey <consumer-key>`
+- `dotnet user-secrets set Authentication:Twitter:ConsumerSecret <consumer-secret>`
 
 ## License
 

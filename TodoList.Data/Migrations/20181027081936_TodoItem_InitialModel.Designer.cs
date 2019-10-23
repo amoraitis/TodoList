@@ -5,8 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using TodoList.Core.Contexts;
 
-namespace TodoList.Web.Data.Migrations
+namespace TodoList.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20181027081936_TodoItem_InitialModel")]

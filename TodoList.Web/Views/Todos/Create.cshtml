@@ -1,4 +1,4 @@
-﻿@model TodoList.Web.Models.TodoItem
+﻿@model TodoList.Web.Models.TodoItemCreateViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -26,6 +26,12 @@
                 <label asp-for="DuetoDateTime" class="control-label"></label>
                 <input type="datetime-local" asp-for="DuetoDateTime" class="form-control" />
                 <span asp-validation-for="DuetoDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tags" class="control-label"></label>
+                <input type="text" asp-for="Tags" class="form-control" id="Tags" placeholder="Comma separated tags"/>
+                <span asp-validation-for="Tags" class="text-danger"></span>
+                <!--TODO: Updated UI needed for this.-->
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

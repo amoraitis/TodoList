@@ -1,8 +1,11 @@
-﻿namespace TodoList.Web.Models
+﻿using TodoList.Core.Models;
+using System.Collections.Generic;
+
+namespace TodoList.Web.Models
 {
     public class ManageUsersViewModel
     {
-        public ApplicationUser[] Administrators { get; set; }
-        public ApplicationUser[] Users { get; set; }
+        public IEnumerable<ApplicationUser> Administrators { get; set; }
+        public IEnumerable<ApplicationUser> Users { get; set; }
     }
 }

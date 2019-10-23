@@ -1,14 +1,16 @@
-﻿using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using TodoList.Core;
+using TodoList.Core.Extensions;
+using TodoList.Core.Models;
 using TodoList.Web.Extensions;
-using TodoList.Web.Models;
 using TodoList.Web.Models.AccountViewModels;
 
 namespace TodoList.Web.Controllers
