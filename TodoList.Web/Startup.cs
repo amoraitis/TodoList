@@ -34,6 +34,7 @@ namespace TodoList.Web
             services.ConfigureSecurity();
             services.ConfigureIdentity();
             services.ConfigureStorage(Configuration);
+            services.ConfigureSocialAuthentication(Configuration);
             services.ConfigureServices();
             services.ConfigureSendGrid(Configuration);
             services.AddLogging();
