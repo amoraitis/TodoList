@@ -7,6 +7,8 @@
 
 This project is a simple but powerful web application to manage to-dos.
 
+![screenshot](screenshot.JPG?raw=true "Screenshot")
+
 ## Requirements
 
 - A Windows OS
