@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TodoList.Web.Models;
+using TodoList.Core.Models;
 
-namespace TodoList.Web.Services
+namespace TodoList.Core.Interfaces
 {
     public interface ITodoItemService
     {
-        Task<IEnumerable<TodoItem>> GetCompleteItemsAsync(ApplicationUser currentUser);
         Task<IEnumerable<TodoItem>> GetIncompleteItemsAsync(ApplicationUser currentUser);
+        Task<IEnumerable<TodoItem>> GetCompleteItemsAsync(ApplicationUser currentUser);
         Task<IEnumerable<TodoItem>> GetItemsByTagAsync(ApplicationUser currentUser, string tag);
         Task<bool> AddItemAsync(TodoItem todo, ApplicationUser currentUser);
         Task<bool> UpdateDoneAsync(Guid id, ApplicationUser currentUser);

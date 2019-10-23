@@ -5,115 +5,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using TodoList.Core.Contexts;
 
-namespace TodoList.Web.Data.Migrations
+namespace TodoList.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181027081936_TodoItem_InitialModel")]
-    partial class TodoItem_InitialModel
+    [Migration("20191015140742_add-tags-fix")]
+    partial class addtagsfix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.3-rtm-10026")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Amoraitis.TodoList.Models.ApplicationUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("Amoraitis.TodoList.Models.FileInfo", b =>
-                {
-                    b.Property<Guid>("TodoId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Path");
-
-                    b.Property<long>("Size");
-
-                    b.HasKey("TodoId");
-
-                    b.ToTable("File");
-                });
-
-            modelBuilder.Entity("Amoraitis.TodoList.Models.TodoItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("AddedDateTime")
-                        .HasColumnName("Added");
-
-                    b.Property<string>("Content")
-                        .HasMaxLength(200);
-
-                    b.Property<bool>("Done");
-
-                    b.Property<DateTime>("DuetoDateTime")
-                        .HasColumnName("DueTo");
-
-                    b.Property<Guid?>("FileTodoId");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FileTodoId");
-
-                    b.ToTable("Todo");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -142,7 +48,8 @@ namespace TodoList.Web.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 
@@ -161,7 +68,8 @@ namespace TodoList.Web.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 
@@ -223,11 +131,105 @@ namespace TodoList.Web.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Amoraitis.TodoList.Models.TodoItem", b =>
+            modelBuilder.Entity("TodoList.Web.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("Amoraitis.TodoList.Models.FileInfo", "File")
-                        .WithMany()
-                        .HasForeignKey("FileTodoId");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("TodoList.Web.Models.FileInfo", b =>
+                {
+                    b.Property<Guid>("TodoId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Path")
+                        .HasMaxLength(500);
+
+                    b.Property<long>("Size");
+
+                    b.HasKey("TodoId");
+
+                    b.ToTable("File");
+                });
+
+            modelBuilder.Entity("TodoList.Web.Models.TodoItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("AddedDateTime")
+                        .HasColumnName("Added");
+
+                    b.Property<string>("Content")
+                        .HasMaxLength(200);
+
+                    b.Property<bool>("Done");
+
+                    b.Property<DateTime>("DuetoDateTime")
+                        .HasColumnName("DueTo");
+
+                    b.Property<Guid?>("FileTodoId");
+
+                    b.Property<string>("Tags");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FileTodoId");
+
+                    b.ToTable("Todo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -240,7 +242,7 @@ namespace TodoList.Web.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Amoraitis.TodoList.Models.ApplicationUser")
+                    b.HasOne("TodoList.Web.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -248,7 +250,7 @@ namespace TodoList.Web.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Amoraitis.TodoList.Models.ApplicationUser")
+                    b.HasOne("TodoList.Web.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -261,7 +263,7 @@ namespace TodoList.Web.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Amoraitis.TodoList.Models.ApplicationUser")
+                    b.HasOne("TodoList.Web.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -269,10 +271,17 @@ namespace TodoList.Web.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Amoraitis.TodoList.Models.ApplicationUser")
+                    b.HasOne("TodoList.Web.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TodoList.Web.Models.TodoItem", b =>
+                {
+                    b.HasOne("TodoList.Web.Models.FileInfo", "File")
+                        .WithMany()
+                        .HasForeignKey("FileTodoId");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,9 +1,9 @@
-using System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using TodoList.Web.Models;
+using System;
+using TodoList.Core.Models;
 
 namespace TodoList.UnitTests.Resources
 {

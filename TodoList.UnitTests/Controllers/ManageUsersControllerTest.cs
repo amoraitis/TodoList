@@ -1,7 +1,9 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Threading.Tasks;
+using TodoList.Core;
+using TodoList.Core.Models;
 using TodoList.UnitTests.Resources;
 using TodoList.Web;
 using TodoList.Web.Controllers;
@@ -17,7 +19,7 @@ namespace TodoList.UnitTests.Controllers
 
         public ManageUsersControllerTest()
         {
-            _userManagerMock =  new Mock<FakeUserManager>();
+            _userManagerMock = new Mock<FakeUserManager>();
             _manageUsersController = new ManageUsersController(_userManagerMock.Object);
 
             _manageUsersController.ControllerContext = new ControllerContext();
@@ -29,11 +31,11 @@ namespace TodoList.UnitTests.Controllers
         {
             _userManagerMock
                 .Setup(manager => manager.GetUsersInRoleAsync(Constants.AdministratorRole))
-                .ReturnsAsync(new ApplicationUser[] { new ApplicationUser{ Id = "1" } });
+                .ReturnsAsync(new ApplicationUser[] { new ApplicationUser { Id = "1" } });
 
             _userManagerMock
                 .Setup(manager => manager.GetUsersInRoleAsync(Constants.UserRole))
-                .ReturnsAsync(new ApplicationUser[] { new ApplicationUser{ Id = "2" } });
+                .ReturnsAsync(new ApplicationUser[] { new ApplicationUser { Id = "2" } });
 
             var result = await _manageUsersController.Index();
             var viewResult = Assert.IsType<ViewResult>(result);

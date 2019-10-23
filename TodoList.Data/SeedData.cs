@@ -3,9 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using TodoList.Web.Models;
+using TodoList.Core;
+using TodoList.Core.Models;
 
-namespace TodoList.Web.Data
+namespace TodoList.Data
 {
     public class SeedData
     {
@@ -20,7 +21,7 @@ namespace TodoList.Web.Data
             await AddAdminRights(userManager);
         }
 
-        private async static Task AddAdminRights(UserManager<ApplicationUser> userManager)
+        private static async Task AddAdminRights(UserManager<ApplicationUser> userManager)
         {
             var adminExists = userManager.Users
                 .Any(x => x.UserName == "admin@admin.local");
@@ -35,7 +36,7 @@ namespace TodoList.Web.Data
                 await userManager.CreateAsync(admin, "Admin1!");
                 await userManager.AddToRoleAsync(
                     admin, Constants.AdministratorRole);
-            }            
+            }
         }
 
         private static async Task EnsureRolesAsync(

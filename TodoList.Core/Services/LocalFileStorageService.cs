@@ -1,15 +1,16 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using TodoList.Core.Interfaces;
 
-namespace TodoList.Web.Services.Storage
+namespace TodoList.Core.Services
 {
     public class LocalFileStorageService : IFileStorageService
     {
-        private readonly string _base_path;
-        public LocalFileStorageService(string base_path)
+        private readonly string _basePath;
+        public LocalFileStorageService(string basePath)
         {
-            _base_path = base_path;
+            _basePath = basePath;
         }
 
         public Task<bool> CleanDirectoryAsync(string targetPath)
@@ -17,7 +18,7 @@ namespace TodoList.Web.Services.Storage
             if (String.IsNullOrEmpty(targetPath))
                 throw new ArgumentNullException(nameof(targetPath));
 
-            targetPath = Path.Combine(_base_path,
+            targetPath = Path.Combine(_basePath,
                 targetPath);
 
             if (!Directory.Exists(targetPath))
@@ -29,7 +30,8 @@ namespace TodoList.Web.Services.Storage
                     File.Delete(file);
                 }
                 return Task.FromResult(true);
-            }catch(Exception)
+            }
+            catch (Exception)
             {
                 return Task.FromResult(false);
             }
@@ -40,28 +42,28 @@ namespace TodoList.Web.Services.Storage
             if (String.IsNullOrEmpty(path))
                 throw new ArgumentNullException(nameof(path));
 
-            path = Path.Combine(_base_path, path);
+            path = Path.Combine(_basePath, path);
             try
             {
                 if (ExistsAsync(path).Result)
                     File.Delete(path);
 
                 if (containingFolder != null)
-                    Directory.Delete(Path.Combine(_base_path, containingFolder));
+                    Directory.Delete(Path.Combine(_basePath, containingFolder));
 
                 return Task.FromResult(true);
             }
             catch (Exception)
             {
                 return Task.FromResult(false);
-            }            
+            }
         }
 
         public Task<bool> ExistsAsync(string path)
         {
             if (String.IsNullOrEmpty(path))
                 throw new ArgumentNullException(nameof(path));
-            return Task.FromResult(File.Exists(Path.Combine(_base_path, path)));
+            return Task.FromResult(File.Exists(Path.Combine(_basePath, path)));
         }
 
         public Task<FileStorageInfo> GetFileInfoAsync(string path)
@@ -71,9 +73,10 @@ namespace TodoList.Web.Services.Storage
 
             try
             {
-                return Task.FromResult(new FileStorageInfo(){
+                return Task.FromResult(new FileStorageInfo()
+                {
                     Path = path,
-                    Size = File.ReadAllBytes(Path.Combine(_base_path, path)).LongLength // Maybe slower than reading the FileInfo and returning the Length
+                    Size = File.ReadAllBytes(Path.Combine(_basePath, path)).LongLength // Maybe slower than reading the FileInfo and returning the Length
                 });
             }
             catch (Exception)
@@ -89,8 +92,9 @@ namespace TodoList.Web.Services.Storage
 
             try
             {
-                return Task.FromResult<Stream>(File.OpenRead(Path.Combine(_base_path, path)));
-            }catch(IOException)
+                return Task.FromResult<Stream>(File.OpenRead(Path.Combine(_basePath, path)));
+            }
+            catch (IOException)
             {
                 return Task.FromResult<Stream>(null);
             }
@@ -101,20 +105,21 @@ namespace TodoList.Web.Services.Storage
             if (String.IsNullOrEmpty(path) || stream.Equals(Stream.Null))
                 throw new ArgumentNullException();
 
-            path = Path.Combine(_base_path, path);
+            path = Path.Combine(_basePath, path);
             if (ExistsAsync(path).Result) return false;
-            
+
             try
             {
                 string dir = Path.GetDirectoryName(path);
-                if(dir!=null)
+                if (dir != null)
                     Directory.CreateDirectory(dir);
                 using (var fStream = File.Create(path))
                 {
                     await stream.CopyToAsync(fStream);
                     return true;
                 }
-            }catch(Exception)
+            }
+            catch (Exception)
             {
                 return false;
             }
