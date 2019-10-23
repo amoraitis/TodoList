@@ -1,4 +1,6 @@
-using System;
+using Moq;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -44,7 +46,7 @@ namespace TodoList.UnitTests.Services
                .Setup(client => client.SendEmailAsync(It.IsAny<SendGridMessage>(), It.IsAny<CancellationToken>()))
                .ReturnsAsync(new Response(HttpStatusCode.InternalServerError, _httpContentMock.Object, null));
 
-            EmailSender _emailSenderService = new EmailSender(_sendGridClientMock.Object, new SendGridMessage());
+            EmailSender _emailSenderService = new EmailSender(_sendGridClientMock.Object, new SendGridMessage(),_logger);
             //Act
             await _emailSenderService.SendEmailAsync("max@example.com", "This is a test", "A test body");
             // This test doesn't make any assertion, basically here we're checking no exception is thrown
