@@ -1,12 +1,12 @@
-﻿using System;
+﻿using NodaTime;
+using NodaTime.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using NodaTime;
-using NodaTime.Extensions;
 
-namespace TodoList.Web.Models
+namespace TodoList.Core.Models
 {
     public class TodoItem
     {
@@ -59,16 +59,5 @@ namespace TodoList.Web.Models
         [Column("Tags")]
         [MaxLength(3)]
         public IEnumerable<string> Tags { get; set; }
-    }
-
-    public class FileInfo
-    {
-        [Required, Key]
-        public Guid TodoId { get; set; }
-
-        [MaxLength(500)]
-        public string Path { get; set; }
-
-        public long Size { get; set; }
     }
 }

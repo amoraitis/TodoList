@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using TodoList.Core.Models;
+using System.Collections.Generic;
 
 namespace TodoList.Web.Models
 {

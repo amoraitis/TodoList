@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 
-namespace TodoList.Web.Services.Storage
+namespace TodoList.Core.Interfaces
 {
     //TODO: Complete other functions like search etc
     public interface IFileStorageService

@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.UI.Services;
 
-namespace TodoList.Web.Extensions
+namespace TodoList.Core.Extensions
 {
     public static class EmailSenderExtensions
     {

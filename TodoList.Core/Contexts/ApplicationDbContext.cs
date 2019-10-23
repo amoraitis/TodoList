@@ -2,16 +2,16 @@
 using System.Linq;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using TodoList.Web.Models;
+using TodoList.Core.Models;
 
-namespace TodoList.Web.Data
+namespace TodoList.Core.Contexts
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-		ApplyMigrations(this);
+            ApplyMigrations(this);
         }
 
         public DbSet<TodoItem> Todos { get; set; }
@@ -31,12 +31,14 @@ namespace TodoList.Web.Data
                 .HasConversion(v => string.Join(',', v),
                 v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
         }
-        
-public void ApplyMigrations(ApplicationDbContext context) {
-    if (context.Database.GetPendingMigrations().Any()) {
-        context.Database.Migrate();
-    }
-}
+
+        public void ApplyMigrations(ApplicationDbContext context)
+        {
+            if (context.Database.GetPendingMigrations().Any())
+            {
+                context.Database.Migrate();
+            }
+        }
 
     }
 }

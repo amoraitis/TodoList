@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using NodaTime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using NodaTime;
-using TodoList.Web.Data;
-using TodoList.Web.Models;
+using TodoList.Core.Contexts;
+using TodoList.Core.Interfaces;
+using TodoList.Core.Models;
 
-namespace TodoList.Web.Services
+namespace TodoList.Core.Services
 {
     public class TodoItemService : ITodoItemService
     {
@@ -103,7 +104,7 @@ namespace TodoList.Web.Services
         public async Task<TodoItem> GetItemAsync(Guid id)
         {
             return await _context.Todos
-                .Include(t=>t.File)
+                .Include(t => t.File)
                 .Where(t => t.Id == id)
                 .SingleOrDefaultAsync();
         }
@@ -111,7 +112,7 @@ namespace TodoList.Web.Services
         public async Task<bool> DeleteTodoAsync(Guid id, ApplicationUser currentUser)
         {
             var todo = await _context.Todos
-                .Include(t=>t.File)
+                .Include(t => t.File)
                 .Where(t => t.Id == id && t.UserId == currentUser.Id)
                 .SingleOrDefaultAsync();
             _context.Todos.Remove(todo);

@@ -1,7 +1,3 @@
-using System;
-using System.Security.Claims;
-using System.Security.Principal;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -11,9 +7,13 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System;
+using System.Security.Claims;
+using System.Security.Principal;
+using System.Threading.Tasks;
+using TodoList.Core.Models;
 using TodoList.UnitTests.Resources;
 using TodoList.Web.Controllers;
-using TodoList.Web.Models;
 using TodoList.Web.Models.AccountViewModels;
 using Xunit;
 
@@ -26,13 +26,13 @@ namespace TodoList.UnitTests.Controllers
         private readonly Mock<IEmailSender> _emailSenderMock;
         private readonly Mock<ILogger<AccountController>> _loggerMock;
 
-        private AccountController _accountController;
+        private readonly AccountController _accountController;
 
         public AccountControllerTest()
         {
-            _userManagerMock =  new Mock<FakeUserManager>();
+            _userManagerMock = new Mock<FakeUserManager>();
             _signInManagerMock = new Mock<FakeSignInManager>();
-            _emailSenderMock =  new Mock<IEmailSender>();
+            _emailSenderMock = new Mock<IEmailSender>();
             _loggerMock = new Mock<ILogger<AccountController>>();
 
             _signInManagerMock
@@ -299,9 +299,9 @@ namespace TodoList.UnitTests.Controllers
         {
             SetGetTwoFactorAuthenticationUserAsyncToNull();
 
-            var exception =  await Assert.ThrowsAsync<ApplicationException>(async() =>
-                await _accountController.LoginWithRecoveryCode(
-                    new LoginWithRecoveryCodeViewModel { RecoveryCode = "123 456" }));
+            var exception = await Assert.ThrowsAsync<ApplicationException>(async () =>
+               await _accountController.LoginWithRecoveryCode(
+                   new LoginWithRecoveryCodeViewModel { RecoveryCode = "123 456" }));
 
             Assert.Equal("Unable to load two-factor authentication user.", exception.Message);
         }
@@ -456,7 +456,7 @@ namespace TodoList.UnitTests.Controllers
                 .Setup(manager => manager.AddLoginAsync(It.IsAny<ApplicationUser>(), It.IsAny<ExternalLoginInfo>()))
                 .ReturnsAsync(Microsoft.AspNetCore.Identity.IdentityResult.Success);
 
-            var result = await _accountController.ExternalLoginConfirmation(new ExternalLoginViewModel{ Email = "max@example.com" });
+            var result = await _accountController.ExternalLoginConfirmation(new ExternalLoginViewModel { Email = "max@example.com" });
 
             Assert.IsType<RedirectToActionResult>(result);
         }
@@ -466,7 +466,7 @@ namespace TodoList.UnitTests.Controllers
         {
             _accountController.ModelState.AddModelError("Test error", "Test error");
 
-            var result = await _accountController.ExternalLoginConfirmation(new ExternalLoginViewModel{ Email = "max@example.com" });
+            var result = await _accountController.ExternalLoginConfirmation(new ExternalLoginViewModel { Email = "max@example.com" });
 
             var viewResult = Assert.IsType<ViewResult>(result);
 
@@ -482,7 +482,7 @@ namespace TodoList.UnitTests.Controllers
                 .ReturnsAsync(() => null);
 
             var exception = await Assert.ThrowsAsync<ApplicationException>(
-                async () => await _accountController.ExternalLoginConfirmation(new ExternalLoginViewModel{ Email = "max@example.com" }));
+                async () => await _accountController.ExternalLoginConfirmation(new ExternalLoginViewModel { Email = "max@example.com" }));
 
             Assert.Equal("Error loading external login information during confirmation.", exception.Message);
         }
@@ -606,7 +606,7 @@ namespace TodoList.UnitTests.Controllers
                 .ReturnsAsync(() => null);
 
             var result = await _accountController.ResetPassword(
-                new ResetPasswordViewModel { Email = "max@example.com"});
+                new ResetPasswordViewModel { Email = "max@example.com" });
             var actionResult = Assert.IsType<RedirectToActionResult>(result);
 
             Assert.Equal("ResetPasswordConfirmation", actionResult.ActionName);

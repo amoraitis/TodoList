@@ -1,8 +1,9 @@
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using TodoList.Core.Models;
 using TodoList.UnitTests.Resources;
 using TodoList.Web.Controllers;
 using TodoList.Web.Models;
@@ -17,7 +18,7 @@ namespace TodoList.UnitTests.Controllers
 
         public HomeControllerTest()
         {
-            _userManagerMock =  new Mock<FakeUserManager>();
+            _userManagerMock = new Mock<FakeUserManager>();
             _homeController = new HomeController(_userManagerMock.Object);
 
             _homeController.ControllerContext = new ControllerContext();
