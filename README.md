@@ -35,6 +35,7 @@ This project is a simple but powerful web application to manage to-dos.
 - Lightweight and fast.
 - Supports for two authentication factor.
 - Allows you to attach files in to-dos.
+- Allows you to add new to-dos items and delete to-dos items.
 - Allows you to specify due date and time in your to-dos.
 
 ## License
