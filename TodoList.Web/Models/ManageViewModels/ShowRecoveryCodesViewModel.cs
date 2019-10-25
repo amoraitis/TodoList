@@ -1,7 +1,9 @@
-﻿namespace TodoList.Web.Models.ManageViewModels
+﻿using System.Collections.Generic;
+
+namespace TodoList.Web.Models.ManageViewModels
 {
     public class ShowRecoveryCodesViewModel
     {
-        public string[] RecoveryCodes { get; set; }
+        public IEnumerable<string> RecoveryCodes { get; set; }
     }
 }

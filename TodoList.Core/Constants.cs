@@ -1,4 +1,4 @@
-﻿namespace TodoList.Web
+﻿namespace TodoList.Core
 {
     public static class Constants
     {

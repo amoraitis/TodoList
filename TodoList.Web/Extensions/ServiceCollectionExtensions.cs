@@ -12,10 +12,11 @@ using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Collections.Generic;
 using System.Globalization;
-using TodoList.Web.Data;
-using TodoList.Web.Models;
-using TodoList.Web.Services;
-using TodoList.Web.Services.Storage;
+using TodoList.Core.Contexts;
+using TodoList.Core.Interfaces;
+using TodoList.Core.Models;
+using TodoList.Core.Services;
+using TodoList.Data;
 
 namespace TodoList.Web.Extensions
 {
@@ -73,6 +74,61 @@ namespace TodoList.Web.Extensions
         {
             // Angular's default header name for sending the XSRF token.
             services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+        }
+
+        public static void ConfigureSocialAuthentication(this IServiceCollection services, IConfiguration config)
+        {
+            // Facebook login support
+            var fbAppId = config.GetSection("Authentication:Facebook:AppId").Value;
+            var fbAppSecret = config.GetSection("Authentication:Facebook:AppSecret").Value;
+            if (fbAppId != null && fbAppSecret != null)
+            {
+                services.AddAuthentication()
+                    .AddFacebook(options =>
+                    {
+                        options.AppId = fbAppId;
+                        options.AppSecret = fbAppSecret;
+                    });
+            }
+            
+            // Google login support
+            var gClientId = config.GetSection("Authentication:Google:ClientId").Value;
+            var gClientSecret = config.GetSection("Authentication:Google:ClientSecret").Value;
+            if (gClientId != null && gClientSecret != null)
+            {
+                services.AddAuthentication()
+                    .AddGoogle(options =>
+                    {
+                        options.ClientId = gClientId;
+                        options.ClientSecret = gClientSecret;
+                    });
+            }
+
+            // Microsoft login support
+            var mClientId = config.GetSection("Authentication:Microsoft:ClientId").Value;
+            var mClientSecret = config.GetSection("Authentication:Microsoft:ClientSecret").Value;
+            if (mClientId != null && mClientSecret != null)
+            {
+                services.AddAuthentication()
+                    .AddMicrosoftAccount(options =>
+                    {
+                        options.ClientId = mClientId;
+                        options.ClientSecret = mClientSecret;
+                    });
+            }
+
+            // Twitter login support
+            var tConsumerKey = config.GetSection("Authentication:Twitter:ConsumerKey").Value;
+            var tConsumerSecret = config.GetSection("Authentication:Twitter:ConsumerSecret").Value;
+            if (tConsumerKey != null && tConsumerSecret != null)
+            {
+                services.AddAuthentication()
+                    .AddTwitter(options =>
+                    {
+                        options.ConsumerKey = tConsumerKey;
+                        options.ConsumerSecret = tConsumerSecret;
+                    });
+            }
         }
 
         public static void ConfigureIdentity(this IServiceCollection services)

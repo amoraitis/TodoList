@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TodoList.Web.Data.Migrations
+namespace TodoList.Data.Migrations
 {
     public partial class TodoItem_InitialModel : Migration
     {

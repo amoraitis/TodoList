@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using TodoList.Core.Interfaces;
+using TodoList.Core.Models;
 using TodoList.Web.Models;
-using TodoList.Web.Services;
-using TodoList.Web.Services.Storage;
 
 namespace TodoList.Web.Controllers
 {
@@ -53,15 +52,15 @@ namespace TodoList.Web.Controllers
         {
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null) return Challenge();
-            var todos = (await _todoItemService.GetIncompleteItemsAsync(currentUser));
+            var todos = await _todoItemService.GetIncompleteItemsAsync(currentUser);
             var dones = await _todoItemService.GetCompleteItemsAsync(currentUser);
 
-            if(!string.IsNullOrEmpty(tag))
+            if (!string.IsNullOrEmpty(tag))
             {
-                //TODO: These lines are a workaround for not having generic collections, so they need to be changed.
-                todos = todos.AsQueryable().Where(t => t.Tags.Contains(tag)).ToArray();
-                dones = dones.AsQueryable().Where(t => t.Tags.Contains(tag)).ToArray();
+                todos = todos.Where(t => t.Tags.Contains(tag));
+                dones = dones.Where(t => t.Tags.Contains(tag));
             }
+
             var model = new TodoViewModel()
             {
                 Todos = todos,
@@ -178,7 +177,7 @@ namespace TodoList.Web.Controllers
                 Id = todo.Id,
                 Title = todo.Title,
                 Content = todo.Content,
-                Tags = todo.Tags?.Count() > 0 ? string.Join(',',todo.Tags) : ""
+                Tags = todo.Tags?.Count() > 0 ? string.Join(',', todo.Tags) : ""
             };
             return View(editViewModel);
         }
@@ -200,7 +199,7 @@ namespace TodoList.Web.Controllers
                     Id = todo.Id,
                     Title = todo.Title,
                     Content = todo.Content,
-                    Tags = todo.Tags != null ? todo.Tags.Split(',') : new[] {""}
+                    Tags = todo.Tags != null ? todo.Tags.Split(',') : new[] { "" }
                 }, currentUser);
 
             if (!successful)

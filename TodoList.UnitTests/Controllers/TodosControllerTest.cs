@@ -1,13 +1,13 @@
+using Microsoft.AspNetCore.Mvc;
+using Moq;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
+using TodoList.Core.Interfaces;
+using TodoList.Core.Models;
 using TodoList.UnitTests.Resources;
 using TodoList.Web.Controllers;
 using TodoList.Web.Models;
-using TodoList.Web.Services;
-using TodoList.Web.Services.Storage;
 using Xunit;
 
 namespace TodoList.UnitTests.Controllers
@@ -18,13 +18,13 @@ namespace TodoList.UnitTests.Controllers
         private readonly Mock<IFileStorageService> _fileItemServiceMock;
         private readonly Mock<FakeUserManager> _userManagerMock;
 
-        private TodosController _todosController;
+        private readonly TodosController _todosController;
 
         public TodosControllerTest()
         {
             _todoItemServiceMock = new Mock<ITodoItemService>();
             _fileItemServiceMock = new Mock<IFileStorageService>();
-            _userManagerMock =  new Mock<FakeUserManager>();
+            _userManagerMock = new Mock<FakeUserManager>();
 
             _userManagerMock
                 .Setup(x => x.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
@@ -89,7 +89,8 @@ namespace TodoList.UnitTests.Controllers
                 .Setup(service => service.AddItemAsync(It.IsAny<TodoItem>(), It.IsAny<ApplicationUser>()))
                 .ReturnsAsync(true);
 
-            var result = await _todosController.Create(new TodoItemCreateViewModel {
+            var result = await _todosController.Create(new TodoItemCreateViewModel
+            {
                 Title = "Test title",
                 Content = "Test content",
                 DuetoDateTime = DateTime.Now,
@@ -107,7 +108,8 @@ namespace TodoList.UnitTests.Controllers
                 .Setup(service => service.AddItemAsync(It.IsAny<TodoItem>(), It.IsAny<ApplicationUser>()))
                 .ReturnsAsync(false);
 
-            var result = await _todosController.Create(new TodoItemCreateViewModel {
+            var result = await _todosController.Create(new TodoItemCreateViewModel
+            {
                 Title = "Test title",
                 Content = "Test content",
                 DuetoDateTime = DateTime.Now,
@@ -122,7 +124,8 @@ namespace TodoList.UnitTests.Controllers
         {
             _todosController.ModelState.AddModelError("Test error", "Test error");
 
-            var result = await _todosController.Create(new TodoItemCreateViewModel {
+            var result = await _todosController.Create(new TodoItemCreateViewModel
+            {
                 Title = "Test title",
                 Content = "Test content",
                 DuetoDateTime = DateTime.Now,

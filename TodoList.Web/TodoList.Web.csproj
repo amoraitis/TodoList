@@ -28,6 +28,12 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\TodoList.Core\TodoList.Core.csproj" />
+    <ProjectReference Include="..\TodoList.Data\TodoList.Data.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
     <Compile Update="Resources\Views\Todos\Home.en.Designer.cs">
       <DependentUpon>Home.en.resx</DependentUpon>
       <DesignTime>True</DesignTime>
