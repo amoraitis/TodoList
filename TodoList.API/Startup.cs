@@ -16,9 +16,12 @@ namespace TodoList.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly ILogger<Startup> _logger;
+        public Startup(IHostingEnvironment hostingContext, ILogger<Startup> logger, IConfiguration configuration)
         {
             Configuration = configuration;
+
+            _logger = logger;
         }
 
         public IConfiguration Configuration { get; }
@@ -26,9 +29,11 @@ namespace TodoList.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureEntityFramework(Configuration);
-            services.ConfigureJwtAuthentication();
-            services.ConfigureSwagger();
+            services.ConfigureEntityFramework(Configuration, _logger);
+            services.ConfigureIdentity(_logger);
+            services.ConfigureJwtAuthentication(Configuration, _logger);
+            services.ConfigureRepository(_logger);
+            services.ConfigureSwagger(_logger);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -46,6 +51,8 @@ namespace TodoList.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
 
             app.UseSwagger();
             app.UseSwaggerUI(o =>
