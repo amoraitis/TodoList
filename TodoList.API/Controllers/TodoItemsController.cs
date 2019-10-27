@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,9 +12,9 @@ using TodoList.Core.Models;
 
 namespace TodoList.API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TodoItemsController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -42,7 +40,7 @@ namespace TodoList.API.Controllers
             var user = await _userManager.GetUserAsync(User);
             if(user == null)
             {
-                _logger.LogError($"Unknown user tryied getting all items.");
+                _logger.LogError($"Unknown user tried getting all items.");
                 return Unauthorized();
             }
             var items = new List<TodoItem>();
@@ -60,7 +58,7 @@ namespace TodoList.API.Controllers
             var user = await _userManager.GetUserAsync(User);
             if(user == null)
             {
-                _logger.LogError($"Unknown user tryied getting all complete items.");
+                _logger.LogError($"Unknown user tried getting all complete items.");
                 return Unauthorized();
             }
             var items = await _todoService.GetCompleteItemsAsync(user);
@@ -75,7 +73,7 @@ namespace TodoList.API.Controllers
             var user = await _userManager.GetUserAsync(User);
             if(user == null)
             {
-                _logger.LogError($"Unknown user tryied getting all incomplete items.");
+                _logger.LogError($"Unknown user tried getting all incomplete items.");
                 return Unauthorized();
             }
             var items = await _todoService.GetIncompleteItemsAsync(user);
@@ -91,7 +89,7 @@ namespace TodoList.API.Controllers
             var user = await _userManager.GetUserAsync(User);
             if(user == null)
             {
-                _logger.LogError($"Unknown user tryied getting all items with tag {tag}.");
+                _logger.LogError($"Unknown user tried getting all items with tag {tag}.");
                 return Unauthorized();
             }
             var items = await _todoService.GetItemsByTagAsync(user, tag);
@@ -101,7 +99,7 @@ namespace TodoList.API.Controllers
         }
 
         // Get item by Id
-        [HttpGet("{id}}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetItemById(Guid id)
         {
             var item = await _todoService.GetItemAsync(id);
@@ -122,7 +120,7 @@ namespace TodoList.API.Controllers
             var user = await _userManager.GetUserAsync(User);
             if(user == null)
             {
-                _logger.LogError($"Unknown user tryied creating an item.");
+                _logger.LogError($"Unknown user tried creating an item.");
                 return Unauthorized();
             }
 
@@ -137,6 +135,7 @@ namespace TodoList.API.Controllers
                 _logger.LogError($"Received invalid item.");
                 return BadRequest();
             }
+            if (item.Done == null) item.Done = false;
 
             // create mapping
             var dbItem = new TodoItem();
@@ -145,11 +144,66 @@ namespace TodoList.API.Controllers
             await _todoService.AddItemAsync(dbItem, user);
 
             _logger.LogInformation($"Created new TodoItem with id {dbItem.Id}");
-            return CreatedAtAction(nameof(GetItemById), new {Id = dbItem.Id}, dbItem);
+            return CreatedAtAction(nameof(GetItemById), new { Id = dbItem.Id }, dbItem);
         }
 
         // Update item
+        [HttpPut("{id}")]
+        public async Task<ActionResult<TodoItem>> UpdateItemAsync([FromBody] TodoItemDto newItem, Guid id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if(user == null)
+            {
+                _logger.LogError($"Unknown user tried creating an item.");
+                return Unauthorized();
+            }
+
+            if (newItem == null)
+            {
+                _logger.LogError($"Received null item.");
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError($"Received invalid item.");
+                return BadRequest();
+            }
+
+            if (newItem.Done == null) newItem.Done = false;
+
+            var dbItem = await _todoService.GetItemAsync(id);
+            if (dbItem == null)
+            {
+                _logger.LogError($"Item with id {id} not found.");
+                return NotFound();
+            }
+
+            _mapper.Map(newItem, dbItem);
+            if (dbItem.Done)
+                await _todoService.UpdateDoneAsync(id, user);
+            else
+                await _todoService.UpdateTodoAsync(dbItem, user);
+
+            _logger.LogInformation($"Updated item with id {dbItem.Id}.");
+            return NoContent();
+        }
 
         // Delete item
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteItem(Guid id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if(user == null)
+            {
+                _logger.LogError($"Unknown user tried creating an item.");
+                return Unauthorized();
+            }
+
+            await _todoService.DeleteTodoAsync(id, user);
+
+            _logger.LogInformation($"Removed item with id {id}.");
+            return NoContent();
+        }
     }
 }
