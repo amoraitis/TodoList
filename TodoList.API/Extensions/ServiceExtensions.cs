@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
+using TodoList.API.MapperProfiles;
+using TodoList.API.Models;
 using TodoList.Core.Contexts;
 using TodoList.Core.Interfaces;
 using TodoList.Core.Models;
@@ -79,6 +82,12 @@ namespace TodoList.API.Extensions
         {
             services.AddSingleton<ITodoItemService, TodoItemService>();
             logger.LogInformation("Configured Repository services.");
+        }
+
+        public static void ConfigureAutoMapper(this IServiceCollection services, ILogger logger)
+        {
+            services.AddAutoMapper(typeof(TodoItemProfile));
+            logger.LogInformation("Configured AutoMapper service.");
         }
     }
 }
