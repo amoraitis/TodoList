@@ -7,9 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using NodaTime;
 using Swashbuckle.AspNetCore.Swagger;
 using TodoList.API.MapperProfiles;
-using TodoList.API.Models;
 using TodoList.Core.Contexts;
 using TodoList.Core.Interfaces;
 using TodoList.Core.Models;
@@ -66,6 +66,7 @@ namespace TodoList.API.Extensions
                             Encoding.UTF8.GetBytes(config["Authentication:JWT:SecurityKey"]))
                     };
                 });
+            services.AddAuthorization();
             logger.LogInformation("Configured JWT authentication scheme.");
         }
 
@@ -80,7 +81,8 @@ namespace TodoList.API.Extensions
 
         public static void ConfigureRepository(this IServiceCollection services, ILogger logger)
         {
-            services.AddSingleton<ITodoItemService, TodoItemService>();
+            services.AddSingleton<IClock>(SystemClock.Instance);
+            services.AddScoped<ITodoItemService, TodoItemService>();
             logger.LogInformation("Configured Repository services.");
         }
 
