@@ -76,14 +76,8 @@ namespace TodoList.API.Controllers
         {
             await _signinManager.SignOutAsync();
 
-            return Ok();
-        }
-
-        [Authorize]
-        [HttpGet("manage/{id}")]
-        public async Task<IActionResult> Manage(Guid id)
-        {
-            return Ok();
+            _logger.LogInformation("User signed out.");
+            return NoContent();
         }
     }
 }
