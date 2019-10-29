@@ -33,6 +33,7 @@ namespace TodoList.API
             services.ConfigureIdentity(_logger);
             services.ConfigureJwtAuthentication(Configuration, _logger);
             services.ConfigureRepository(_logger);
+            services.ConfigureStorage(Configuration, _logger);
             services.ConfigureAutoMapper(_logger);
             services.ConfigureSwagger(_logger);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

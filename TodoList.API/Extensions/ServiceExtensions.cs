@@ -70,6 +70,9 @@ namespace TodoList.API.Extensions
             logger.LogInformation("Configured JWT authentication scheme.");
         }
 
+        /// <summary>
+        /// Configures identity services.
+        /// </summary>
         public static void ConfigureIdentity(this IServiceCollection services, ILogger logger)
         {
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -79,6 +82,9 @@ namespace TodoList.API.Extensions
             logger.LogInformation("Configured Identity service.");
         }
 
+        /// <summary>
+        /// Configures repository service.
+        /// </summary>
         public static void ConfigureRepository(this IServiceCollection services, ILogger logger)
         {
             services.AddSingleton<IClock>(SystemClock.Instance);
@@ -86,10 +92,24 @@ namespace TodoList.API.Extensions
             logger.LogInformation("Configured Repository services.");
         }
 
+        /// <summary>
+        /// Configures AutoMapper services.
+        /// </summary>
         public static void ConfigureAutoMapper(this IServiceCollection services, ILogger logger)
         {
-            services.AddAutoMapper(typeof(TodoItemProfile));
+            services.AddAutoMapper(typeof(Startup), typeof(TodoItemProfile));
             logger.LogInformation("Configured AutoMapper service.");
+        }
+
+        /// <summary>
+        /// Configures file storage service.
+        /// </summary>
+        public static void ConfigureStorage(this IServiceCollection services, IConfiguration configuration, ILogger logger)
+        {
+            var storageService = new LocalFileStorageService(configuration["LocalFileStorageBasePath"]);
+            services.AddSingleton<IFileStorageService>(storageService);
+            
+            logger.LogInformation("Configured Storage service.");
         }
     }
 }
