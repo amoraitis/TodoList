@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TodoList.Core.Interfaces;
@@ -64,6 +65,17 @@ namespace TodoList.UnitTests.Controllers
         }
 
         [Fact]
+        public async Task IndexWithTag_ReturnsViewResult_WithAListOfTaggedTodosAndDones()
+        {
+            var result = await _todosController.Index("test");
+            var viewResult = Assert.IsType<ViewResult>(result);
+
+            var allItems = Assert.IsAssignableFrom<TodoViewModel>(viewResult.ViewData.Model);
+            Assert.All(allItems.Todos, i => ((List<string>) i.Tags).Contains("test"));
+            Assert.All(allItems.Dones, i => ((List<string>)i.Tags).Contains("test"));
+        }
+
+        [Fact]
         public async Task Index_ReturnsChallengeResult_WhenUserIsNull()
         {
             SetupGetUserAsyncToNull();
@@ -85,7 +97,7 @@ namespace TodoList.UnitTests.Controllers
         [Fact]
         public async Task Create_RedirectsToIndex_WhenTodoItemIsCreated()
         {
-            this._todoItemServiceMock
+            _todoItemServiceMock
                 .Setup(service => service.AddItemAsync(It.IsAny<TodoItem>(), It.IsAny<ApplicationUser>()))
                 .ReturnsAsync(true);
 
@@ -132,6 +144,24 @@ namespace TodoList.UnitTests.Controllers
                 Tags = "test"
             });
 
+            Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Index", (result as RedirectToActionResult).ActionName);
+        }
+
+        [Fact]
+        public async Task Create_RedirectsToIndex_WhenTodoItemHasTooManyTags()
+        {
+            _todosController.ModelState.AddModelError("Test error", "Test error");
+
+            var result = await _todosController.Create(new TodoItemCreateViewModel
+            {
+                Title = "Test title",
+                Content = "Test content 1234567890",
+                DuetoDateTime = DateTime.Now,
+                Tags = "t1,t2,t3,t4"
+            });
+
+            Assert.False(_todosController.ModelState.IsValid);
             Assert.IsType<RedirectToActionResult>(result);
             Assert.Equal("Index", (result as RedirectToActionResult).ActionName);
         }
