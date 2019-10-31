@@ -7,5 +7,7 @@ namespace TodoList.Web.Models
     {
         public IEnumerable<TodoItem> RecentlyAddedTodos { get; set; }
         public IEnumerable<TodoItem> CloseDueToTodos { get; set; }
+        public IEnumerable<TodoItem> MonthlyToTodos { get; set; }
+        public CalendarViewModel CalendarViewModel { get; set; }
     }
 }
