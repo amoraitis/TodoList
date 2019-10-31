@@ -34,15 +34,23 @@ namespace TodoList.Web.Controllers
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null) return Challenge();
 
+            var now = DateTime.Now;
+            var cal = new CalendarViewModel(now.Month, now.Year);
+            
             var recentlyAddedTodos = await _todoItemService.GetRecentlyAddedItemsAsync(currentUser);
             var dueTo2daysTodos = await _todoItemService.GetDueTo2DaysItems(currentUser);
+            var monthlyItems = await _todoItemService.GetMonthlyItems(currentUser, now.Month);
 
             var homeViewModel = new HomeViewModel()
             {
                 RecentlyAddedTodos = recentlyAddedTodos,
-                CloseDueToTodos = dueTo2daysTodos
+                CloseDueToTodos = dueTo2daysTodos,
+                MonthlyToTodos=monthlyItems,
+                CalendarViewModel =cal
             };
 
+            
+            
             return View(homeViewModel);
         }
 

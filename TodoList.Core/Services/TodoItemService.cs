@@ -134,6 +134,15 @@ namespace TodoList.Core.Services
                 .ToArrayAsync();
         }
 
+        public async Task<IEnumerable<TodoItem>> GetMonthlyItems(ApplicationUser user, int month)
+        {
+            return await _context.Todos
+                .Where(t => t.UserId == user.Id && !t.Done)
+                 //&& DateTime.Compare(DateTime.UtcNow.AddDays(1), t.DueTo.ToDateTimeUtc()) >= 0)
+                .Where(t=>t.DueTo.ToDateTimeUtc().Month == month)
+                .ToArrayAsync();
+        }
+
         public async Task<bool> SaveFileAsync(Guid todoId, ApplicationUser currentUser, string path, long size)
         {
             var todo = await _context.Todos.Include(t => t.File)

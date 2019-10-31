@@ -18,6 +18,7 @@ namespace TodoList.Core.Interfaces
         Task<bool> DeleteTodoAsync(Guid id, ApplicationUser currentUser);
         Task<IEnumerable<TodoItem>> GetRecentlyAddedItemsAsync(ApplicationUser currentUser);
         Task<IEnumerable<TodoItem>> GetDueTo2DaysItems(ApplicationUser user);
+        Task<IEnumerable<TodoItem>> GetMonthlyItems(ApplicationUser user, int Month);
         Task<bool> SaveFileAsync(Guid todoId, ApplicationUser currentUser, string path, long size);
     }
 }
