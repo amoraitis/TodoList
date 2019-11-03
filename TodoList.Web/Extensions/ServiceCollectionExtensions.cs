@@ -66,7 +66,7 @@ namespace TodoList.Web.Extensions
         {
             services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(configuration["ConnectionStrings:Connection"]);
+                options.UseSqlServer(configuration["ConnectionStrings:Connection"], x => x.MigrationsAssembly("TodoList.Data"));
             });
         }
 

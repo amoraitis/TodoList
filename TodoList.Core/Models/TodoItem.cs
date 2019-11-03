@@ -57,7 +57,7 @@ namespace TodoList.Core.Models
         }
 
         [Column("Tags")]
-        [MaxLength(3)]
+        [MaxLength(Constants.MAX_TAGS)]
         public IEnumerable<string> Tags { get; set; }
     }
 }
