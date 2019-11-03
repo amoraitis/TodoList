@@ -17,6 +17,9 @@ namespace TodoList.UnitTests.Services
         private readonly Mock<ISendGridClient> _sendGridClientMock;
         private readonly Mock<HttpContent> _httpContentMock;
         private readonly NullLogger<EmailSender> _logger;
+        private const string email = "max@example.com";
+        private const string subject = "This is a test";
+        private const string body = "A test body";
 
         public EmailSenderTest()
         {
@@ -35,7 +38,7 @@ namespace TodoList.UnitTests.Services
         public async Task It_Should_Send_Email()
         {
             // This test doesn't make any assertion, basically here we're checking no assertion is thrown
-            await _emailSenderService.SendEmailAsync("max@example.com", "This is a test", "A test body");
+            await _emailSenderService.SendEmailAsync(email,subject,body);
         }
 
         [Fact]
@@ -48,7 +51,7 @@ namespace TodoList.UnitTests.Services
 
             EmailSender emailSenderService = new EmailSender(_sendGridClientMock.Object, new SendGridMessage(),_logger);
             //Act
-            await emailSenderService.SendEmailAsync("max@example.com", "This is a test", "A test body");
+            await emailSenderService.SendEmailAsync(email, subject, body);
             // This test doesn't make any assertion, basically here we're checking no exception is thrown
         }
     }
