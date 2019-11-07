@@ -64,7 +64,6 @@ namespace TodoList.Core.Services
         {
             return _context.Todos
                 .Any(t => t.Id == id);
-
         }
 
         public async Task<bool> UpdateDoneAsync(Guid id, ApplicationUser user)
@@ -75,10 +74,7 @@ namespace TodoList.Core.Services
 
             if (todo == null) return false;
 
-            if (todo.Done)
-                todo.Done = false;
-            else
-                todo.Done = true;
+            todo.Done = !todo.Done;
 
             var saved = await _context.SaveChangesAsync();
             return saved == 1;
@@ -98,7 +94,6 @@ namespace TodoList.Core.Services
 
             var saved = await _context.SaveChangesAsync();
             return saved == 1;
-
         }
 
         public async Task<TodoItem> GetItemAsync(Guid id)
@@ -115,8 +110,10 @@ namespace TodoList.Core.Services
                 .Include(t => t.File)
                 .Where(t => t.Id == id && t.UserId == currentUser.Id)
                 .SingleOrDefaultAsync();
+
             _context.Todos.Remove(todo);
             _context.Files.Remove(todo.File);
+
             var deleted = await _context.SaveChangesAsync();
             return deleted > 0;
         }
@@ -143,15 +140,13 @@ namespace TodoList.Core.Services
                 .Where(t => t.Id == todoId && t.UserId == currentUser.Id)
                 .SingleOrDefaultAsync();
 
-            if (todo == null)
-                return false;
+            if (todo == null) return false;
 
             todo.File.Path = path;
             todo.File.Size = size;
             todo.File.TodoId = todo.Id;
 
             var changes = await _context.SaveChangesAsync();
-
             return changes > 0;
         }
     }
