@@ -34,6 +34,7 @@
 
 
   <ItemGroup>
+    
     <Compile Update="Resources\Views\Todos\Home.en.Designer.cs">
       <DependentUpon>Home.en.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -43,6 +44,10 @@
 
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Views\Todos\Home.hi.resx">
+      <LastGenOutput>Views.Todos.Home.gr.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Todos\Home.en.resx">
       <LastGenOutput>Views.Todos.Home.gr.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>

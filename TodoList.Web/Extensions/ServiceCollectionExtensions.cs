@@ -40,7 +40,8 @@ namespace TodoList.Web.Extensions
                     var supportedCultures = new List<CultureInfo>
                     {
                         new CultureInfo("en-GB"),
-                        new CultureInfo("el-GR")
+                        new CultureInfo("el-GR"),
+                        new CultureInfo("hi-IN")
                     };
 
                     opts.DefaultRequestCulture = new RequestCulture("en-GB");
