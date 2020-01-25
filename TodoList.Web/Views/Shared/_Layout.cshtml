@@ -51,7 +51,9 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/js/site.min.js"></script>
-
+<script src="https://ajax.aspnetcdn.com/ajax/bootstrap/4.0.0/bootstrap.min.js"
+      asp-fallback-src="~/lib/bootstrap/dist/bootstrap.min.js"
+      asp-fallback-test="window.jQuery"></script>
 @RenderSection("Scripts", required: false)
 </body>
 </html>
