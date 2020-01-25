@@ -138,7 +138,6 @@ namespace TodoList.Core.Services
         {
             return await _context.Todos
                 .Where(t => t.UserId == user.Id && !t.Done)
-                 //&& DateTime.Compare(DateTime.UtcNow.AddDays(1), t.DueTo.ToDateTimeUtc()) >= 0)
                 .Where(t=>t.DueTo.ToDateTimeUtc().Month == month)
                 .ToArrayAsync();
         }
