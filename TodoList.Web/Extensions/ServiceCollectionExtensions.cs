@@ -17,7 +17,6 @@ using TodoList.Core.Contexts;
 using TodoList.Core.Interfaces;
 using TodoList.Core.Models;
 using TodoList.Core.Services;
-using TodoList.Data;
 
 namespace TodoList.Web.Extensions
 {

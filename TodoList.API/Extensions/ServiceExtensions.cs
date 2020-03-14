@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using NodaTime;
+using Npgsql;
 using Swashbuckle.AspNetCore.Swagger;
 using TodoList.API.MapperProfiles;
 using TodoList.Core.Contexts;
@@ -25,11 +26,13 @@ namespace TodoList.API.Extensions
         public static void ConfigureEntityFramework(this IServiceCollection services, 
             IConfiguration configuration, 
             ILogger logger)
-        {
-            services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationDbContext>(options =>
+        {   
+            var connectionStringBuilder = new NpgsqlConnectionStringBuilder(configuration["ConnectionStrings:PostgreSql"]);
+            services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetSection("ConnectionString:DefaultConnection").Value);
+                options.UseNpgsql(connectionStringBuilder.ConnectionString, x => x.MigrationsAssembly("TodoList.Data"));
             });
+            
             logger.LogInformation("Configured EF.");
         }
 
