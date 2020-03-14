@@ -261,6 +261,9 @@ paket-files/
 __pycache__/
 *.pyc
 
-// lib files
+# lib files
 TodoList.Web/wwwroot/lib/
 .vscode/
+
+# pgsql data file
+pgdata/

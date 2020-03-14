@@ -1,0 +1,24 @@
+version: "3.5"
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: todolist
+      POSTGRES_USER: todolist_user
+      POSTGRES_PASSWORD: todolist_password
+    networks:
+      - todolist
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+
+networks:
+  todolist:
+    name: todolist-network
+
+volumes:
+  postgres:
+    driver: local

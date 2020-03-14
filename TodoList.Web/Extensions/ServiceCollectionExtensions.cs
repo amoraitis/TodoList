@@ -12,6 +12,7 @@ using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Collections.Generic;
 using System.Globalization;
+using Npgsql;
 using TodoList.Core.Contexts;
 using TodoList.Core.Interfaces;
 using TodoList.Core.Models;
@@ -65,9 +66,10 @@ namespace TodoList.Web.Extensions
 
         public static void ConfigureEntityFramework(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationDbContext>(options =>
+            var connectionStringBuilder = new NpgsqlConnectionStringBuilder(configuration["ConnectionStrings:PostgreSql"]);
+            services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(configuration["ConnectionStrings:Connection"], x => x.MigrationsAssembly("TodoList.Data"));
+                options.UseNpgsql(connectionStringBuilder.ConnectionString, x => x.MigrationsAssembly("TodoList.Data"));
             });
         }
 
