@@ -35,13 +35,15 @@ This project is a simple but powerful web application to manage to-dos.
 
 4 - Go to the `TodoList/TodoList.Web` folder by running the command `cd TodoList/TodoList.Web` or manually navigating into the file system.
 
-5 - Run the command `dotnet restore` to install all the dependencies.
+5 - Run the command `dotnet tool install -g Microsoft.Web.LibraryManager.Cli` to install Libman.
 
-6 - Run the command `dotnet build` to compile the project.
+6 - Run the command `dotnet restore` to install all the dependencies.
 
-7 - Run the command `dotnet run` to start serving the project.
+7 - Run the command `dotnet build` to compile the project.
 
-8 - That it's, your application is running in `http://localhost:47818`.
+8 - Run the command `dotnet run` to start serving the project.
+
+9 - That it's, your application is running in `http://localhost:47818`.
 
 ## Support for social login providers
 
