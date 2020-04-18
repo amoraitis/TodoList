@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,13 +40,30 @@ namespace TodoList.Web.Controllers
             
             var recentlyAddedTodos = await _todoItemService.GetRecentlyAddedItemsAsync(currentUser);
             var dueTo2daysTodos = await _todoItemService.GetDueTo2DaysItems(currentUser);
+            
             var monthlyItems = await _todoItemService.GetMonthlyItems(currentUser, currentDateTime.Month);
-
+            var calendarTodos = monthlyItems
+                .Select(t => 
+                    new CalendarTodoViewModel
+                    {
+                        Id = t.Id,
+                        Title = t.Title,
+                        Content = t.Content,
+                        DueToDay = t.DueTo.ToDateTimeOffset().Day
+                    })
+                .GroupBy(t => 
+                    t.DueToDay
+                )
+                .ToDictionary(
+                    keySelector: g => g.Key,
+                    elementSelector: g => g.Select(t => t)
+                );
+            
             var homeViewModel = new HomeViewModel()
             {
                 RecentlyAddedTodos = recentlyAddedTodos,
                 CloseDueToTodos = dueTo2daysTodos,
-                MonthlyToTodos= monthlyItems,
+                CalendarTodosByDay = calendarTodos,
                 CalendarViewModel = calendar
             };
 
