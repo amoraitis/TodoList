@@ -188,15 +188,45 @@
                             @days
 
                             @{
-                                var day = new DateTime(DateTime.Now.Year, DateTime.Now.Month, days).Day;
-                                var todosInDay = Model.MonthlyToTodos.Count(todo => todo.DueTo.ToDateTimeOffset().Day == day);
-                                if (todosInDay > 0)
+                                var dayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, days);
+                                if (Model.CalendarTodosByDay.ContainsKey(dayOfMonth.Day))
                                 {
-                                    <span style="margin-left: 1em;" class="badge badge-info">@todosInDay</span>
+                                    var todosInDay = Model.CalendarTodosByDay[dayOfMonth.Day].ToList();
+                                    
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#todomodal-@days">
+                                        @todosInDay.Count
+                                    </button>
+                                    
+                                    <div class="modal fade" id="todomodal-@days" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalLabel">Todos</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul class="list-group">
+                                                        @foreach (var todo in todosInDay)
+                                                        {
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                @todo.Title
+                                                                <a type="button" class="btn btn-info" href="/Todos/Details?id=@todo.Id">View</a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 }
                             }
                         </td>
-                        @if ((days + Model.CalendarViewModel.OffsetFromSun) % 7 == 0)
+                        if ((days + Model.CalendarViewModel.OffsetFromSun) % 7 == 0)
                         {
                             WriteLiteral("</tr><tr>");
                         }
