@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System.Globalization;
 using TodoList.Web.Extensions;
 
 namespace TodoList.Web
@@ -62,9 +64,19 @@ namespace TodoList.Web
             app.UseCookiePolicy();
             app.UseAuthentication();
 
-            //Add localization
-            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
-            app.UseRequestLocalization(options.Value);
+            //Add localization supported cultures and request localization via query string (ex: ?culture=en-US)
+            var supportedCultures = new CultureInfo[] {
+                new CultureInfo("en"),
+                new CultureInfo("pt"),
+                new CultureInfo("de"),
+                new CultureInfo("hi")
+            };
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
 
             app.UseMvc(routes =>
             {

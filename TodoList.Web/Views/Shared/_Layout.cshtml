@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using TodoList.Localization.Shared
+@inject IHtmlLocalizer<SharedResources> SharedLocalizer
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -6,9 +10,9 @@
     <title>@ViewData["Title"] - TodoList</title>
 
     @*<environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>*@
+            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+            <link rel="stylesheet" href="~/css/site.css" />
+        </environment>*@
     <environment include="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.0.0/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
@@ -30,10 +34,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="About" class="nav-link">About</a></li>
-                    <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="Contact" class="nav-link">Contact</a></li>
-                </ul>
+                    <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">@SharedLocalizer["Home"]</a></li>
+                    <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="About" class="nav-link">@SharedLocalizer["About"]</a></li>
+                    <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="Contact" class="nav-link">@SharedLocalizer["Contact"]</a></li>
+</ul>
                 @await Html.PartialAsync("_LoginPartial")
                 @await Html.PartialAsync("_AdminActionsPartial")
             </div>
@@ -47,13 +51,13 @@
         </footer>
     </div>
     <partial name="_CookieConsentPartial" />
-<script src="~/lib/moment.js/moment.min.js"></script>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/js/site.min.js"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/bootstrap/4.0.0/bootstrap.min.js"
-      asp-fallback-src="~/lib/bootstrap/dist/bootstrap.min.js"
-      asp-fallback-test="window.jQuery"></script>
-@RenderSection("Scripts", required: false)
+    <script src="~/lib/moment.js/moment.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/js/site.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/4.0.0/bootstrap.min.js"
+            asp-fallback-src="~/lib/bootstrap/dist/bootstrap.min.js"
+            asp-fallback-test="window.jQuery"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

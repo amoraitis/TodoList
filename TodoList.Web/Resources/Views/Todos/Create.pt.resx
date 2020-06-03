@@ -117,49 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add Todo" xml:space="preserve">
-    <value>Todo hinzufügen</value>
+  <data name="Back to List" xml:space="preserve">
+    <value>Voltar</value>
   </data>
-  <data name="Added" xml:space="preserve">
-    <value>Hinzugefügt</value>
+  <data name="Content" xml:space="preserve">
+    <value>Conteúdo</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Löschen</value>
+  <data name="Create" xml:space="preserve">
+    <value>Criar</value>
   </data>
-  <data name="Details" xml:space="preserve">
-    <value>Details</value>
-  </data>
-  <data name="Done" xml:space="preserve">
-    <value>Erledigt</value>
-  </data>
-  <data name="Due Date" xml:space="preserve">
-    <value>Fälligkeitsdatum</value>
-  </data>
-  <data name="Due to" xml:space="preserve">
-    <value>Fällig am</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Ändern</value>
-  </data>
-  <data name="Feed" xml:space="preserve">
-    <value>Feed</value>
-  </data>
-  <data name="No" xml:space="preserve">
-    <value>Nein</value>
-  </data>
-  <data name="Recently added" xml:space="preserve">
-    <value>Zuletzt hinzugefügt</value>
+  <data name="DuetoDateTime" xml:space="preserve">
+    <value>Data Limite</value>
   </data>
   <data name="Tags" xml:space="preserve">
     <value>Tags</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Titel</value>
+    <value>Título</value>
   </data>
-  <data name="Update Status" xml:space="preserve">
-    <value>Status aktualisieren</value>
-  </data>
-  <data name="Yes" xml:space="preserve">
-    <value>Ja</value>
+  <data name="Todo" xml:space="preserve">
+    <value>Tarefa</value>
   </data>
 </root>
