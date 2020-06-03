@@ -1,47 +1,49 @@
 ﻿@model TodoList.Web.Models.TodoItemCreateViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>@Localizer["Create"]</h2>
 
-<h4>Todo</h4>
+<h4>@Localizer["Todo"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
+                <label asp-for="Title" class="control-label">@Localizer["Title"]</label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
+                <label asp-for="Content" class="control-label">@Localizer["Content"]</label>
                 <textarea asp-for="Content" class="form-control" id="CreateContentTextArea"></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DuetoDateTime" class="control-label"></label>
+                <label asp-for="DuetoDateTime" class="control-label">@Localizer["DuetoDateTime"]</label>
                 <input type="datetime-local" asp-for="DuetoDateTime" class="form-control" />
                 <span asp-validation-for="DuetoDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Tags" class="control-label"></label>
-                <input type="text" asp-for="Tags" class="form-control" id="Tags" placeholder="Comma separated tags"/>
+                <label asp-for="Tags" class="control-label">@Localizer["Tags"]</label>
+                <input type="text" asp-for="Tags" class="form-control" id="Tags" placeholder="Comma separated tags" />
                 <span asp-validation-for="Tags" class="text-danger"></span>
                 <!--TODO: Updated UI needed for this.-->
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-secondary" />
+                <input type="submit" value="@Localizer["Create"]" class="btn btn-secondary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@Localizer["Back to List"]</a>
 </div>
 
 <partial name="_EditorStylePartial" />

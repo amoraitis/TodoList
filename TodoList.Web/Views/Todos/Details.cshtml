@@ -1,6 +1,8 @@
 ﻿@model TodoList.Core.Models.TodoItem
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
-@{ 
+@{
     ViewData["Title"] = "Details";
 }
 
@@ -24,7 +26,7 @@
             @Html.DisplayNameFor(model => model.Done)
         </dt>
         <dd>
-            @(Model.Done ? "Yes" : "No")
+            @(Model.Done ? Localizer["Yes"] : Localizer["No"])
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Added)
@@ -55,7 +57,7 @@
             }
         </dd>
         <dt>
-            @Html.DisplayNameFor(model=>model.File)
+            @Html.DisplayNameFor(model => model.File)
         </dt>
         <dd>
             @ViewData["FileName"]
@@ -63,6 +65,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id">@Localizer["Edit"]</a> |
+    <a asp-action="Index">@Localizer["Back to List"]</a>
 </div>

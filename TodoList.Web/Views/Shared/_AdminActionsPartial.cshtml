@@ -1,6 +1,9 @@
 ﻿@using TodoList.Core
 @using TodoList.Core.Models
 @using TodoList.Web
+@using Microsoft.AspNetCore.Mvc.Localization
+@using TodoList.Localization.Shared
+@inject IHtmlLocalizer<SharedResources> SharedLocalizer
 
 @inject SignInManager<ApplicationUser> signInManager
 @inject UserManager<ApplicationUser> userManager
@@ -20,7 +23,7 @@
             <li>
                 <a asp-controller="ManageUsers"
                    asp-action="Index">
-                    Manage Users
+                    @SharedLocalizer["Manage Users"]
                 </a>
             </li>
         </ul>

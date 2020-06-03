@@ -1,10 +1,12 @@
 ﻿@model TodoList.Web.Models.DeleteViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
-@{ 
+@{
     ViewData["Title"] = "Delete";
 }
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>@Localizer["Are you sure you want to delete this?"]</h3>
 <div>
     <h4>Delete @Model.Id</h4>
     <hr />
@@ -16,7 +18,7 @@
             @Html.DisplayFor(model => model.Title)
         </dd>
         <dt>
-            File
+            @Localizer["File"]
         </dt>
         <dd>
             @ViewData["FileName"]
@@ -25,8 +27,8 @@
 
     <form asp-action="DeleteConfirmed" method="post">
         <input type="hidden" asp-for="Id" />
-        <input type="hidden" asp-for="FilePath"/>
-        <input type="submit" value="Delete" class="btn btn-danger" />
-        <a asp-action="Index">Cancel</a>
-    </form>    
+        <input type="hidden" asp-for="FilePath" />
+        <input type="submit" value="@Localizer["Delete"]" class="btn btn-danger" />
+        <a asp-action="Index">@Localizer["Cancel"]</a>
+    </form>
 </div>

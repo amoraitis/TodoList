@@ -1,4 +1,6 @@
 ﻿@model TodoList.Web.Models.EditViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,22 +14,22 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
+                <label asp-for="Title" class="control-label">@Localizer["Title"]</label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
+                <label asp-for="Content" class="control-label">@Localizer["Content"]</label>
                 <textarea asp-for="Content" class="form-control"></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Tags" class="control-label"></label>
+                <label asp-for="Tags" class="control-label">@Localizer["Tags"]</label>
                 <input asp-for="Tags" class="form-control" />
                 <span asp-validation-for="Tags" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-secondary" />
+                <input type="submit" value="@Localizer["Save"]" class="btn btn-secondary" />
             </div>
         </form>
         <div class="row">
@@ -36,13 +38,13 @@
                       asp-controller="Todos" asp-action="UploadFile" asp-route-id="@Model.Id">
                     <div class="form-group">
                         <div class="col-md-10">
-                            <p>Upload your using this form:</p>
+                            <p>@Localizer["Upload your using this form:"]</p>
                             <input type="file" name="file" />
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-10">
-                            <input type="submit" value="Upload" />
+                            <input type="submit" value="@Localizer["Upload"]" />
                         </div>
                     </div>
                 </form>
@@ -53,7 +55,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@Localizer["Back to List"]</a>
 </div>
 
 <partial name="_EditorStylePartial" />

@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using TodoList.Localization.Shared
+@inject IHtmlLocalizer<SharedResources> SharedLocalizer
 @using TodoList.Core.Models
 
 @inject SignInManager<ApplicationUser> SignInManager
@@ -8,16 +11,15 @@
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item">
-                <a asp-area="" asp-controller="Todos" asp-action="Index" class="nav-link">My todos</a>
-            </li>
+                <a asp-area="" asp-controller="Todos" asp-action="Index" class="nav-link">@SharedLocalizer["My todos"]</a>
+</li>
             <li class="nav-item">
                 <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage" class="nav-link">
-                    <img gravatar-email="@UserManager.GetUserName(User)" gravatar-size="20" title="Hello @UserManager.GetUserName(User)" />
-                     
+                    <img gravatar-email="@UserManager.GetUserName(User)" gravatar-size="20" title="@SharedLocalizer["Hello"] @UserManager.GetUserName(User)" />
                 </a>
             </li>
             <li class="nav-item">
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">@SharedLocalizer["Log out"]</button>
             </li>
         </ul>
     </form>

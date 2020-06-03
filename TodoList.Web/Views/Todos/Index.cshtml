@@ -1,28 +1,30 @@
 ﻿@model TodoList.Web.Models.TodoViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = Localizer["Index"];
 }
 
-<h2>Todos</h2>
+<h2>@Localizer["Todos"]</h2>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                Update Status
+                @Localizer["Update Status"]
             </th>
             <th>
-                Title
+                @Localizer["Title"]
             </th>
             <th>
-                Done
+                @Localizer["Done"]
             </th>
             <th>
-                Added
+                @Localizer["Added"]
             </th>
-            <th>Tags</th>
-            <th></th>
+            <th>@Localizer["Tags"]</th>
+        <th></th>
         </tr>
     </thead>
     <tbody>
@@ -66,24 +68,24 @@
 </table>
 
 <p>
-    <a class="btn btn-success" asp-action="Create">Add Todo</a>
+    <a class="btn btn-success" asp-action="Create">@Localizer["Add Todo"]</a>
 </p>
 
 <hr />
 
-<h2>Dones</h2>
+<h2>@Localizer["Dones"]</h2>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                Title
+                @Localizer["Title"]
             </th>
             <th>
-                Added
+                @Localizer["Added"]
             </th>
             <th>
-                Tags
+                @Localizer["Tags"]
             </th>
             <th></th>
         </tr>
@@ -91,29 +93,29 @@
     <tbody>
         @foreach (var item in Model.Dones)
         {
-        <tr>
-            <td>
-                @item.Title
-            </td>
-            <td>
-                <span data-value="@item.Added" class="timeStampValue">
-                    @item.Added
-                </span>
-            </td>
-            <td>
-                @if (item.Tags != null)
-                {
-                    @foreach (var tag in item.Tags)
+            <tr>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    <span data-value="@item.Added" class="timeStampValue">
+                        @item.Added
+                    </span>
+                </td>
+                <td>
+                    @if (item.Tags != null)
                     {
-                        <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                        @foreach (var tag in item.Tags)
+                        {
+                            <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                        }
                     }
-                }
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-            </td>
-        </tr>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
