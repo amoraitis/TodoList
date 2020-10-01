@@ -55,6 +55,14 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Todos\Home.hr.resx">
+      <LastGenOutput>Views.Todos.Home.gr.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Todos\Home.it.resx">
+      <LastGenOutput>Views.Todos.Home.gr.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
