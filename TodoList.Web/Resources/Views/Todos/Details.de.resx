@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Added" xml:space="preserve">
-    <value>Hinzugefügt am</value>
+    <value>Hinzugefügt</value>
   </data>
   <data name="Back to List" xml:space="preserve">
     <value>Zurück zur Liste</value>
   </data>
   <data name="Comma separated tags" xml:space="preserve">
-    <value>Komma getrennte Tags</value>
+    <value>Komma-getrennte Tags</value>
   </data>
   <data name="Content" xml:space="preserve">
     <value>Inhalt</value>
@@ -139,7 +139,7 @@
     <value>Fälligkeitsdatum</value>
   </data>
   <data name="DuetoDateTime" xml:space="preserve">
-    <value>Fälligkeitsdatum</value>
+    <value>Fälligkeitszeitpunkt</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Bearbeiten</value>
