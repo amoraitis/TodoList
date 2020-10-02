@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Are you sure you want to delete this?" xml:space="preserve">
-    <value>Wollen Sie dies wirklich löschen?</value>
+    <value>Wollen Sie das wirklich löschen?</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Abbrechen</value>
