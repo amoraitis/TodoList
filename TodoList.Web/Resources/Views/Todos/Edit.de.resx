@@ -121,7 +121,7 @@
     <value>Zurück zur Liste</value>
   </data>
   <data name="Comma separated tags" xml:space="preserve">
-    <value>Komma getrennte Tags</value>
+    <value>Komma-getrennte Tags</value>
   </data>
   <data name="Content" xml:space="preserve">
     <value>Inhalt</value>
@@ -130,7 +130,7 @@
     <value>Fälligkeitsdatum</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Bearbeite</value>
+    <value>Bearbeiten</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Speichern</value>

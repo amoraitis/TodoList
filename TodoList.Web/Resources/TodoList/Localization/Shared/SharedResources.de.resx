@@ -117,22 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Are you sure you want to delete this?" xml:space="preserve">
-    <value>Wollen Sie das wirklich löschen?</value>
+  <data name="About" xml:space="preserve">
+    <value>Über</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Abbrechen</value>
+  <data name="Contact" xml:space="preserve">
+    <value>Kontakt</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Löschen</value>
+  <data name="Hello" xml:space="preserve">
+    <value>Hallo</value>
   </data>
-  <data name="File" xml:space="preserve">
-    <value>Datei</value>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
   </data>
-  <data name="Title" xml:space="preserve">
-    <value>Titel</value>
+  <data name="Log out" xml:space="preserve">
+    <value>Ausloggen</value>
   </data>
-  <data name="Yes" xml:space="preserve">
-    <value>Ja</value>
+  <data name="Manager Users" xml:space="preserve">
+    <value>Benutzer Verwalten</value>
+  </data>
+  <data name="My todos" xml:space="preserve">
+    <value>Meine To-Dos</value>
   </data>
 </root>

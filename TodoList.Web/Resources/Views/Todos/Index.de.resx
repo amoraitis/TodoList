@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Add Todo" xml:space="preserve">
-    <value>Todo hinzufügen</value>
+    <value>ToDo hinzufügen</value>
   </data>
   <data name="Added" xml:space="preserve">
     <value>Hinzugefügt</value>
@@ -163,7 +163,7 @@
     <value>Titel</value>
   </data>
   <data name="Todos" xml:space="preserve">
-    <value>Todos</value>
+    <value>ToDos</value>
   </data>
   <data name="Update Status" xml:space="preserve">
     <value>Status aktualisieren</value>
