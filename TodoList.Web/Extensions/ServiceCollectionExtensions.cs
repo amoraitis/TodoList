@@ -44,7 +44,8 @@ namespace TodoList.Web.Extensions
                         new CultureInfo("hi-IN"),
                         new CultureInfo("de-DE"),
                         new CultureInfo("hr-HR"),
-                        new CultureInfo("it-IT")
+                        new CultureInfo("it-IT"),
+                        new CultureInfo("tr-TR")
                     };
 
                     opts.DefaultRequestCulture = new RequestCulture("en-GB");
