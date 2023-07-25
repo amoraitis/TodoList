@@ -69,7 +69,10 @@ namespace TodoList.Web
                 new CultureInfo("en"),
                 new CultureInfo("pt"),
                 new CultureInfo("de"),
-                new CultureInfo("hi")
+                new CultureInfo("hi"),
+                new CultureInfo("tr"),
+                new CultureInfo("fa")
+
             };
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
